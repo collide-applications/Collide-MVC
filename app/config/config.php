@@ -28,8 +28,13 @@
 $cfg = array();
 
 /**
- * Configure log level.
+ * Defined log types: file, email, firephp
  *
+ * You can add another log types by extending "Log" library and create another
+ * method with the same name as one type defined in the following array.
+ */
+
+/**
  * Defined log levels:
  * 0 - do not write to logs;
  * 1 - info
@@ -38,10 +43,14 @@ $cfg = array();
  * 4 - debug
  * 5 - all
  */
-$cfg['log']['level'] = 5;
+$cfg['log']['types']['file']     = array( 'enabled' => true, 'level' => 5 );
+$cfg['log']['types']['email']    = array( 'enabled' => true, 'level' => 5 );
+$cfg['log']['types']['firephp']  = array( 'enabled' => true, 'level' => 5 );
 
 // if set to true will overwrite the log file at each instance
 // !!! use it with caution (all previews log messages for current day will be lost)
+// @TODO fix this to write all logs from one refresh
+$cfg['log']['new'] = false;
 $cfg['log']['new'] = false;
 
 /**

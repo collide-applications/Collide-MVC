@@ -615,7 +615,7 @@ class FirePHP {
     if(!$this->enabled) {
       return false;
     }
-  
+    
     if (headers_sent($filename, $linenum)) {
       // If we are logging from within the exception handler we cannot throw another exception
       if($this->inExceptionHandler) {
@@ -625,7 +625,7 @@ class FirePHP {
         throw $this->newException('Headers already sent in '.$filename.' on line '.$linenum.'. Cannot send log data to FirePHP. You must have Output Buffering enabled via ob_start() or output_buffering ini directive.');
       }
     }
-  
+    
     $Type = null;
     $Label = null;
     $Options = array();

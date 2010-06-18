@@ -29,6 +29,6 @@
 require_once( CORE_PATH . 'config' . DS . 'config' . EXT );
 
 // include shared library
-require_once( CORE_LIB_PATH . 'internal' . DS . 'init' . EXT );
+require_once( CORE_LIB_INT_PATH . 'init' . EXT );
 
 /* end of file: ./core/bootstrap.php */
