@@ -115,6 +115,10 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  */
 if( !function_exists( 'initHook' ) ){
 	function initHook() {
+        // include log library, instantiate and add it to this controller
+		incLib( 'log' );
+		$objLog = new Log();
+
         // include config library and load default application config
         incLib( 'config' );
 		$objConf = new Config();
@@ -172,10 +176,13 @@ if( !function_exists( 'initHook' ) ){
 		$objLoad = new Load();
 
         // register new objects as globals to be visible in Controller class
-        $GLOBALS['objView']     =& $objView;
-        $GLOBALS['objModel']    =& $objModel;
-        $GLOBALS['objLoad']     =& $objLoad;
-        $GLOBALS['objConf']     =& $objConf;
+        $GLOBALS['autoload'] = array(
+            'log'   =>  $objLog,
+            'view'   => $objView,
+            'model'  => $objModel,
+            'load'   => $objLoad,
+            'config' => $objConf
+        );
 
         // include standard controller library
 		incLib( 'controller' );

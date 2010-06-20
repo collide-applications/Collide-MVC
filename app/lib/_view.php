@@ -19,6 +19,7 @@ class _View extends View{
 	public function __construct(){
 		parent::__construct();
 
+        //$this->log->write( '_View::__construct()' );
 		echo '_View::__construct()<br />';
 	}
 

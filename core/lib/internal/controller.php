@@ -66,6 +66,14 @@ class Controller{
 	public $config = null;
 
     /**
+	 * Log reference
+	 *
+	 * @access	public
+	 * @var		object	log reference
+	 */
+	public $log = null;
+
+    /**
      * This controller name
      *
      * @access  private
@@ -88,14 +96,13 @@ class Controller{
         self::$thisInstance =& $this;
 
         // get global objects and add to class, then unset them
-        $this->setView( $GLOBALS['objView'] );
-        unset( $GLOBALS['objView'] );
-        $this->setModel( $GLOBALS['objModel'] );
-        unset( $GLOBALS['objModel'] );
-        $this->setLoad( $GLOBALS['objLoad'] );
-        unset( $GLOBALS['objLoad'] );
-        $this->setConf( $GLOBALS['objConf'] );
-        unset( $GLOBALS['objConf'] );
+        if( isset( $GLOBALS['autoload'] ) ){
+            foreach( $GLOBALS['autoload'] as $name => $obj ){
+                $this->setAutoloadedLib( $name, $obj );
+            }
+
+            unset( $GLOBALS['autoload'] );
+        }
 
         // get url segments
 		$arrUrl = explode( '/', URL );
@@ -180,14 +187,33 @@ class Controller{
 	 * Set config object for this controller
 	 *
 	 * @access	private
-	 * @param	object	$objConf	load library reference
+	 * @param	object	$objConf	config library reference
      * @return  void
 	 */
 	private function setConf( $objConf ){
 		$this->config = $objConf;
 	}
+
+    /**
+	 * Set log object for this controller
+	 *
+	 * @access	private
+	 * @param	object	$objLog log library reference
+     * @return  void
+	 */
+	private function setLog( $objLog ){
+		$this->log = $objLog;
+	}
+
+    private function setAutoloadedLib( $name, $obj ){
+        $this->$name = $obj;
+    }
 }
 
+/**
+ * Get instance of
+ * @return <type>
+ */
 function &thisInstance(){
 	return Controller::getInstance();
 }

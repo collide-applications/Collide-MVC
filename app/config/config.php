@@ -45,12 +45,20 @@ $cfg = array();
  */
 $cfg['log']['types']['file']     = array( 'enabled' => true, 'level' => 5 );
 $cfg['log']['types']['email']    = array( 'enabled' => true, 'level' => 5 );
-$cfg['log']['types']['firephp']  = array( 'enabled' => true, 'level' => 5 );
+
+// set firephp options
+$firePhpOptions = array(
+    'maxObjectDepth'        => 10,
+    'maxArrayDepth'         => 20,
+    'useNativeJsonEncode'   => true,
+    'includeLineNumbers'    => true,
+    'trace'                 => false     // include trace
+);
+$cfg['log']['types']['firephp']  = array( 'enabled' => true, 'level' => 5, 'options' => $firePhpOptions );
 
 // if set to true will overwrite the log file at each instance
 // !!! use it with caution (all previews log messages for current day will be lost)
 // @TODO fix this to write all logs from one refresh
-$cfg['log']['new'] = false;
 $cfg['log']['new'] = false;
 
 /**

@@ -26,17 +26,10 @@
  */
 class Log{
     /**
-     * Collide instance
-     *
-     * @access  private
-     * @var     object  $_collide   mvc instance
-     */
-    private $_collide;
-
-    /**
      * Log levels
      *
-     * @var array   $_levels    log levels
+     * @access  private
+     * @var     array   $_levels    log levels
      */
     private $_levels = array(
         'info'      => 1,
@@ -51,7 +44,8 @@ class Log{
      *
      * This is set in "write" method
      *
-     * @var string  $_msg   message to write
+     * @access  private
+     * @var     string  $_msg   message to write
      */
     private $_msg;
 
@@ -60,9 +54,18 @@ class Log{
      *
      * This is set in "write" method
      *
-     * @var string  $_level message level
+     * @access  private
+     * @var     string  $_level message level
      */
     private $_level;
+
+    /**
+     * FirePHP instance
+     *
+     * @access  private
+     * @var     object  $_firephp   FirePHP instance
+     */
+    private $_firephp;
 
     /**
      * Constructor
@@ -71,10 +74,19 @@ class Log{
      * @return  void
      */
     public function __construct(){
-        // define this controller object
-        $this->_collide = Controller::getInstance();
-
+        // include FirePHP external library for firephp log type
         require( CORE_LIB_EXT_PATH . 'FirePHPCore-0.3.1/FirePHP.class.php' );
+
+        // get instance of FirePHP
+        $this->_firephp = FirePHP::getInstance( true );
+        // create group
+        $this->_firephp->group(
+            'Collide MVC Log',
+            array(
+                'Collapsed' => false,
+                'Color' => '#FF0000'
+            )
+        );
     }
 
     /**
@@ -88,12 +100,15 @@ class Log{
      * @return  boolean check if at least one log was writed
      */
     public function write( $msg, $level = 'info' ){
+        // Collide instance
+        $collide = Controller::getInstance();
+
         // set parameters
         $this->_msg     = $msg;
         $this->_level   = strtolower( trim( $level ) );
 
         // get log types
-        $logTypes = $this->_collide->config->get( array( 'log', 'types' ) );
+        $logTypes = $collide->config->get( array( 'log', 'types' ) );
 
         // check if at least one log was writed
         $writed = false;
@@ -112,8 +127,15 @@ class Log{
             if( $logLevel >= $this->_levels[$this->_level] ){
                 // check if method exists for each type
                 if( method_exists( $this, $type ) ){
+                    $options = array();
+
+                    // set options if any
+                    if( isset( $properties['options'] ) ){
+                        $options = $properties['options'];
+                    }
+                    
                     // call method
-                    if( $this->$type() ){
+                    if( $this->$type( $options ) ){
                         $writed = true;
                     }
                 }
@@ -129,9 +151,13 @@ class Log{
      * Each day will have its own log
      *
      * @access  private
+     * @param   array   $opt    options for this log type
      * @return  boolean
      */
-    private function file(){
+    private function file( $opt = array() ){
+        // Collide instance
+        $collide = Controller::getInstance();
+
         // check if folder is writable and do nothing otherwise
         if( !is_writable( CORE_LOG_PATH ) ){
             return false;
@@ -144,7 +170,7 @@ class Log{
         $fileName = CORE_LOG_PATH . date( 'm_d_Y' ) . '.php';
 
         // write message
-        $logNew = $this->_collide->config->get( array( 'log', 'new' ) );
+        $logNew = $collide->config->get( array( 'log', 'new' ) );
         $openType = 'a';
         if( $logNew ){
             $openType = 'w';
@@ -186,10 +212,11 @@ EOF;
      * Send log on email
      *
      * @access  private
+     * @param   array   $opt    options for this log type
      * @return  boolean
      * @todo    to be implemented when emailing sistem is done
      */
-    private function email(){
+    private function email( $opt = array() ){
 
         return true;
     }
@@ -201,27 +228,36 @@ EOF;
      * This method is using FirePHP library
      *
      * @access  private
+     * @param   array   $opt    options for this log type
      * @return  boolean
      */
-    private function firephp(){
-        $firephp = FirePHP::getInstance( true );
+    private function firephp( $opt = array() ){
+        // set options if any
+        if( is_array( $opt ) ){
+            $this->_firephp->getOptions();
+            $this->_firephp->setOptions( $opt );
+        }
 
-        $firephp->log( $this->_msg );
-        $firephp->info( $this->_msg );
-        $firephp->warn( $this->_msg );
-        $firephp->error( $this->_msg );
-        $firephp->log( $this->_msg, 'Optional Label' );
+        // call log function
+        switch( $this->_level ){
+            case 'info':
+                $this->_firephp->info( $this->_msg );
+                break;
+            case 'warning':
+                $this->_firephp->warn( $this->_msg );
+                break;
+            case 'error':
+                $this->_firephp->error( $this->_msg );
+                break;
+            default:
+                // other log levels
+                $this->_firephp->log( $this->_msg, strtoupper( $this->_level ) );
+        }
 
-        $table   = array();
-        $table[] = array( 'Col 1 Heading','Col 2 Heading' );
-        $table[] = array( 'Row 1 Col 1','Row 1 Col 2' );
-        $table[] = array( 'Row 2 Col 1','Row 2 Col 2' );
-        $table[] = array( 'Row 3 Col 1','Row 3 Col 2' );
-        $firephp->table( 'Table Label', $table );
-
-        //$firephp->trace( 'Trace Label' );
-
-        $firephp->dump( 'Key', $this->_levels );
+        // add trace if set in config
+        if( isset( $opt['trace'] ) && $opt['trace'] === true ){
+            $this->_firephp->trace( 'Trace' );
+        }
 
         return true;
     }

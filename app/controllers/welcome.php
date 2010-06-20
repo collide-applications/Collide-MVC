@@ -18,10 +18,8 @@ class WelcomeController extends _Controller{
 	 */
 	public function __construct(){
 		parent::__construct();
-
-        $this->load->lib( 'log' );
         
-        $this->log->write( 'WelcomeController::__construct()' );
+        $this->log->write( 'WelcomeController::__construct()', 'debug' );
 	}
 
 	/**

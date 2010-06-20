@@ -43,6 +43,4 @@ define( 'URL', rtrim( $_GET['url'], '/' ) );
 
 require_once( CORE_PATH . 'bootstrap' . EXT );
 
-ob_end_flush();
-
 /* end of file: ./app/public/index.php */

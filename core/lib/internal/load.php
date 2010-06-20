@@ -199,6 +199,9 @@ class Load{
     private function load( $name, $type, $params = array(), $newClassName = '' ){
         echo 'Load::load()<br />';
 
+        // Collide instance
+        $collide = Controller::getInstance();
+
         // initialization
         $names          = array();
         $newClassNames  = array();
@@ -234,6 +237,11 @@ class Load{
             // prepare name
             $name = trim( strtolower( $name ) );
 
+            // if object already instantiated go further
+            if( isset( $collide->$name ) ){
+                continue;
+            }
+            
             // include file
             $incRes = $this->incFile( $name, $type );
             if( !$incRes ){

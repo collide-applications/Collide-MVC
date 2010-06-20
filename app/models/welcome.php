@@ -18,7 +18,8 @@ class WelcomeModel extends _Model{
 	 */
 	public function __construct(){
 		parent::__construct();
-		
+
+        //$this->log->write( 'WelcomeModel::__construct()' );
 		echo 'WelcomeModel::__construct()<br />';
 	}
 
@@ -29,6 +30,7 @@ class WelcomeModel extends _Model{
 	 * @return	string	page title
 	 */
 	public function getTitle(){
+        //$this->log->write( 'WelcomeModel::getTitle()' );
 		echo 'WelcomeModel::getTitle()<br />';
 		
 		return 'Collide MVC Framework';

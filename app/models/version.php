@@ -29,7 +29,8 @@ class VersionModel extends _Model{
 	 */
 	public function __construct( $version = '1.0' ){
 		parent::__construct();
-		
+
+        //$this->log->write( 'VersionModel::__construct()' );
 		echo 'VersionModel::__construct()<br />';
 
         // set framework name
@@ -43,6 +44,7 @@ class VersionModel extends _Model{
 	 * @return	string	framework version
 	 */
 	public function getVersion(){
+        //$this->log->write( 'VersionModel::getVersion()' );
 		echo 'VersionModel::getVersion()<br />';
 
 		return $this->_version;

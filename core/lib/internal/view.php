@@ -41,6 +41,7 @@ class View{
      * @return  void
 	 */
 	public function __construct(){
+        //$this->log->write( 'View::__construct()' );
 		echo 'View::__construct()<br />';
 	}
 

@@ -40,6 +40,7 @@ class Config{
      * @return  void
 	 */
 	public function __construct(){
+        //$this->log->write( 'Config::__construct()' );
 		echo 'Config::__construct()<br />';
 	}
 
