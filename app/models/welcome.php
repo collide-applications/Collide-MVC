@@ -19,8 +19,7 @@ class WelcomeModel extends _Model{
 	public function __construct(){
 		parent::__construct();
 
-        //$this->log->write( 'WelcomeModel::__construct()' );
-		echo 'WelcomeModel::__construct()<br />';
+        $this->log->write( 'WelcomeModel::__construct()' );
 	}
 
 	/**
@@ -30,8 +29,7 @@ class WelcomeModel extends _Model{
 	 * @return	string	page title
 	 */
 	public function getTitle(){
-        //$this->log->write( 'WelcomeModel::getTitle()' );
-		echo 'WelcomeModel::getTitle()<br />';
+        $this->log->write( 'WelcomeModel::getTitle()' );
 		
 		return 'Collide MVC Framework';
 	}
@@ -43,7 +41,7 @@ class WelcomeModel extends _Model{
 	 * @return	string	page left panel
 	 */
 	public function getLeftPanel(){
-		echo 'WelcomeModel::getLeftPanel()<br />';
+        $this->log->write( 'WelcomeModel::getLeftPanel()' );
 
 		return 'left panel';
 	}
@@ -57,7 +55,7 @@ class WelcomeModel extends _Model{
 	 * @return	string	page content
 	 */
 	public function getContent( $name, $version ){
-		echo 'WelcomeModel::getContent()<br />';
+        $this->log->write( 'WelcomeModel::getContent()' );
 
 		return "Welcome to {$name} MVC Framework, version {$version}";
 	}

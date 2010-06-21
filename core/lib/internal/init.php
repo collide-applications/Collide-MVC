@@ -115,13 +115,13 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  */
 if( !function_exists( 'initHook' ) ){
 	function initHook() {
-        // include log library, instantiate and add it to this controller
-		incLib( 'log' );
-		$objLog = new Log();
+        // include log library and instantiate it
+		$logClassName = incLib( 'log' );
+        $objLog = new $logClassName();
 
         // include config library and load default application config
-        incLib( 'config' );
-		$objConf = new Config();
+        $configClassName = incLib( 'config' );
+		$objConf = new $configClassName();
         $objConf->load( 'config' );
 
 		// set default values
@@ -147,14 +147,7 @@ if( !function_exists( 'initHook' ) ){
 		$params = $arrUrl;    
 
 		// include view library
-		incLib( 'view' );
-
-		// check if custom view exists
-		$viewClassName = 'View';
-		if( class_exists( $objConf->get( array( 'default', 'lib_prefix' ) ) . $viewClassName ) ){
-			$viewClassName = $objConf->get( array( 'default', 'lib_prefix' ) ) . $viewClassName;
-		}
-
+		$viewClassName = incLib( 'view' );
 		// instantiate view
 		$objView = new $viewClassName();
 
@@ -164,20 +157,19 @@ if( !function_exists( 'initHook' ) ){
 		// include default model if exists and instantiate it
 		if( file_exists( APP_MODELS_PATH . $controller . EXT ) ){
 			require_once( APP_MODELS_PATH . $controller . EXT );
-
-			// instantiate model
 			$modelClassName = ucfirst( $controller ) .
 							  $objConf->get( array( 'default', 'model_sufix' ) );
+
+            // instantiate model
 			$objModel = new $modelClassName();
 		}
 
         // include load library, instantiate and add it to this controller
-		incLib( 'load' );
-		$objLoad = new Load();
+		$loadClassName = incLib( 'load' );
+		$objLoad = new $loadClassName();
 
         // register new objects as globals to be visible in Controller class
         $GLOBALS['autoload'] = array(
-            'log'   =>  $objLog,
             'view'   => $objView,
             'model'  => $objModel,
             'load'   => $objLoad,
@@ -224,14 +216,15 @@ if( !function_exists( 'initHook' ) ){
  *
  * @access  public
  * @param	string	$libName	library name
- * @return	boolean	true on success false on error
+ * @return	mixed   false on error or class name on success
  */
 if( !function_exists( 'incLib' ) ){
 	function incLib( $libName ){        
         require( APP_CONFIG_PATH . 'config' . EXT );
 
 		// prepare library name
-		$libName = trim( strtolower( $libName ) );
+		$libName    = trim( strtolower( $libName ) );
+        $className  = ucfirst( $libName );
 
         if( empty( $libName ) ){
             return false;
@@ -252,9 +245,10 @@ if( !function_exists( 'incLib' ) ){
 						 $libName . EXT ) ){
 			require_once( APP_LIB_PATH . $cfg['default']['lib_prefix'] .
 						  $libName . EXT );
+            $className = $cfg['default']['lib_prefix'] . $className;
 		}
 
-		return true;
+		return $className;
 	}
 }
 

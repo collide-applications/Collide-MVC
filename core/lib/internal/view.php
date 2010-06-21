@@ -26,6 +26,14 @@
  * @TODO        Add SMARTY support
  */
 class View{
+    /**
+     * Log object reference
+     *
+     * @access  protected
+     * @var     object  $log    log reference
+     */
+    protected $_log = null;
+
 	/**
 	 * Array with variables to be assigned to views
 	 *
@@ -41,8 +49,9 @@ class View{
      * @return  void
 	 */
 	public function __construct(){
-        //$this->log->write( 'View::__construct()' );
-		echo 'View::__construct()<br />';
+        // instantiate log
+    	$this->_log = Log::getInstance();
+        $this->_log->write( 'View::__construct()' );
 	}
 
 	/**
@@ -54,7 +63,7 @@ class View{
      * @return  void
 	 */
 	public function  __call( $name,  $args ){
-        echo 'View::__call()<br />';
+        $this->_log->write( 'View::__call(' . $name . ', ' . $args . ')' );
 
 		echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!<br />';
 	}
@@ -70,7 +79,7 @@ class View{
      * @return  void
 	 */
 	public function render( $views = null, $info = array(), $return = false, $filters = null ){
-        echo 'View::render( ' . print_r( $views, 1) . ', ' . print_r( $info, 1) . ', ' . $return . ', ' . print_r( $filters, 1) . ')<br />';
+        $this->_log->write( 'View::render()' );
 
         // define this controller object
         $collide = Controller::getInstance();
@@ -130,7 +139,7 @@ class View{
      * @return  mixed   boolean or content if <var>$return</var> is true
 	 */
 	private function getView( $view ){
-        echo 'View::getView( ' . $view . ')<br />';
+        $this->_log->write( 'View::getView()' );
 
         // define this controller object
         $collide = Controller::getInstance();
@@ -181,7 +190,7 @@ class View{
      * @return  boolean true on success or false on error
 	 */
 	private function applyFilters( $filters, &$output ){
-        echo 'View::applyFilters( ' . print_r( $filters, 1) . ', $output)<br />';
+        $this->_log->write( 'View::applyFilters( ' . print_r( $filters, 1) . ', $output)' );
 
         // include filters script
         if( is_file( APP_LIB_PATH . 'filters' . EXT ) ){

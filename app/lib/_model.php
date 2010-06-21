@@ -19,7 +19,7 @@ class _Model extends Model{
 	public function __construct(){
 		parent::__construct();
 
-		echo '_Model::__construct()<br />';
+		$this->log->write( '_Model::__construct()' );
 	}
 }
 

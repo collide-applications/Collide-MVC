@@ -26,13 +26,23 @@
  * @TODO        Add Doctrine support
  */
 class Model{
+    /**
+     * Log object reference
+     *
+     * @access  public
+     * @var     object  $log    log reference
+     */
+    public $log = null;
+
 	/**
 	 * Constructor
 	 *
 	 * @access	public
 	 */
 	public function __construct(){
-		echo 'Model::__construct()<br />';
+        // instantiate log
+        $this->log = Log::getInstance();
+        $this->log->write( 'Model::__construct()' );
 	}
 
 	/**
@@ -44,7 +54,7 @@ class Model{
      * @return  void
 	 */
 	public function  __call( $name,  $args ){
-		//$this->log->write( "Model::__call( '{$name}', " . print_r( $args, 1 ) . " )" );
+		$this->log->write( "Model::__call( '{$name}', " . print_r( $args, 1 ) . " )" );
 
 		echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!';
 	}

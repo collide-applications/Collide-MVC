@@ -91,18 +91,19 @@ class Controller{
      * @return  void
 	 */
 	public function __construct(){
-		//$this->log->write( 'Controller::__construct()' );
-
         self::$thisInstance =& $this;
+
+        // instantiate log
+        $this->log = Log::getInstance();
+        $this->log->write( 'Controller::__construct()' );
 
         // get global objects and add to class, then unset them
         if( isset( $GLOBALS['autoload'] ) ){
             foreach( $GLOBALS['autoload'] as $name => $obj ){
                 $this->setAutoloadedLib( $name, $obj );
             }
-
-            unset( $GLOBALS['autoload'] );
         }
+        unset( $GLOBALS['autoload'] );
 
         // get url segments
 		$arrUrl = explode( '/', URL );
@@ -121,7 +122,7 @@ class Controller{
      * @return  string
      */
     public function getControllerName(){
-        echo 'Controller::getControllerName()<br />';
+        $this->log->write( 'Controller::getControllerName()' );
 
         return $this->_controllerName;
     }
@@ -135,7 +136,7 @@ class Controller{
      * @return  void
 	 */
 	public function  __call( $name,  $args ){
-		//$this->log->write( "Controller::__call( '{$name}', " . print_r( $args, 1 ) . " )" );
+		$this->log->write( "Controller::__call()" );
 
 		echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!';
 	}
@@ -146,73 +147,30 @@ class Controller{
 	 * @access	public
      * @return  object  this controller instance reference
 	 */
-    public static function &getInstance(){
+    public static function &getInstance(){        
 		return self::$thisInstance;
 	}
 
-	/**
-	 * Set default model for this controller
-	 *
-	 * @access	private
-	 * @param	object	$objModel	model reference
-     * @return  void
-	 */
-	private function setModel( $objModel ){
-		$this->model = $objModel;
-	}
-
-	/**
-	 * Set view instance for this controller
-	 *
-	 * @access	private
-	 * @param	object	$objView	view reference
-     * @return  void
-	 */
-	private function setView( $objView ){
-		$this->view = $objView;
-	}
-
     /**
-	 * Set load library object for this controller
-	 *
-	 * @access	private
-	 * @param	object	$objLoad	load library reference
+     * Set extra class objects
+     * Objects came from $GLOBALS['autoload'] array
+     *
+     * @access  private
+     * @param   string  $name   object name
+     * @param   object  $obj    object to add
      * @return  void
-	 */
-	private function setLoad( $objLoad ){
-		$this->load = $objLoad;
-	}
-
-    /**
-	 * Set config object for this controller
-	 *
-	 * @access	private
-	 * @param	object	$objConf	config library reference
-     * @return  void
-	 */
-	private function setConf( $objConf ){
-		$this->config = $objConf;
-	}
-
-    /**
-	 * Set log object for this controller
-	 *
-	 * @access	private
-	 * @param	object	$objLog log library reference
-     * @return  void
-	 */
-	private function setLog( $objLog ){
-		$this->log = $objLog;
-	}
-
+     */
     private function setAutoloadedLib( $name, $obj ){
+        $this->log->write( "Controller::setAutoloadedLib()" );
+        
         $this->$name = $obj;
     }
 }
 
 /**
- * Get instance of
- * @return <type>
+ * Get instance of MVC
+ * 
+ * @return  object  MVC instance
  */
 function &thisInstance(){
 	return Controller::getInstance();

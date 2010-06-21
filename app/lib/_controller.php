@@ -19,7 +19,7 @@ class _Controller extends Controller{
 	public function __construct(){
 		parent::__construct();
 
-		//$this->log->write( '_Controller::__construct()' );
+		$this->log->write( '_Controller::__construct()' );
 	}
 }
 

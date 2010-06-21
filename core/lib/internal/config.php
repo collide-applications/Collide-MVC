@@ -26,6 +26,14 @@
  */
 class Config{
     /**
+     * Log object reference
+     *
+     * @access  protected
+     * @var     object  $log    log reference
+     */
+    protected $_log = null;
+
+    /**
      * All config arrays merged
      *
      * @access  private
@@ -40,8 +48,9 @@ class Config{
      * @return  void
 	 */
 	public function __construct(){
-        //$this->log->write( 'Config::__construct()' );
-		echo 'Config::__construct()<br />';
+        // instantiate log
+        $this->_log = Log::getInstance();
+        $this->_log->write( 'Config::__construct()' );
 	}
 
     /**
@@ -56,7 +65,7 @@ class Config{
      * @return  mixed   value from that index or null in not exists
      */
     public function get( $var = null ){
-        echo 'Config::get("' . print_r( $var, 1 ) . '")<br />';
+        $this->_log->write( 'Config::get()' );
 
         // create an array from $var
         if( !is_null( $var ) && !is_array( $var ) ){
@@ -95,7 +104,7 @@ class Config{
      * @return  void
      */
     public function set( $var, $val ){
-        echo 'Config::get("' . $var . '", ' . $val . ')<br />';
+        $this->_log->write( 'Config::get("' . $var . '", ' . $val . ')' );
 
         $this->_cfg[$var] = $val;
     }
@@ -108,7 +117,7 @@ class Config{
      * @return  boolean
      */
     public function load( $file ){
-        echo 'Config::load("' . $file . '")<br />';
+        $this->_log->write( 'Config::load("' . $file . '")' );
         
         // clean file name
         $file = rtrim( trim( strtolower( $file ) ), EXT );

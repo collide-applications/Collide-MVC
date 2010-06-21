@@ -11,6 +11,14 @@
  */
 class Demo{
     /**
+     * Collide MVC instance
+     * 
+     * access   private
+     * @var     object  $_collide   mvc instance
+     */
+    private $_collide;
+
+    /**
      * Page content
      *
      * @access  private
@@ -27,7 +35,10 @@ class Demo{
      * @return  void
 	 */
 	public function __construct( $content ){
-		echo 'Demo::__construct()<br />';
+        // initialize mvc instance
+        $this->_collide = &thisInstance();
+
+        $this->_collide->log->write( 'Demo::__construct()' );
 
         $this->_content = $content;
 	}
@@ -39,7 +50,7 @@ class Demo{
 	 * @return	string	framework name
 	 */
 	public function prepareContent(){
-		echo 'Demo::prepareContent()<br />';
+        $this->_collide->log->write( 'Demo::prepareContent()' );
 
         $this->_content = str_replace( 'Collide',
                                        '<span style="color:#f00;">Collide</span>',

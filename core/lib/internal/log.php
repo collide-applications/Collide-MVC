@@ -26,6 +26,22 @@
  */
 class Log{
     /**
+	 * This instance
+	 *
+	 * @access	private
+	 * @var		object	this instance
+	 */
+    private static $instance;
+
+    /**
+     * Application config array
+     *
+     * @access  private
+     * @var     array   $_cfg   config array
+     */
+    private $_cfg = array();
+
+    /**
      * Log levels
      *
      * @access  private
@@ -74,8 +90,17 @@ class Log{
      * @return  void
      */
     public function __construct(){
+        self::$instance =& $this;
+
+        // load config file
+        require( APP_CONFIG_PATH . 'config' . EXT );
+        if( isset( $cfg ) ){
+            $this->_cfg = $cfg['log'];
+            unset( $cfg );
+        }
+
         // include FirePHP external library for firephp log type
-        require( CORE_LIB_EXT_PATH . 'FirePHPCore-0.3.1/FirePHP.class.php' );
+        require_once( CORE_LIB_EXT_PATH . 'FirePHPCore-0.3.1/FirePHP.class.php' );
 
         // get instance of FirePHP
         $this->_firephp = FirePHP::getInstance( true );
@@ -83,11 +108,21 @@ class Log{
         $this->_firephp->group(
             'Collide MVC Log',
             array(
-                'Collapsed' => false,
+                'Collapsed' => $this->_cfg['types']['firephp']['options']['collapsed'],
                 'Color' => '#FF0000'
             )
         );
     }
+
+    /**
+	 * Return this instance
+	 *
+	 * @access	public
+     * @return  object  this instance reference
+	 */
+    public static function &getInstance(){
+		return self::$instance;
+	}
 
     /**
      * Write to logs
@@ -99,24 +134,29 @@ class Log{
      * @param   string  $level  log level (defined in config)
      * @return  boolean check if at least one log was writed
      */
-    public function write( $msg, $level = 'info' ){
-        // Collide instance
-        $collide = Controller::getInstance();
-
+    public function write( $msg, $level = 'info', $exclusive_types = null ){
         // set parameters
         $this->_msg     = $msg;
         $this->_level   = strtolower( trim( $level ) );
 
         // get log types
-        $logTypes = $collide->config->get( array( 'log', 'types' ) );
+        $logTypes = $this->_cfg['types'];
 
         // check if at least one log was writed
         $writed = false;
 
+        if( !is_null( $exclusive_types ) && !is_array( $exclusive_types ) ){
+            $exclusive_types = array( $exclusive_types );
+        }
+
         // for each enabled type try to write log
         foreach( $logTypes as $type => $properties ){
+            if( is_array( $exclusive_types ) && !in_array( $type, $exclusive_types ) ){
+                continue;
+            }
+
             // if type not enabled continue
-            if( !$properties['enabled'] ){
+            if( is_array( $exclusive_types ) && !$properties['enabled'] ){
                 continue;
             }
 
@@ -155,9 +195,6 @@ class Log{
      * @return  boolean
      */
     private function file( $opt = array() ){
-        // Collide instance
-        $collide = Controller::getInstance();
-
         // check if folder is writable and do nothing otherwise
         if( !is_writable( CORE_LOG_PATH ) ){
             return false;
@@ -170,7 +207,7 @@ class Log{
         $fileName = CORE_LOG_PATH . date( 'm_d_Y' ) . '.php';
 
         // write message
-        $logNew = $collide->config->get( array( 'log', 'new' ) );
+        $logNew = $this->_cfg['new'];
         $openType = 'a';
         if( $logNew ){
             $openType = 'w';

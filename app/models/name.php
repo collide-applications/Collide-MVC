@@ -28,10 +28,9 @@ class NameModel extends _Model{
      * @return  void
 	 */
 	public function __construct( $name ){
-        echo $name;
 		parent::__construct();
-		
-		echo 'NameModel::__construct()<br />';
+
+        $this->log->write( 'NameModel::__construct(' . $name . ')' );
 
         // set framework name
         $this->_name = trim( ucfirst( $name ) );
@@ -44,7 +43,7 @@ class NameModel extends _Model{
 	 * @return	string	framework name
 	 */
 	public function getName(){
-		echo 'NameModel::getName()<br />';
+        $this->log->write( 'NameModel::getName()' );
 
 		return $this->_name;
 	}

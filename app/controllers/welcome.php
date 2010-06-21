@@ -19,7 +19,7 @@ class WelcomeController extends _Controller{
 	public function __construct(){
 		parent::__construct();
         
-        $this->log->write( 'WelcomeController::__construct()', 'debug' );
+        $this->log->write( 'WelcomeController::__construct()' );
 	}
 
 	/**
@@ -38,6 +38,14 @@ class WelcomeController extends _Controller{
 	 */
 	public function index(){
         $this->log->write( 'WelcomeController::index()' );
+
+        // log examples
+        $this->log->write( 'Test info log' );
+        $this->log->write( 'Test info log', 'info' );
+        $this->log->write( 'Test warning log', 'warning' );
+        $this->log->write( 'Test error log', 'error' );
+        $this->log->write( 'Test exclusive firephp info log', 'info', 'firephp' );
+        $this->log->write( 'Test exclusive firephp and file info log', 'info', array( 'firephp', 'file' ) );
 
         // you can render an array of views with data like this
         /**
@@ -92,10 +100,10 @@ class WelcomeController extends _Controller{
         // collect views
         $info['header']     = $this->view->render( '_common/header',
                                                    $header, true );
-        $info['lpanel']     = $this->view->render( 'left_panel',
+        $info['lpanel']     = $this->view->render( 'welcome/left_panel',
                                                    $left_panel, true );
         // because $content is not an array will assign $info variable
-        $info['content']    = $this->view->render( 'content',
+        $info['content']    = $this->view->render( 'welcome/content',
                                                    $content, true );
         $info['footer']     = $this->view->render( '_common/footer',
                                                    null, true );

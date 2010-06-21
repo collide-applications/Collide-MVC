@@ -25,6 +25,14 @@
  * @link		http://mvc.collide-applications.com/docs/
  */
 class Load{
+    /**
+     * Log object reference
+     *
+     * @access  protected
+     * @var     object  $log    log reference
+     */
+    protected $_log = null;
+
 	/**
 	 * Constructor
 	 *
@@ -32,7 +40,9 @@ class Load{
      * @return  void
 	 */
 	public function __construct(){
-		echo 'Load::__construct()<br />';
+        // instantiate log
+    	$this->_log = Log::getInstance();
+        $this->_log->write( 'Load::__construct()' );
 	}
 
     /**
@@ -44,7 +54,7 @@ class Load{
      * @return	boolean	true on success false on error
      */
     private function incFile( $fileName, $type = 'model' ){
-        echo 'Load::incFile( "' . $fileName . '")<br />';
+        $this->_log->write( 'Load::incFile( "' . $fileName . '")' );
 
         // check and prepare parameters
         if( empty( $fileName ) || empty( $type ) ){
@@ -139,7 +149,7 @@ class Load{
      * @return	boolean	true on success false on error
 	 */
 	private function instantiate( $className, $type, $multiple, $params = array(), $newClassName = '' ){
-        echo 'Load::instantiate()<br />';
+        $this->_log->write( 'Load::instantiate()' );
 
         // prepare parameters
         $newClassName = trim( strtolower( $newClassName ) );
@@ -151,7 +161,7 @@ class Load{
         if( $type == 'model' ){
             $className .= $type;
         }
-
+        
         // make a reflection object
         $objReflection = new ReflectionClass( $className );
 
@@ -197,7 +207,7 @@ class Load{
      * @return	boolean	true on success false on error
 	 */
     private function load( $name, $type, $params = array(), $newClassName = '' ){
-        echo 'Load::load()<br />';
+        $this->_log->write( 'Load::load()' );
 
         // Collide instance
         $collide = Controller::getInstance();
@@ -267,7 +277,7 @@ class Load{
      * @return	boolean	true on success false on error
 	 */
 	public function model( $name, $params = array(), $newName = '' ){
-        echo 'Load::model()<br />';
+        $this->_log->write( 'Load::model()' );
 
         // load class
         if( !$this->load( $name, 'model', $params, $newName ) ){
@@ -287,7 +297,7 @@ class Load{
      * @return	boolean	true on success false on error
 	 */
 	public function lib( $name, $params = array(), $newName = '' ){
-        echo 'Load::lib()<br />';
+        $this->_log->write( 'Load::lib()' );
 
         // load class
         if( !$this->load( $name, 'lib', $params, $newName ) ){
@@ -307,7 +317,7 @@ class Load{
      * @return	boolean	true on success false on error
 	 */
 	public function helper( $name, $params = array(), $newName = '' ){
-        echo 'Load::helper()<br />';
+        $this->_log->write( 'Load::helper()' );
 
         // load class
         if( !$this->load( $name, 'helper', $params, $newName ) ){

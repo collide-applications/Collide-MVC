@@ -52,7 +52,8 @@ $firePhpOptions = array(
     'maxArrayDepth'         => 20,
     'useNativeJsonEncode'   => true,
     'includeLineNumbers'    => true,
-    'trace'                 => false     // include trace
+    'trace'                 => false,       // include trace
+    'collapsed'             => true         // show collapsed
 );
 $cfg['log']['types']['firephp']  = array( 'enabled' => true, 'level' => 5, 'options' => $firePhpOptions );
 

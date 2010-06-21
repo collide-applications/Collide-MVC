@@ -10,6 +10,14 @@
  * @link		http://mvc.collide-applications.com/docs/
  */
 class _View extends View{
+    /**
+     * Collide MVC instance
+     *
+     * access   private
+     * @var     object  $_collide   mvc instance
+     */
+    private $_collide;
+
 	/**
 	 * Constructor
 	 *
@@ -19,8 +27,7 @@ class _View extends View{
 	public function __construct(){
 		parent::__construct();
 
-        //$this->log->write( '_View::__construct()' );
-		echo '_View::__construct()<br />';
+        $this->_log->write( '_View::__construct()' );
 	}
 
 	/**
@@ -32,7 +39,7 @@ class _View extends View{
      * @return  void
 	 */
 	public function  __call( $name,  $args ){
-		echo "_View::__call( '{$name}', " . print_r( $args, 1 ) . " )";
+        $this->_log->write( "_View::__call( '{$name}', " . print_r( $args, 1 ) . " )" );
 
 		echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!';
 	}
