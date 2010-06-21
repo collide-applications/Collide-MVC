@@ -107,7 +107,7 @@ class WelcomeController extends _Controller{
                                                    $content, true );
         $info['footer']     = $this->view->render( '_common/footer',
                                                    null, true );
-
+        
         // assign collected views to another view
         $this->view->render( 'index', $info, false, 'transformMVC' );
 	}

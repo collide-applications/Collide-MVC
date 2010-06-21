@@ -111,10 +111,12 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  *
  * @access  public
  * @return	boolean	true on success false on error
- * @TODO    split in small functions
+ * @TODO    split in small functions ore move functionality to controller
  */
 if( !function_exists( 'initHook' ) ){
 	function initHook() {
+        $logClassName = incLib( 'collide_exception' );
+
         // include log library and instantiate it
 		$logClassName = incLib( 'log' );
         $objLog = new $logClassName();
@@ -153,7 +155,7 @@ if( !function_exists( 'initHook' ) ){
 
 		// include model library
 		incLib( 'model' );
-
+        $objModel = null;
 		// include default model if exists and instantiate it
 		if( file_exists( APP_MODELS_PATH . $controller . EXT ) ){
 			require_once( APP_MODELS_PATH . $controller . EXT );
@@ -179,33 +181,27 @@ if( !function_exists( 'initHook' ) ){
         // include standard controller library
 		incLib( 'controller' );
 
-		// include requested controller
-		if( file_exists( APP_CONTROLLERS_PATH .
-						 strtolower( $controller ) . EXT ) ){
-			require_once( APP_CONTROLLERS_PATH .
-						  strtolower( $controller ) . EXT );
-		}else{
-			// @TODO: display 404 page
-			echo 'Page not found!<br />';
-
-			return false;
-		}
+        // include requested controller
+        if( file_exists( APP_CONTROLLERS_PATH .
+                         strtolower( $controller ) . EXT ) ){
+            require_once( APP_CONTROLLERS_PATH .
+                          strtolower( $controller ) . EXT );
+        }else{
+            throw new Collide_exception( 'Page not found!' );
+        }
 
         // instantiate controller
 		$controllerClassName = ucfirst( $controller ) .
 							   $objConf->get( array( 'default', 'controller_sufix' ) );
 
         $objController = new $controllerClassName();
-		
-		// try to call method
-		if( (int)method_exists( $controllerClassName, $method ) ){
-			call_user_func_array( array( $objController, $method ), $params );
-		}else{
-			// @TODO: display 404 page
-			echo 'Method not foud!<br />';
 
-			return false;
-		}
+        // try to call method
+        if( (int)method_exists( $controllerClassName, $method ) ){
+            call_user_func_array( array( $objController, $method ), $params );
+        }else{
+            throw new Collide_exception( 'Method not foud!' );
+        }
 
 		return true;
 	}
@@ -219,7 +215,9 @@ if( !function_exists( 'initHook' ) ){
  * @return	mixed   false on error or class name on success
  */
 if( !function_exists( 'incLib' ) ){
-	function incLib( $libName ){        
+	function incLib( $libName ){
+        require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
+
         require( APP_CONFIG_PATH . 'config' . EXT );
 
 		// prepare library name
@@ -229,16 +227,21 @@ if( !function_exists( 'incLib' ) ){
         if( empty( $libName ) ){
             return false;
         }
+        
+        try{
+            // include requested standard library first
+            if( file_exists( CORE_LIB_INT_PATH . $libName . EXT ) ){
+                require_once( CORE_LIB_INT_PATH . $libName . EXT );
+            }else{
+                throw new Collide_exception( 'Standard library not found!' );
 
-		// include requested standard library first
-		if( file_exists( CORE_LIB_INT_PATH . $libName . EXT ) ){
-			require_once( CORE_LIB_INT_PATH . $libName . EXT );
-		}else{
-			// @TODO: display error
-			echo 'Standard library not found!<br />';
+                return false;
+            }
+        }catch( Collide_exception $e ){
+            $e->__toString();
 
-			return false;
-		}
+            return false;
+        }
 
 		// include requested custom library if exists
 		if( file_exists( APP_LIB_PATH . $cfg['default']['lib_prefix'] .
@@ -273,7 +276,7 @@ if( !function_exists( 'incLib' ) ){
 			require_once( APP_PATH . 'models' . DS .
 						  strtolower( $className ) . EXT );
 		}else{																// not found
-			// @TODO: display 404 page
+			throw new Collide_exception( 'Page not found!' );
 		}
 	}
 }*/
@@ -282,6 +285,13 @@ if( !function_exists( 'incLib' ) ){
 setDisplayErrors();
 removeMagicQuotes();
 unsetGlobalArrays();
-initHook();
+
+try{
+    initHook();
+}catch( Collide_exception $e ){
+    $e->__toString();
+
+    return false;
+}
 
 /* end of file: ./core/lib/internal/init.php */

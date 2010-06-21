@@ -100,7 +100,9 @@ class Controller{
         // get global objects and add to class, then unset them
         if( isset( $GLOBALS['autoload'] ) ){
             foreach( $GLOBALS['autoload'] as $name => $obj ){
-                $this->setAutoloadedLib( $name, $obj );
+                if( !is_null( $obj ) ){
+                    $this->setAutoloadedLib( $name, $obj );
+                }
             }
         }
         unset( $GLOBALS['autoload'] );

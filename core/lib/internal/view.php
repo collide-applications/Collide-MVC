@@ -169,9 +169,7 @@ class View{
             // try file name from views folder root
             include( APP_VIEWS_PATH . $view . EXT );
 		}else{															// not found
-			echo "View {$view} does not exists!";
-
-			// @TODO: display error when view is missing
+			throw new Collide_exception( 'View "' . $view . '" does not exist!' );
 		}
 
         // return content and clean the buffer
@@ -196,11 +194,7 @@ class View{
         if( is_file( APP_LIB_PATH . 'filters' . EXT ) ){
             require_once( APP_LIB_PATH . 'filters' . EXT );
         }else{
-            echo './app/lib/filters.php does not exists!<br />';
-
-            // @TODO: display error if filter library is not there
-
-            return false;
+            throw new Collide_exception( 'Filters script does not exist!' );
         }
 
         // apply filters
@@ -216,11 +210,7 @@ class View{
                 if( function_exists( $filter ) ){
                     $filter( $output );
                 }else{
-                    echo "Filter {$filter} does not exists!";
-
-                    // @TODO: display error if filter function is not there
-
-                    return false;
+                    throw new Collide_exception( 'Filter "' . $filter . '" does not exist!' );
                 }
             }
         }else{  // anything else

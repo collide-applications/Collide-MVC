@@ -101,7 +101,7 @@ class Load{
                 }else if( $isCore ){
                     require_once( $coreFile );
                 }else{
-                    echo $fileName . ' does not exists!<br />';
+                    throw new Collide_exception( '"' . $fileName . ' helper does not exists!' );
                 }
             }else{
                 if( $isApp ){
@@ -113,7 +113,7 @@ class Load{
                 }else if( $isCore ){
                     require_once( $coreFile );
                 }else{
-                    echo $fileName . ' does not exists!<br />';
+                    throw new Collide_exception( '"' . $fileName . '" library does not exists!' );
                 }
             }
         }else{                                          // model
@@ -127,10 +127,7 @@ class Load{
             if( file_exists( $file ) ){
                 require_once( $file );
             }else{
-                // @TODO: display error
-                echo 'Class not found!<br />';
-
-                return false;
+                throw new Collide_exception( '"' . $fileName . '" class not found!' );
             }
         }		
 
@@ -254,6 +251,7 @@ class Load{
             
             // include file
             $incRes = $this->incFile( $name, $type );
+            
             if( !$incRes ){
                 return false;
             }
