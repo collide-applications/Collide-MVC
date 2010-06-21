@@ -139,7 +139,7 @@ class View{
      * @return  mixed   boolean or content if <var>$return</var> is true
 	 */
 	private function getView( $view ){
-        $this->_log->write( 'View::getView()' );
+        $this->_log->write( 'View::getView("' . $view . '")' );
 
         // define this controller object
         $collide = Controller::getInstance();
@@ -157,9 +157,10 @@ class View{
         ob_start();
 
 		// include view
-		if( is_file( APP_VIEWS_PATH . $collide->getControllerName() . DS . $view . EXT ) ){
+        $viewFile = APP_VIEWS_PATH . $collide->getControllerName() . DS . $view . EXT;
+		if( is_file( $viewFile ) ){
             // try filename from controller folder
-			include( APP_VIEWS_PATH . $collide->getControllerName() . DS . $view . EXT );
+			include( $viewFile );
 		}else if( is_file( APP_VIEWS_PATH . $view . DS .
 						   $collide->config->get( array( 'default', 'view' ) ) . EXT ) ){
             // try folder name and default file name

@@ -204,7 +204,7 @@ class Load{
      * @return	boolean	true on success false on error
 	 */
     private function load( $name, $type, $params = array(), $newClassName = '' ){
-        $this->_log->write( 'Load::load()' );
+        $this->_log->write( 'Load::load("' . $name . '", "' . $type . '")' );
 
         // Collide instance
         $collide = Controller::getInstance();
