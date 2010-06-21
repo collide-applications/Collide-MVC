@@ -54,11 +54,15 @@ if( !function_exists( 'siteUrl' ) ){
         }
         $protocol .= '://';
 
-        // get port
-        $port = ':' . trim( substr( $_SERVER["HTTP_HOST"],
-                              strpos( $_SERVER['HTTP_HOST'], ':' ) + 1
-                           )
-                      );
+        $port = '';
+        // if any port
+        if( strstr( $_SERVER["HTTP_HOST"], ':' ) ){
+            // get port
+            $port = ':' . trim( substr( $_SERVER["HTTP_HOST"],
+                                  strpos( $_SERVER['HTTP_HOST'], ':' ) + 1
+                               )
+                          );
+        }
 
         // if port is default do not add it
         if( $port === '80' ){

@@ -96,7 +96,7 @@ class WelcomeController extends _Controller{
 
         $this->load->helper( 'url' );
         $content .= ' <a href="' . siteUrl() . 'welcome/">&laquo; Back</a>';
-
+        
         // collect views
         $info['header']     = $this->view->render( '_common/header',
                                                    $header, true );
