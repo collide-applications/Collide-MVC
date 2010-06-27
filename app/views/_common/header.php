@@ -17,5 +17,23 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"/>
 	<title><?=$title?></title>
+
+    <style type="text/css">
+        *{
+            font-family:Verdana, Arial;
+            font-size:14px;
+        }
+        div#page div{
+            padding:10px;
+            border:1px solid #ccc;
+        }
+        div#page div#lpanel{
+            float:left;
+        }
+        div#page div#content{
+            float:left;
+            margin-left:10px;
+        }
+    </style>
 </head>
 <body>

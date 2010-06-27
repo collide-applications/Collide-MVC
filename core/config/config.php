@@ -105,4 +105,5 @@ define( 'VERSION', '1.0' );
 
 // custom libraries prefix
 define( 'LIB_PREFIX', '_' );
+
 /* end of file: ./core/config/config.php */

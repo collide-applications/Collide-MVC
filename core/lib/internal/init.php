@@ -114,7 +114,7 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  * @TODO    split in small functions ore move functionality to controller
  */
 if( !function_exists( 'initHook' ) ){
-	function initHook() {
+	function initHook(){
         $logClassName = incLib( 'collide_exception' );
 
         // include log library and instantiate it
@@ -286,6 +286,7 @@ setDisplayErrors();
 removeMagicQuotes();
 unsetGlobalArrays();
 
+// call initialization hook
 try{
     initHook();
 }catch( Collide_exception $e ){
