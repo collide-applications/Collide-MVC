@@ -14,6 +14,9 @@
  *																			  *
  ******************************************************************************/
 
+// start output buffering to allow printing before view loading
+ob_start();
+
 /**
  * Set error reporting level.
  * Possible values: dev, prod

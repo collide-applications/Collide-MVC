@@ -26,20 +26,28 @@
  */
 class Config{
     /**
+     * Collide MVC instance
+     *
+     * @access  protected
+     * @var     object      $_collide
+     */
+    protected $_collide;
+
+    /**
      * Log object reference
      *
      * @access  protected
-     * @var     object  $log    log reference
+     * @var     object      $log    log reference
      */
     protected $_log = null;
 
     /**
      * All config arrays merged
      *
-     * @access  private
-     * @var     array
+     * @access  protected
+     * @var     array       $_cfg   config array
      */
-    public $_cfg = array();
+    protected $_cfg = array();
 
 	/**
 	 * Constructor
@@ -48,6 +56,9 @@ class Config{
      * @return  void
 	 */
 	public function __construct(){
+        require( CORE_LIB_INT_PATH . 'controller' . EXT );
+        $this->_collide = &thisInstance();
+        
         // instantiate log
         $this->_log = Log::getInstance();
         $this->_log->write( 'Config::__construct()' );
@@ -101,12 +112,14 @@ class Config{
      * @access  public
      * @param   string  $var    config index to set
      * @param   mixed   $val    value to set at <code>$var</code> position
-     * @return  void
+     * @return  mixed           modified value
      */
     public function set( $var, $val ){
         $this->_log->write( 'Config::get("' . $var . '", ' . $val . ')' );
 
         $this->_cfg[$var] = $val;
+
+        return $val;
     }
 
     /**
@@ -129,7 +142,10 @@ class Config{
             if( $config == 'config'){
                 require( $file );
             }else{
-                require_once( $file );
+                /**
+                 * @todo    include file once
+                 */
+                require( $file );
             }            
 
             // merge current config with the new one

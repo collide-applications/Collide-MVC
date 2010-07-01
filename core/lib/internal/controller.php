@@ -81,6 +81,24 @@ class Controller{
      */
      private $_controllerName = '';
 
+     /**
+      * Loaded items
+      *
+      * @access private
+      * @var    array   $_loaded    loaded items
+      * @todo   add here for each item loaded
+      */
+     private $_loaded = array(
+        'libraries' => array(
+            'model', 'view', 'load', 'config', 'log'
+        ),
+        'models'    => array(),
+
+        'configs'   => array(
+            'config'
+        )
+     );
+
 	/**
 	 * Constructor
      *

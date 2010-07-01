@@ -52,8 +52,15 @@ class Demo{
 	public function prepareContent(){
         $this->_collide->log->write( 'Demo::prepareContent()' );
 
+        // get color from config
+        $this->_collide->config->load( 'welcome' );
+        // try to change default color in config
+        $this->_collide->config->set( 'color', '#0000ff' );
+        // get color already changed
+        $color = $this->_collide->config->get( 'color' );
+
         $this->_content = str_replace( 'Collide',
-                                       '<span style="color:#f00;">Collide</span>',
+                                       '<span style="color:' . $color .';">Collide</span>',
                                        $this->_content
                                      );
 
