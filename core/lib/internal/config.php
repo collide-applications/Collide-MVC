@@ -56,7 +56,7 @@ class Config{
      * @return  void
 	 */
 	public function __construct(){
-        require( CORE_LIB_INT_PATH . 'controller' . EXT );
+        // get Collide instance
         $this->_collide = &thisInstance();
         
         // instantiate log
@@ -126,10 +126,11 @@ class Config{
      * Load config script and load <code>$cfg</code> array from it
      *
      * @access  public
-     * @param   $string $file   file to load
+     * @param   string  $file   file to load
+     * @param   boolean $force  force config loading (overwrite any changes)
      * @return  boolean
      */
-    public function load( $file ){
+    public function load( $file, $force = false ){
         $this->_log->write( 'Config::load("' . $file . '")' );
         
         // clean file name
@@ -139,17 +140,24 @@ class Config{
 
         // try to include file
         if( file_exists( $file ) ){
-            if( $config == 'config'){
-                require( $file );
+            // load config file if not loaded
+            if( !$force ){
+                $loadedConfigs = $this->_collide->getLoaded();
+
+                // if not loaded before load it
+                if( !in_array( $config, $loadedConfigs['configs'] ) ){
+                    $this->_collide->addLoaded( 'config', $config );
+                    require( $file );
+                }
             }else{
-                /**
-                 * @todo    include file once
-                 */
+                // load original config and overwrite changes
                 require( $file );
-            }            
+            }
 
             // merge current config with the new one
-            $this->_cfg = array_merge( $this->_cfg, $cfg );
+            if( isset( $cfg ) && is_array( $cfg ) ){
+                $this->_cfg = array_merge( $this->_cfg, $cfg );
+            }
             
             return true;
         }

@@ -94,9 +94,7 @@ class Controller{
         ),
         'models'    => array(),
 
-        'configs'   => array(
-            'config'
-        )
+        'configs'   => array()
      );
 
 	/**
@@ -111,19 +109,9 @@ class Controller{
 	public function __construct(){
         self::$thisInstance =& $this;
 
-        // instantiate log
+        // instantiate log  
         $this->log = Log::getInstance();
         $this->log->write( 'Controller::__construct()' );
-
-        // get global objects and add to class, then unset them
-        if( isset( $GLOBALS['autoload'] ) ){
-            foreach( $GLOBALS['autoload'] as $name => $obj ){
-                if( !is_null( $obj ) ){
-                    $this->setAutoloadedLib( $name, $obj );
-                }
-            }
-        }
-        unset( $GLOBALS['autoload'] );
 
         // get url segments
 		$arrUrl = explode( '/', URL );
@@ -167,22 +155,70 @@ class Controller{
 	 * @access	public
      * @return  object  this controller instance reference
 	 */
-    public static function &getInstance(){        
+    public static function &getInstance(){
+
 		return self::$thisInstance;
 	}
 
     /**
-     * Set extra class objects
-     * Objects came from $GLOBALS['autoload'] array
+     * Getter for loaded array
      *
-     * @access  private
+     * @access  public
+     * @return  array
+     */
+    public function getLoaded(){
+        $this->log->write( "Controller::getLoaded()" );
+
+        return $this->_loaded;
+    }
+
+    /**
+     * Add loaded item
+     *
+     * @access  public
+     * @param   string  $type   item type (e.g: library/model/config)
+     * @param   string  $item   item name
+     * @return  boolean
+     */
+    public function addLoaded( $type, $item ){
+        $this->log->write( "Controller::addLoaded()" );
+
+        // prepare type and item
+        $type = strtolower( trim( $type ) );
+        $item = strtolower( trim( $item ) );
+
+        // map types to _loaded array types
+        switch( $type ){
+            case 'library':
+                $type = 'libraries';
+                break;
+            case 'model':
+                $type = 'models';
+                break;
+            case 'config':
+                $type = 'configs';
+                break;
+            default:
+                return false;
+        }
+
+        // add element
+        $this->_loaded[$type][] = $item;
+
+        return true;
+    }
+
+    /**
+     * Add extra class objects
+     *
+     * @access  public
      * @param   string  $name   object name
      * @param   object  $obj    object to add
      * @return  void
      */
-    private function setAutoloadedLib( $name, $obj ){
-        $this->log->write( "Controller::setAutoloadedLib()" );
-        
+    public function addObject( $name, $obj ){
+        $this->log->write( "Controller::addObject()" );
+
         $this->$name = $obj;
     }
 }

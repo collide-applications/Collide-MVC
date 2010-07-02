@@ -117,18 +117,12 @@ if( !function_exists( 'initHook' ) ){
 	function initHook(){
         $logClassName = incLib( 'collide_exception' );
 
-        // include log library and instantiate it
-		$logClassName = incLib( 'log' );
-        $objLog = new $logClassName();
-
         // include config library and load default application config
-        $configClassName = incLib( 'config' );
-		$objConf = new $configClassName();
-        $objConf->load( 'config' );
+        require( APP_CONFIG_PATH . 'config' . EXT );
 
 		// set default values
-		$controller = $objConf->get( array( 'default', 'controller' ) );
-		$method		= $objConf->get( array( 'default', 'method' ) );
+		$controller = $cfg['default']['controller'];
+		$method		= $cfg['default']['method'];
 
 		// get url segments
 		$arrUrl = explode( '/', URL );
@@ -148,36 +142,6 @@ if( !function_exists( 'initHook' ) ){
 		// query string
 		$params = $arrUrl;    
 
-		// include view library
-		$viewClassName = incLib( 'view' );
-		// instantiate view
-		$objView = new $viewClassName();
-
-		// include model library
-		incLib( 'model' );
-        $objModel = null;
-		// include default model if exists and instantiate it
-		if( file_exists( APP_MODELS_PATH . $controller . EXT ) ){
-			require_once( APP_MODELS_PATH . $controller . EXT );
-			$modelClassName = ucfirst( $controller ) .
-							  $objConf->get( array( 'default', 'model_sufix' ) );
-
-            // instantiate model
-			$objModel = new $modelClassName();
-		}
-
-        // include load library, instantiate and add it to this controller
-		$loadClassName = incLib( 'load' );
-		$objLoad = new $loadClassName();
-
-        // register new objects as globals to be visible in Controller class
-        $GLOBALS['autoload'] = array(
-            'view'   => $objView,
-            'model'  => $objModel,
-            'load'   => $objLoad,
-            'config' => $objConf
-        );
-
         // include standard controller library
 		incLib( 'controller' );
 
@@ -191,10 +155,48 @@ if( !function_exists( 'initHook' ) ){
         }
 
         // instantiate controller
-		$controllerClassName = ucfirst( $controller ) .
-							   $objConf->get( array( 'default', 'controller_sufix' ) );
+		$controllerClassName = ucfirst( $controller ) . $cfg['default']['controller_sufix'];
 
+        // include and instantiate log library to be visible in internal
+        // controller constructor
+        $logClassName = incLib( 'log' );
+        $objLog = new $logClassName();
+
+        // instantiate controller
         $objController = new $controllerClassName();
+
+        // add log object to controller
+        $objController->addObject( 'log', $objLog );
+
+        // add config to controller
+        $configClassName = incLib( 'config' );
+		$objConf = new $configClassName();
+        $objConf->load( 'config' );
+        $objController->addObject( 'config', $objConf );
+
+		// include view library
+		$viewClassName = incLib( 'view' );
+		// instantiate view
+		$objView = new $viewClassName();
+        $objController->addObject( 'view', $objView );
+
+		// include model library
+		incLib( 'model' );
+        $objModel = null;
+		// include default model if exists and instantiate it
+		if( file_exists( APP_MODELS_PATH . $controller . EXT ) ){
+			require_once( APP_MODELS_PATH . $controller . EXT );
+			$modelClassName = ucfirst( $controller ) . $cfg['default']['model_sufix'];
+
+            // instantiate model
+			$objModel = new $modelClassName();
+		}
+        $objController->addObject( 'model', $objModel );
+
+        // include load library, instantiate and add it to this controller
+		$loadClassName = incLib( 'load' );
+		$objLoad = new $loadClassName();
+        $objController->addObject( 'load', $objLoad );
 
         // try to call method
         if( (int)method_exists( $controllerClassName, $method ) ){
