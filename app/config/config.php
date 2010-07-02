@@ -24,9 +24,6 @@
  * @link		http://mvc.collide-applications.com/docs/
  */
 
-// create config array
-$cfg = array();
-
 /**
  * Defined log types: file, email, firephp
  *

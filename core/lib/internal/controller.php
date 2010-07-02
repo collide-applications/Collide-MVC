@@ -89,7 +89,7 @@ class Controller{
       * @todo   add here for each item loaded
       */
      private $_loaded = array(
-        'libraries' => array(
+        'libs' => array(
             'model', 'view', 'load', 'config', 'log'
         ),
         'models'    => array(),
@@ -189,8 +189,8 @@ class Controller{
 
         // map types to _loaded array types
         switch( $type ){
-            case 'library':
-                $type = 'libraries';
+            case 'lib':
+                $type = 'libs';
                 break;
             case 'model':
                 $type = 'models';
