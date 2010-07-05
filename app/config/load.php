@@ -24,12 +24,32 @@
  * @link		http://mvc.collide-applications.com/docs/
  */
 
-// create loading config array
+/**
+ * Create loading config array
+ * 
+ * All items here are loaded after controller initialization
+ *
+ * Format for lib/model/helper:
+ * 'item_name' => array(
+ *      'params'    => array( 'param1', 'param2', ..., 'paramN' ),
+ *      'name'      => 'new_item_name'
+ * )
+ */
 $cfg['load'] = array(
-    'configs'       => array(),
-    'libs'          => array(),
-    'models'        => array(),
-    'helpers'       => array()
+    'config'       => array( 
+        'welcome'
+    ),
+    'lib'          => array(
+
+    ),
+    'model'        => array( 
+        'name' => array(
+            'params' => array( 'collide' )
+        )
+    ),
+    'helper'       => array(
+        
+    )
 );
 
 /* end of file: ./app/config/load.php */

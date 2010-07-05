@@ -41,7 +41,7 @@ class Model{
 	 */
 	public function __construct(){
         // instantiate log
-        $this->log = Log::getInstance();
+        $this->log =& Log::getInstance();
         $this->log->write( 'Model::__construct()' );
 	}
 

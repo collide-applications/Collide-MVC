@@ -89,12 +89,12 @@ class Controller{
       * @todo   add here for each item loaded
       */
      private $_loaded = array(
-        'libs' => array(
+        'lib'       => array(
             'model', 'view', 'load', 'config', 'log'
         ),
-        'models'    => array(),
-
-        'configs'   => array()
+        'model'     => array(),
+        'config'    => array(),
+        'helper'    => array()
      );
 
 	/**
@@ -110,7 +110,7 @@ class Controller{
         self::$thisInstance =& $this;
 
         // instantiate log  
-        $this->log = Log::getInstance();
+        $this->log =& Log::getInstance();
         $this->log->write( 'Controller::__construct()' );
 
         // get url segments
@@ -164,12 +164,35 @@ class Controller{
      * Getter for loaded array
      *
      * @access  public
+     * @param   mixed   $types   loaded type or types (if empty return all types)
      * @return  array
      */
-    public function getLoaded(){
+    public function getLoaded( $types = '' ){
         $this->log->write( "Controller::getLoaded()" );
 
-        return $this->_loaded;
+        // if empty array or empty string return all loaded items
+        if( ( is_array( $types ) && count( $types ) < 1 ) ||
+            ( is_string( $types ) && empty( $types ) ) ){
+            return $this->_loaded;
+        }
+
+        // transform type to array
+        if( is_string( $types ) ){
+            $types = array( $types );
+        }
+
+        // get items and return them
+        $items = array();
+        foreach( $types as $type ){
+            // prepare type name
+            $type = strtolower( trim( $type ) );
+
+            if( isset( $this->_loaded[$type] ) ){
+                $items[ $type ] = $this->_loaded[$type];
+            }
+        }
+
+        return $items;
     }
 
     /**
@@ -187,19 +210,16 @@ class Controller{
         $type = strtolower( trim( $type ) );
         $item = strtolower( trim( $item ) );
 
-        // map types to _loaded array types
-        switch( $type ){
-            case 'lib':
-                $type = 'libs';
-                break;
-            case 'model':
-                $type = 'models';
-                break;
-            case 'config':
-                $type = 'configs';
-                break;
-            default:
-                return false;
+        // check if item type is valid
+        $valid = false;
+        foreach( $this->_loaded as $available => $items ){
+            if( $type == $available ){
+                $valid = true;
+            }
+        }
+
+        if( !$valid ){
+            return false;
         }
 
         // add element

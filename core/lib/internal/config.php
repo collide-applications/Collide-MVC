@@ -56,11 +56,8 @@ class Config{
      * @return  void
 	 */
 	public function __construct(){
-        // get Collide instance
-        $this->_collide = &thisInstance();
-        
         // instantiate log
-        $this->_log = Log::getInstance();
+        $this->_log =& Log::getInstance();
         $this->_log->write( 'Config::__construct()' );
 	}
 
@@ -132,6 +129,9 @@ class Config{
      */
     public function load( $file, $force = false ){
         $this->_log->write( 'Config::load("' . $file . '")' );
+
+        // collide instance
+        $collide =& thisInstance();
         
         // clean file name
         $file = rtrim( trim( strtolower( $file ) ), EXT );
@@ -142,11 +142,11 @@ class Config{
         if( file_exists( $file ) ){
             // load config file if not loaded
             if( !$force ){
-                $loadedConfigs = $this->_collide->getLoaded();
+                $loadedConfigs = $collide->getLoaded( 'config' );
 
                 // if not loaded before load it
-                if( !in_array( $config, $loadedConfigs['configs'] ) ){
-                    $this->_collide->addLoaded( 'config', $config );
+                if( !in_array( $config, $loadedConfigs ) ){
+                    $collide->addLoaded( 'config', $config );
                     require( $file );
                 }
             }else{

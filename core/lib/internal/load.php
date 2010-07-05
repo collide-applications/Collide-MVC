@@ -41,7 +41,7 @@ class Load{
 	 */
 	public function __construct(){
         // instantiate log
-    	$this->_log = Log::getInstance();
+    	$this->_log =& Log::getInstance();
         $this->_log->write( 'Load::__construct()' );
 	}
 
@@ -207,7 +207,7 @@ class Load{
         $this->_log->write( 'Load::load("' . $name . '", "' . $type . '")' );
 
         // Collide instance
-        $collide = Controller::getInstance();
+        $collide =& thisInstance();
 
         // initialization
         $names          = array();
@@ -239,13 +239,16 @@ class Load{
             $newClassNames = $newClassName;
         }
 
+        // get already loaded items
+        $loadedItems = $collide->getLoaded();
+
         // for each name instantiate class
         foreach( $names as $index => $name ){
             // prepare name
             $name = trim( strtolower( $name ) );
 
             // if object already instantiated go further
-            if( isset( $collide->$name ) ){
+            if( in_array( $name, $loadedItems[$type] ) ){
                 continue;
             }
             
@@ -260,6 +263,9 @@ class Load{
             if( $type == 'lib' || $type == 'model' ){
                 $this->instantiate( $name, $type, $multiple, $params, $newClassNames[$index] );
             }
+
+            // add loaded element
+            $collide->addLoaded( $type, $name );
         }
 
         return true;

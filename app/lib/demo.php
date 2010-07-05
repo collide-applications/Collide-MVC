@@ -36,7 +36,7 @@ class Demo{
 	 */
 	public function __construct( $content ){
         // initialize mvc instance
-        $this->_collide = &thisInstance();
+        $this->_collide =& thisInstance();
 
         $this->_collide->log->write( 'Demo::__construct()' );
 
@@ -53,7 +53,9 @@ class Demo{
         $this->_collide->log->write( 'Demo::prepareContent()' );
 
         // get color from config
-        $this->_collide->config->load( 'welcome' );
+        // !!!OBS: "welcome" config autoloaded
+        // $this->_collide->config->load( 'welcome' );
+
         // try to change default color in config
         $this->_collide->config->set( 'color', '#0000ff' );
         // get color already changed

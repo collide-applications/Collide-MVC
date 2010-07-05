@@ -76,12 +76,14 @@ class WelcomeController extends _Controller{
          * $this->load->model( 'version', $versionParams, 'version_model' );
 		 * $frameworkVersion = $this->version_model->getVersion();
          */
-        
-        // load and call both models at once
-        $params = array( 'name' => array( 'collide' ) );    // params for name model
 
-        // loat both models with params for first model and an alternative name for second model
-        $this->load->model( array( 'name', 'version' ), $params, array( null, 'version_model' ) );
+        // load two models at once
+        // $params = array( 'name' => array( 'collide' ) );    // params for name model
+        // $this->load->model( array( 'name', 'version' ), $params, array( null, 'version_model' ) );
+
+        // load version model with no parameters but an alternative name
+        // !!!OBS: name model is loaded in load config
+        $this->load->model( 'version', array(), 'version_model' );
 
         // call models methods
 		$frameworkName = $this->name->getName();

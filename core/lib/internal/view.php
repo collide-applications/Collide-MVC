@@ -50,7 +50,7 @@ class View{
 	 */
 	public function __construct(){
         // instantiate log
-    	$this->_log = Log::getInstance();
+    	$this->_log =& Log::getInstance();
         $this->_log->write( 'View::__construct()' );
 	}
 

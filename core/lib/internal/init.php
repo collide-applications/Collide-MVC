@@ -117,7 +117,7 @@ if( !function_exists( 'initHook' ) ){
 	function initHook(){
         $logClassName = incLib( 'collide_exception' );
 
-        // include config library and load default application config
+        // load default application config
         require( APP_CONFIG_PATH . 'config' . EXT );
 
 		// set default values
@@ -198,6 +198,9 @@ if( !function_exists( 'initHook' ) ){
 		$objLoad = new $loadClassName();
         $objController->addObject( 'load', $objLoad );
 
+        // autoload items from load config in application
+        autoload( $objController );
+
         // try to call method
         if( (int)method_exists( $controllerClassName, $method ) ){
             call_user_func_array( array( $objController, $method ), $params );
@@ -255,6 +258,47 @@ if( !function_exists( 'incLib' ) ){
 
 		return $className;
 	}
+}
+
+/**
+ * Autoload items and add them to controller
+ *
+ * Autoloaded items are set in load config in application
+ *
+ * @access  public
+ * @param   object  $objController  controller reference
+ * @return  void
+ */
+if( !function_exists( 'autoload' ) ){
+	function autoload( &$objController ){
+        // load application config
+        require( APP_CONFIG_PATH . 'load' . EXT );
+
+        // autoload items from load config in application
+        foreach( $cfg['load'] as $type => $items ){            
+            // if any item to load in this type
+            if( count( $items ) > 0 ){
+                foreach( $items as $item => $attr ){
+                    // configs are using their own loading method
+                    if( $type != 'config' ){
+                        // set default parameters and new name
+                        if( !isset( $attr['params'] ) ){
+                            $attr['params'] = array();
+                        }
+                        if( !isset( $attr['name'] ) ){
+                            $attr['name'] = '';
+                        }
+
+                        // load item
+                        $objController->load->$type( $item, $attr['params'], $attr['name'] );
+                    }else{
+                        // load configs here
+                        $objController->config->load( $item );
+                    }
+                }
+            }
+        }
+    }
 }
 
 // @TODO: create autoload system
