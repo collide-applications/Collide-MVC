@@ -109,6 +109,13 @@ class WelcomeController extends _Controller{
                                                    $content, true );
         $info['footer']     = $this->view->render( '_common/footer',
                                                    null, true );
+
+        /**
+         * @todo    delete this after testing
+         */
+//        $this->load->model( 'test' );
+//        $this->test->name = 'ddd';
+//        $this->test->save();
         
         // assign collected views to another view
         $this->view->render( 'index', $info, false, 'transformMVC' );

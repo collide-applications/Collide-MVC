@@ -64,9 +64,9 @@ define( 'SMARTY_DEBUG', FALSE );
  */
 
 // Doctrine version
-define( 'DOCTRINE_VERSION', '1.1.3' );
+define( 'DOCTRINE_VERSION', '1.2.2' );
 // path to Doctrine
-define( 'DOCTRINE_PATH', 'Doctrine-' . DOCTRINE_VERSION . DS );
+define( 'DOCTRINE_PATH', CORE_LIB_EXT_PATH . 'Doctrine-' . DOCTRINE_VERSION . DS );
 
 
 /**

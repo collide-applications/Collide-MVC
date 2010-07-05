@@ -97,6 +97,14 @@ class Controller{
         'helper'    => array()
      );
 
+    /**
+     * Database object (singleton)
+     *
+     * @access  public
+     * @var     object  $db database object
+     */
+    public $db = null;
+
 	/**
 	 * Constructor
      *
@@ -146,7 +154,8 @@ class Controller{
 	public function  __call( $name,  $args ){
 		$this->log->write( "Controller::__call()" );
 
-		echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!';
+        require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
+        throw new Collide_exception( 'Function "' . $name . '" does not exists!' );
 	}
 
     /**
