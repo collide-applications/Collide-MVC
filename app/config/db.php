@@ -9,7 +9,7 @@
  * @package		Collide	MVC App												  *
  * @author		Collide Applications Development Team						  *
  * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license  				  *
+ * @license		http://mvc.collide-applications.com/license.txt               *
  * @link		http://mvc.collide-applications.com 						  *
  * @since		Version 1.0													  *
  *																			  *
