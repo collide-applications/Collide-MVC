@@ -84,13 +84,14 @@ class WelcomeController extends _Controller{
         // load version model with no parameters but an alternative name
         // !!!OBS: name model is loaded in load config
         $this->load->model( 'version', array(), 'version_model' );
+        $this->load->model( 'welcome', array() );
 
         // call models methods
 		$frameworkName = $this->name->getName();
         $frameworkVersion = $this->version_model->getVersion();
 
         // get page content
-        $content = $this->model->getContent( $frameworkName, $frameworkVersion );
+        $content = $this->welcome->getContent( $frameworkName, $frameworkVersion );
         
         $params = array( 'content' => $content );
         $this->load->lib( 'demo', $params, 'demo_lib' );

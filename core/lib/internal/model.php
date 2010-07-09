@@ -53,7 +53,7 @@ class Model{
         $this->log->write( 'Model::__construct()' );
 
         // add doctrine to models
-        $this->loadDoctrine();
+        //self::loadDoctrine();
 
         // collide instance
         $collide =& thisInstance();
@@ -81,12 +81,12 @@ class Model{
     /**
      * Add doctrine to models
      *
-     * @access  private
+     * @access  public
      * @return  void
      * @todo    add extra configuration for doctrine
      */
-    private function loadDoctrine(){
-        $this->log->write( 'Model::loadDoctrine()' );
+    public static function loadDoctrine(){
+        //$this->log->write( 'Model::loadDoctrine()' );
 
         // collide instance
         $collide =& thisInstance();

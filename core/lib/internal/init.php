@@ -182,6 +182,7 @@ if( !function_exists( 'initHook' ) ){
 
 		// include model library
 		incLib( 'model' );
+        Model::loadDoctrine();
         $objModel = null;
 		// include default model if exists and instantiate it
 		if( file_exists( APP_MODELS_PATH . $controller . EXT ) ){

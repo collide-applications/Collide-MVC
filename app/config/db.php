@@ -49,4 +49,11 @@ $cfg['db']['prefix']		= 'c_';
 // use persistent connection
 $cfg['db']['persistent']	= FALSE;
 
+// Doctrine configs
+$cfg['db']['doctrine']['models_path']           = APP_MODELS_PATH;
+$cfg['db']['doctrine']['data_fixtures_path']    = $cfg['db']['doctrine']['models_path'] . 'fixtures';
+$cfg['db']['doctrine']['migrations_path']       = $cfg['db']['doctrine']['models_path'] . 'migrations';
+$cfg['db']['doctrine']['sql_path']              = $cfg['db']['doctrine']['models_path'] . 'sql';
+$cfg['db']['doctrine']['yaml_schema_path']      = $cfg['db']['doctrine']['models_path'] . 'yaml';
+
 /* end of file: ./app/config/db.php */
