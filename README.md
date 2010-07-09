@@ -6,7 +6,7 @@ Collide MVC
 
 ### Features:
 
-- logs generated in files, and FirePHP console;
+- logs generated in files and FirePHP console;
 - config files;
 - database access using Doctrine ORM;
 
