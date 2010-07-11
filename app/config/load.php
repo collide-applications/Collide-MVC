@@ -43,9 +43,7 @@ $cfg['load'] = array(
 
     ),
     'model'        => array( 
-        'name' => array(
-            'params' => array( 'collide' )
-        )
+        'name' => array()
     ),
     'helper'       => array(
         

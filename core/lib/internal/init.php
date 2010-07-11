@@ -180,19 +180,9 @@ if( !function_exists( 'initHook' ) ){
 		$objView = new $viewClassName();
         $objController->addObject( 'view', $objView );
 
-		// include model library
+		// include model library and initialize Doctrine
 		incLib( 'model' );
         Model::loadDoctrine();
-        $objModel = null;
-		// include default model if exists and instantiate it
-		if( file_exists( APP_MODELS_PATH . $controller . EXT ) ){
-			require_once( APP_MODELS_PATH . $controller . EXT );
-			$modelClassName = ucfirst( $controller ) . $cfg['default']['model_sufix'];
-
-            // instantiate model
-			$objModel = new $modelClassName();
-		}
-        $objController->addObject( 'model', $objModel );
 
         // include load library, instantiate and add it to this controller
 		$loadClassName = incLib( 'load' );

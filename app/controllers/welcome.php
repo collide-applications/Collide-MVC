@@ -59,9 +59,11 @@ class WelcomeController extends _Controller{
 
         // you can assign each view with its own data and give them to another view
 
+        $this->load->model( 'welcome', array() );
+
         // get info from default model and assign them to views
-		$header['title']        = $this->model->getTitle();
-        $left_panel['content']  = $this->model->getLeftPanel();
+		$header['title']        = $this->welcome->getTitle();
+        $left_panel['content']  = $this->welcome->getLeftPanel();
 
         /**
          * You can load and call two models like this
@@ -84,7 +86,6 @@ class WelcomeController extends _Controller{
         // load version model with no parameters but an alternative name
         // !!!OBS: name model is loaded in load config
         $this->load->model( 'version', array(), 'version_model' );
-        $this->load->model( 'welcome', array() );
 
         // call models methods
 		$frameworkName = $this->name->getName();
@@ -110,13 +111,6 @@ class WelcomeController extends _Controller{
                                                    $content, true );
         $info['footer']     = $this->view->render( '_common/footer',
                                                    null, true );
-
-        /**
-         * @todo    delete this after testing
-         */
-//        $this->load->model( 'test' );
-//        $this->test->name = 'ddd';
-//        $this->test->save();
         
         // assign collected views to another view
         $this->view->render( 'index', $info, false, 'transformMVC' );

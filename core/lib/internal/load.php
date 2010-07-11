@@ -164,25 +164,29 @@ class Load{
 	private function instantiate( $className, $type, $multiple, $params = array(), $newClassName = '' ){
         $this->_log->write( 'Load::instantiate()' );
 
-        // prepare parameters
-        $newClassName = trim( strtolower( $newClassName ) );
+        // get framework instance
+        $collide =& thisInstance();
 
+        // prepare parameters
+        $newClassName   = trim( strtolower( $newClassName ) );
+        $className      = trim( strtolower( $className ) );
+
+        // keep original class name
+        $oldClassName = $className;
+
+        // if this is model add prefix
         if( $type == 'model' ){
-            $collide =& thisInstance();
             $collide->config->load( 'db' );
             $dbPrefix = $collide->config->get( array( 'db', 'prefix' ) );
             // Doctrine will generate models like this:
             // table name = collide_users
             // model name = CollideUsers.php
             $dbPrefix = trim( ucfirst( $dbPrefix ), '_' );
+            $className = $dbPrefix . ucfirst( $className );
         }
-
-        // prepare class name
-        $oldClassName = $className;
-        $className = ucfirst( $className );
         
         // make a reflection object
-        $objReflection = new ReflectionClass( $dbPrefix . $className );
+        $objReflection = new ReflectionClass( $className );
 
         if( is_string( $params ) ){
             $params[$oldClassName] = $params;
@@ -205,14 +209,19 @@ class Load{
             $obj = $objReflection->newInstanceArgs();
         }
 
+        // add log object to model
+        if( $type == 'model' ){
+            $obj->log =& Log::getInstance();
+        }
+
         // add new object to this controller
         // if new name provided use this name
         if( !empty( $newClassName ) ){
             $oldClassName = $newClassName;
         }
-        
-        $thisInstance = Controller::getInstance();
-        $thisInstance->$oldClassName =& $obj;
+
+        // add object to controller
+        $collide->$oldClassName =& $obj;
     }
 
     /**

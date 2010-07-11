@@ -12,5 +12,77 @@
  */
 class CWelcome extends BaseCWelcome
 {
+    public $log;
+    
+    private $_title;
+    private $_left;
+    private $_content;
 
+    /**
+	 * Constructor
+	 *
+	 * @access	public
+     * @return  void
+	 */
+	public function __construct(){
+		parent::__construct();
+
+//        $this->log->write( 'WelcomeModel::__construct()' );
+
+        /**
+         * @todo make this work
+         */
+        $res = Doctrine_Query::create()->
+        from( 'CWelcome' )->
+        where( 'id', 1 )->
+        fetchOne();
+
+//        $res = new StdClass();
+//        $res->title = '****Collide MVC Framework';
+//        $res->left = 'left panel';
+//        $res->content = 'Welcome to %s MVC Framework, version %s';
+
+        // initialize variables
+        $this->_title   = $res->title;
+        $this->_left    = $res->left;
+        $this->_content = $res->content;
+	}
+
+	/**
+	 * Return page title
+	 *
+	 * @access	public
+	 * @return	string	page title
+	 */
+	public function getTitle(){
+        $this->log->write( 'WelcomeModel::getTitle()' );
+
+		return $this->_title;
+	}
+
+    /**
+	 * Return page left panel
+	 *
+	 * @access	public
+	 * @return	string	page left panel
+	 */
+	public function getLeftPanel(){
+        $this->log->write( 'WelcomeModel::getLeftPanel()' );
+
+		return $this->_left;
+	}
+
+    /**
+	 * Return page content
+	 *
+	 * @access	public
+     * @param   string  $name       framework name
+     * @param   string  $version    framework version
+	 * @return	string	page content
+	 */
+	public function getContent( $name, $version ){
+        $this->log->write( 'WelcomeModel::getContent()' );
+
+		return sprintf( $this->_content, $name, $version );
+	}
 }

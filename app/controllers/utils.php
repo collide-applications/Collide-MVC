@@ -25,6 +25,37 @@ class UtilsController extends _Controller{
         $this->log->write( 'UtilsController::__construct()' );
 	}
 
+    /**
+     * Generate Doctrine models
+     *
+     * Possible actions:
+     *
+     * build-all
+     * build-all-load
+     * build-all-reload
+     * compile
+     * create-db
+     * create-tables
+     * dql
+     * drop-db
+     * dump-data
+     * generate-migration
+     * generate-migrations-db
+     * generate-migrations-models
+     * generate-models-db
+     * generate-models-yaml
+     * generate-sql
+     * generate-yaml-db
+     * generate-yaml-models
+     * load-data
+     * migrate
+     * rebuild-db
+     *
+     * @access  public
+     * @param   string  $action how to generate models
+     * @return  void
+     * @todo    test all cases
+     */
 	public function generateModels( $action ){
         $action = array( 0 => '', 1 => $action );
         $this->log->write( 'UtilsController::generateModels()' );
@@ -33,7 +64,6 @@ class UtilsController extends _Controller{
         $conf = $this->config->get( array( 'db', 'doctrine' ) );
 
         define( 'STDOUT', '' );
-        //Model::loadDoctrine();
 
         $cli = new Doctrine_Cli( $conf );
         $cli->run( $action );

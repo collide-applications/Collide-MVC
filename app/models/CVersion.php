@@ -12,5 +12,43 @@
  */
 class CVersion extends BaseCVersion
 {
+    public $log;
+    
+    /**
+     * Framework version
+     *
+     * @access  private
+     * @var     string  $_version  framework version
+     */
+    private $_version = '';
 
+	/**
+	 * Constructor
+     *
+     * Set framework version
+	 *
+	 * @access	public
+     * @param   string  $name   framework version
+     * @return  void
+	 */
+	public function __construct( $version = '1.0' ){
+		parent::__construct();
+
+//        $this->log->write( 'VersionModel::__construct()' );
+
+        // set framework name
+        $this->_version = trim( $version );
+	}
+
+	/**
+	 * Return framework version
+	 *
+	 * @access	public
+	 * @return	string	framework version
+	 */
+	public function getVersion(){
+        $this->log->write( 'VersionModel::getVersion()' );
+
+		return $this->_version;
+	}
 }
