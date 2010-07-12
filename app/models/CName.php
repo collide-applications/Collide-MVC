@@ -15,32 +15,17 @@ class CName extends BaseCName
     public $log;
 
 	/**
-	 * Constructor
-     *
-     * Set framework name
-	 *
-	 * @access	public
-     * @param   string  $name   framework name
-     * @return  void
-	 */
-	public function __construct(){
-		parent::__construct();
-
-//        $this->log->write( 'NameModel::__construct(' . $name . ')' );
-	}
-
-	/**
 	 * Return framework name
 	 *
 	 * @access	public
 	 * @return	string	framework name
 	 */
 	public function getName(){
-        $this->log->write( 'NameModel::getName()' );
+        $this->log->write( 'CName::getName()' );
 
-        $query = new Doctrine_Query();
-        $res = $query->
-        from( 'CName n' )->
+        $res = Doctrine_Query::create()->
+        select( 'name' )->
+        from( 'CName' )->
         where( 'id', 1 )->
         fetchOne();
         

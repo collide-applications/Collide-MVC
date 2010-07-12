@@ -19,10 +19,6 @@ Doctrine_Manager::getInstance()->bindComponent('CWelcome', 'default');
  */
 abstract class BaseCWelcome extends Doctrine_Record
 {
-    public function __construct(){
-        parent::__construct();
-    }
-
     public function setTableDefinition()
     {
         $this->setTableName('c_welcome');

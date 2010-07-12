@@ -13,40 +13,6 @@
 class CWelcome extends BaseCWelcome
 {
     public $log;
-    
-    private $_title;
-    private $_left;
-    private $_content;
-
-    /**
-	 * Constructor
-	 *
-	 * @access	public
-     * @return  void
-	 */
-	public function __construct(){
-		parent::__construct();
-
-//        $this->log->write( 'WelcomeModel::__construct()' );
-
-        /**
-         * @todo make this work
-         */
-        $res = Doctrine_Query::create()->
-        from( 'CWelcome' )->
-        where( 'id', 1 )->
-        fetchOne();
-
-//        $res = new StdClass();
-//        $res->title = '****Collide MVC Framework';
-//        $res->left = 'left panel';
-//        $res->content = 'Welcome to %s MVC Framework, version %s';
-
-        // initialize variables
-        $this->_title   = $res->title;
-        $this->_left    = $res->left;
-        $this->_content = $res->content;
-	}
 
 	/**
 	 * Return page title
@@ -55,9 +21,15 @@ class CWelcome extends BaseCWelcome
 	 * @return	string	page title
 	 */
 	public function getTitle(){
-        $this->log->write( 'WelcomeModel::getTitle()' );
+        $this->log->write( 'CWelcome::getTitle()' );
 
-		return $this->_title;
+        $res = Doctrine_Query::create()->
+        select( 'title' )->
+        from( 'CWelcome' )->
+        where( 'id', 1 )->
+        fetchOne();
+
+		return $res->title;
 	}
 
     /**
@@ -67,9 +39,15 @@ class CWelcome extends BaseCWelcome
 	 * @return	string	page left panel
 	 */
 	public function getLeftPanel(){
-        $this->log->write( 'WelcomeModel::getLeftPanel()' );
+        $this->log->write( 'CWelcome::getLeftPanel()' );
 
-		return $this->_left;
+        $res = Doctrine_Query::create()->
+        select( 'left' )->
+        from( 'CWelcome' )->
+        where( 'id', 1 )->
+        fetchOne();
+
+		return $res->left;
 	}
 
     /**
@@ -81,8 +59,14 @@ class CWelcome extends BaseCWelcome
 	 * @return	string	page content
 	 */
 	public function getContent( $name, $version ){
-        $this->log->write( 'WelcomeModel::getContent()' );
+        $this->log->write( 'CWelcome::getContent()' );
 
-		return sprintf( $this->_content, $name, $version );
+        $res = Doctrine_Query::create()->
+        select( 'content' )->
+        from( 'CWelcome' )->
+        where( 'id', 1 )->
+        fetchOne();
+
+		return sprintf( $res->content, $name, $version );
 	}
 }
