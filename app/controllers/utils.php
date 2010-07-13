@@ -36,7 +36,15 @@ class UtilsController extends _Controller{
 	public function generateModelsFromDb(){
         $this->log->write( 'UtilsController::generateModelsFromDb()' );
 
-        if( Doctrine::generateModelsFromDb( rtrim( APP_MODELS_PATH, DS ) ) ){
+        $options = array(
+            'generateBaseClasses'   => true,
+            'phpDocPackage'         => 'Collide MVC',
+            'phpDocSubpackage'      => 'Model',
+            'phpDocName'            => 'Radu Graur',
+            'phpDocEmail'           => 'radu.graur@gmail.com'
+        );
+
+        if( Doctrine::generateModelsFromDb( rtrim( APP_MODELS_PATH, DS ), array(), $options ) ){
             echo 'Models generated';
         }else{
             echo 'Models not generated!';

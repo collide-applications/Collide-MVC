@@ -10,9 +10,9 @@ Doctrine_Manager::getInstance()->bindComponent('CVersion', 'default');
  * @property integer $id
  * @property string $version
  * 
- * @package    ##PACKAGE##
- * @subpackage ##SUBPACKAGE##
- * @author     ##NAME## <##EMAIL##>
+ * @package    Collide MVC
+ * @subpackage Model
+ * @author     Radu Graur <radu.graur@gmail.com>
  * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class BaseCVersion extends Doctrine_Record
