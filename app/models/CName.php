@@ -30,5 +30,5 @@ class CName extends BaseCName
         fetchOne();
         
         return ucfirst( $res->name );
-	}
+    }
 }

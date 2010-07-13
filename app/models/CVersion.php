@@ -30,5 +30,5 @@ class CVersion extends BaseCVersion
         fetchOne();
 
 		return $res->version;
-	}
+    }
 }

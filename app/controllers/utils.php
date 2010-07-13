@@ -26,47 +26,21 @@ class UtilsController extends _Controller{
 	}
 
     /**
-     * Generate Doctrine models
-     *
-     * Possible actions:
-     *
-     * build-all
-     * build-all-load
-     * build-all-reload
-     * compile
-     * create-db
-     * create-tables
-     * dql
-     * drop-db
-     * dump-data
-     * generate-migration
-     * generate-migrations-db
-     * generate-migrations-models
-     * generate-models-db
-     * generate-models-yaml
-     * generate-sql
-     * generate-yaml-db
-     * generate-yaml-models
-     * load-data
-     * migrate
-     * rebuild-db
+     * Generate Doctrine models from database
      *
      * @access  public
      * @param   string  $action how to generate models
      * @return  void
      * @todo    test all cases
      */
-	public function generateModels( $action ){
-        $action = array( 0 => '', 1 => $action );
-        $this->log->write( 'UtilsController::generateModels()' );
+	public function generateModelsFromDb(){
+        $this->log->write( 'UtilsController::generateModelsFromDb()' );
 
-        $this->config->load( 'db' );
-        $conf = $this->config->get( array( 'db', 'doctrine' ) );
-
-        define( 'STDOUT', '' );
-
-        $cli = new Doctrine_Cli( $conf );
-        $cli->run( $action );
+        if( Doctrine::generateModelsFromDb( rtrim( APP_MODELS_PATH, DS ) ) ){
+            echo 'Models generated';
+        }else{
+            echo 'Models not generated!';
+        }
     }
 }
 

@@ -30,7 +30,7 @@ class CWelcome extends BaseCWelcome
         fetchOne();
 
 		return $res->title;
-	}
+}
 
     /**
 	 * Return page left panel
