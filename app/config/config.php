@@ -25,6 +25,14 @@
  */
 
 /**
+ * Security key used to concatenate on hashes
+ *
+ * Default security key is MD5( 'Collide MVC' )
+ * !!!OBS: It is recommended to change default security key
+ */
+$cfg['security']['key'] = 'c953a8af38791d0a6e0d5d7268152e56';
+
+/**
  * Defined log types: file, email, firephp
  *
  * You can add another log types by extending "Log" library and create another

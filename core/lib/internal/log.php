@@ -238,7 +238,11 @@ EOF;
         $text .= date( 'h:i:s - ' ) . ucfirst( $this->_level ) . ' - ' . $this->_msg . "\n";
 
         // write to log file
-        $fp = fopen( $fileName, $openType );
+        $fp = @fopen( $fileName, $openType );
+        if( $fp === false ){
+            return false;
+        }
+        
         fwrite( $fp, $text );
         fclose( $fp );
 

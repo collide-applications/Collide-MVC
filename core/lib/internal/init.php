@@ -292,6 +292,62 @@ if( !function_exists( 'autoload' ) ){
     }
 }
 
+/**
+ * Check if Collide MVC is prepared
+ *
+ * @access  public
+ * @return  array   $msg    errors and warnings
+ */
+if( !function_exists( 'checkCollide' ) ){
+    function checkCollide(){
+        // messages
+        $msg    = array();
+        $html   = '';
+
+        // check if logs folder exists and is readable/writable
+        if( !is_dir( CORE_LOG_PATH ) ){
+            $msg[] = 'Logs dir (' . CORE_LOG_PATH . ') does not exist!';
+        }else{
+            $dir = @opendir( CORE_LOG_PATH );
+            if( $dir === false ){
+                $msg[] = 'Logs dir (' . CORE_LOG_PATH . ') is not readable!';
+            }else{
+                closedir( $dir );
+            }
+
+            $file = @fopen( CORE_LOG_PATH . 'test_writable', 'w' );
+            if( $file === false ){
+                $msg[] = 'Logs dir (' . CORE_LOG_PATH . ') is not writable!';
+            }else{
+                fclose( $file );
+                unlink( CORE_LOG_PATH . 'test_writable' );
+            }
+        }
+
+        // check if default security key was changed
+        require( APP_CONFIG_PATH . 'config.php' );
+        if( isset( $cfg['security']['key'] ) && hash( 'md5', 'Collide MVC' ) == $cfg['security']['key'] ){
+            $msg[] = 'Default security key not changed. Change $cfg[\'security\'][\'key\'] value from ' . APP_CONFIG_PATH . 'config.php';
+        }
+
+        if( count( $msg ) ){
+            $html =<<<EOF
+<div style="position:absolute; bottom:0; margin:10px; padding:10px; border:1px dotted #555; font-family:Verdana, Arial; color:#555;">
+    <div style="font-weight:bold; font-size:1.1em; border-bottom:1px solid #f00; margin-bottom:5px; color:#f00;">Collide MVC Framework Errors</div>
+EOF;
+            foreach( $msg as $num => $text ){
+                $html .= '<strong>' . ( $num + 1 ) . '.</strong> ' . $text . '<br />';
+            }
+
+            $html .=<<<EOF
+</div>
+EOF;
+        }
+
+        echo $html;
+    }
+}
+
 // @TODO: create autoload system
 /**
  * Autoload requested classes
@@ -331,5 +387,8 @@ try{
 
     return false;
 }
+
+// check for framework errors
+checkCollide();
 
 /* end of file: ./core/lib/internal/init.php */
