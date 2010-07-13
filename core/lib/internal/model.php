@@ -77,12 +77,6 @@ class Model{
 
         // set table prefix
         $db->setAttribute( Doctrine_Core::ATTR_TBLNAME_FORMAT, $cfg['db']['prefix'] . '%s' );
-
-        // set model loading method
-        $manager->setAttribute( Doctrine_Core::ATTR_MODEL_LOADING, Doctrine_Core::MODEL_LOADING_CONSERVATIVE );
-
-        // load models for autoloader
-        Doctrine_Core::loadModels( APP_MODELS_PATH );
     }
 }
 
