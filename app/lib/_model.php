@@ -3,24 +3,24 @@
 /**
  * Custom model class
  *
- * @package		Collide MVC App
- * @subpackage	Libraries
- * @category	Models
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC App
+ * @subpackage  Libraries
+ * @category    Models
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class _Model extends Model{
-	/**
-	 * Constructor
-	 *
-	 * @access	public
+    /**
+     * Constructor
+     *
+     * @access  public
      * @return  void
-	 */
-	public function __construct(){
-		parent::__construct();
+     */
+    public function __construct(){
+        parent::__construct();
 
-		$this->log->write( '_Model::__construct()' );
-	}
+        $this->log->write( '_Model::__construct()' );
+    }
 }
 
 /* end of file: ./app/lib/_model.php */

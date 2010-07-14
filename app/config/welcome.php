@@ -3,11 +3,11 @@
 /**
  * Welcome config
  *
- * @package		Collide MVC App
- * @subpackage	Configs
- * @category	Application config
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC App
+ * @subpackage  Configs
+ * @category    Application config
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 
 // set color to display some texts

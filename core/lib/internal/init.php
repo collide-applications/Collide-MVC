@@ -110,7 +110,7 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  * Instantiate controller and required libraries and call requested methods
  *
  * @access  public
- * @return	boolean	true on success false on error
+ * @return  boolean true on success false on error
  * @TODO    split in small functions ore move functionality to controller
  */
 if( !function_exists( 'initHook' ) ){

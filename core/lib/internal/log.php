@@ -1,36 +1,36 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /******************************************************************************
- *																			  *
- * Collide PHP Framework													  *
- *																			  *
- * MVC framework for PHP.													  *
- *																			  *
- * @package		Collide	MVC Core											  *
- * @author		Collide Applications Development Team						  *
- * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license.txt               *
- * @link		http://mvc.collide-applications.com 						  *
- * @since		Version 1.0													  *
- *																			  *
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC Core                                              *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
  ******************************************************************************/
-
+ 
 /**
  * Controller class
  *
- * @package		Collide MVC Core
- * @subpackage	Libraries
- * @category	Log
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    Log
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class Log{
     /**
-	 * This instance
-	 *
-	 * @access	private
-	 * @var		object	this instance
-	 */
+     * This instance
+     *
+     * @access  private
+     * @var     object  this instance
+     */
     private static $instance;
 
     /**
@@ -115,14 +115,14 @@ class Log{
     }
 
     /**
-	 * Return this instance
-	 *
-	 * @access	public
+     * Return this instance
+     *
+     * @access  public
      * @return  object  this instance reference
-	 */
+     */
     public static function &getInstance(){
-		return self::$instance;
-	}
+        return self::$instance;
+    }
 
     /**
      * Write to logs

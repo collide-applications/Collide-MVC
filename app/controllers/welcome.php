@@ -3,40 +3,40 @@
 /**
  * Welcome page
  *
- * @package		Collide MVC App
- * @subpackage	Controllers
- * @category	Welcome
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC App
+ * @subpackage  Controllers
+ * @category    Welcome
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class WelcomeController extends _Controller{
-	/**
-	 * Constructor
-	 *
-	 * @access	public
+    /**
+     * Constructor
+     *
+     * @access  public
      * @return  void
-	 */
-	public function __construct(){
-		parent::__construct();
+     */
+    public function __construct(){
+        parent::__construct();
         
         $this->log->write( 'WelcomeController::__construct()' );
-	}
+    }
 
-	/**
-	 * Default method
-	 *
-	 * This function url could be:<br>
-	 * http://localhost/collide/welcome/index/val1/val2/val3<br>
-	 * or<br>
-	 * http://localhost/collide/welcome/index/val1/val2<br>
-	 *
-	 * @access	public
-	 * @param	mixed	$param1	first parameter
-	 * @param	mixed	$param2	second parameter
-	 * @param	string	$param3	third parameter (default value)
+    /**
+     * Default method
+     *
+     * This function url could be:<br>
+     * http://localhost/collide/welcome/index/val1/val2/val3<br>
+     * or<br>
+     * http://localhost/collide/welcome/index/val1/val2<br>
+     *
+     * @access  public
+     * @param   mixed   $param1 first parameter
+     * @param   mixed   $param2 second parameter
+     * @param   string  $param3 third parameter (default value)
      * @return  void
-	 */
-	public function index(){
+     */
+    public function index(){
         $this->log->write( 'WelcomeController::index()' );
 
         // log examples
@@ -49,12 +49,12 @@ class WelcomeController extends _Controller{
 
         // you can render an array of views with data like this
         /**
-		 * $views = array( 'index' );
+         * $views = array( 'index' );
          * $info['header']     = 'header';
          * $info['lpanel']     = 'left panel';
          * $info['content']    = 'content';
          * $info['footer']     = 'footer';
-		 * $this->view->render( $views, $info );
+         * $this->view->render( $views, $info );
         */
 
         // you can assign each view with its own data and give them to another view
@@ -62,7 +62,7 @@ class WelcomeController extends _Controller{
         $this->load->model( 'welcome', array() );
 
         // get info from default model and assign them to views
-		$header['title']        = $this->welcome->getTitle();
+        $header['title']        = $this->welcome->getTitle();
         $left_panel['content']  = $this->welcome->getLeftPanel();
 
         /**
@@ -71,12 +71,12 @@ class WelcomeController extends _Controller{
          * // load model to get framework name
          * $nameParams = array( 'collide' );
          * $this->load->model( 'name', $nameParams, 'name_model' );
-		 * $frameworkName = $this->name_model->getName();
+         * $frameworkName = $this->name_model->getName();
          *
          * // load model to get framework version
          * $versionParams = array( '1.0' );
          * $this->load->model( 'version', $versionParams, 'version_model' );
-		 * $frameworkVersion = $this->version_model->getVersion();
+         * $frameworkVersion = $this->version_model->getVersion();
          */
 
         // load two models at once
@@ -88,7 +88,7 @@ class WelcomeController extends _Controller{
         $this->load->model( 'version', array(), 'version_model' );
 
         // call models methods
-		$frameworkName = $this->name->getName();
+        $frameworkName = $this->name->getName();
         $frameworkVersion = $this->version_model->getVersion();
 
         // get page content
@@ -114,7 +114,7 @@ class WelcomeController extends _Controller{
         
         // assign collected views to another view
         $this->view->render( 'index', $info, false, 'transformMVC' );
-	}
+    }
 
     /**
      * Function that does nothing

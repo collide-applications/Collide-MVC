@@ -1,28 +1,28 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /******************************************************************************
- *																			  *
- * Collide PHP Framework													  *
- *																			  *
- * MVC framework for PHP.													  *
- *																			  *
- * @package		Collide	MVC Core											  *
- * @author		Collide Applications Development Team						  *
- * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license.txt               *
- * @link		http://mvc.collide-applications.com 						  *
- * @since		Version 1.0													  *
- *																			  *
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC Core                                              *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
  ******************************************************************************/
 
 /**
  * Config class
  *
- * @package		Collide MVC Core
- * @subpackage	Libraries
- * @category	Config
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    Config
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class Config{
     /**
@@ -49,17 +49,17 @@ class Config{
      */
     protected $_cfg = array();
 
-	/**
-	 * Constructor
-	 *
-	 * @access	public
+    /**
+     * Constructor
+     *
+     * @access	public
      * @return  void
-	 */
-	public function __construct(){
+     */
+    public function __construct(){
         // instantiate log
         $this->_log =& Log::getInstance();
         $this->_log->write( 'Config::__construct()' );
-	}
+    }
 
     /**
      * Get one config variable

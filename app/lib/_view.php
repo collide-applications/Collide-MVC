@@ -3,11 +3,11 @@
 /**
  * Custom view class
  *
- * @package		Collide MVC App
- * @subpackage	Libraries
- * @category	Views
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC App
+ * @subpackage  Libraries
+ * @category    Views
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class _View extends View{
     /**
@@ -18,31 +18,31 @@ class _View extends View{
      */
     private $_collide;
 
-	/**
-	 * Constructor
-	 *
-	 * @access	public
+    /**
+     * Constructor
+     *
+     * @access  public
      * @return  void
-	 */
-	public function __construct(){
-		parent::__construct();
+     */
+    public function __construct(){
+        parent::__construct();
 
         $this->_log->write( '_View::__construct()' );
-	}
+    }
 
-	/**
-	 * This function is called when method does not exists
-	 *
-	 * @access	public
-	 * @param	string	$name	method name
-	 * @param	array	$args	method arguments
+    /**
+     * This function is called when method does not exists
+     *
+     * @access  public
+     * @param   string  $name   method name
+     * @param   array   $args   method arguments
      * @return  void
-	 */
-	public function  __call( $name,  $args ){
+     */
+    public function  __call( $name,  $args ){
         $this->_log->write( "_View::__call( '{$name}', " . print_r( $args, 1 ) . " )" );
 
-		echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!';
-	}
+        echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!';
+    }
 }
 
 /* end of file: ./core/lib/internal/model.php */

@@ -1,28 +1,28 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /******************************************************************************
- *																			  *
- * Collide PHP Framework													  *
- *																			  *
- * MVC framework for PHP.													  *
- *																			  *
- * @package		Collide	MVC Core											  *
- * @author		Collide Applications Development Team						  *
- * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license.txt               *
- * @link		http://mvc.collide-applications.com 						  *
- * @since		Version 1.0													  *
- *																			  *
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC Core                                              *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
  ******************************************************************************/
 
 /**
  * Model class
  *
- * @package		Collide MVC Core
- * @subpackage	Libraries
- * @category	Models
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    Models
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  * @TODO        Add Doctrine support
  */
 class Model{
@@ -34,16 +34,16 @@ class Model{
      */
     public $log = null;
 
-	/**
-	 * Constructor
-	 *
-	 * @access	public
-	 */
-	public function __construct(){
+    /**
+     * Constructor
+     *
+     * @access  public
+     */
+    public function __construct(){
         // instantiate log
         $this->log =& Log::getInstance();
         $this->log->write( 'Model::__construct()' );
-	}
+    }
 
     /**
      * Add doctrine to models

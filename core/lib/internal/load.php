@@ -1,28 +1,28 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /******************************************************************************
- *																			  *
- * Collide PHP Framework													  *
- *																			  *
- * MVC framework for PHP.													  *
- *																			  *
- * @package		Collide MVC Core											  *
- * @author		Collide Applications Development Team						  *
- * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license.txt               *
- * @link		http://mvc.collide-applications.com 						  *
- * @since		Version 1.0													  *
- *																			  *
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC Core                                              *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
  ******************************************************************************/
 
 /**
  * Load class
  *
- * @package		Collide MVC Core
- * @subpackage	Libraries
- * @category	Load
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    Load
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class Load{
     /**
@@ -33,17 +33,17 @@ class Load{
      */
     protected $_log = null;
 
-	/**
-	 * Constructor
-	 *
-	 * @access	public
+    /**
+     * Constructor
+     *
+     * @access	public
      * @return  void
-	 */
-	public function __construct(){
+     */
+    public function __construct(){
         // instantiate log
-    	$this->_log =& Log::getInstance();
+        $this->_log =& Log::getInstance();
         $this->_log->write( 'Load::__construct()' );
-	}
+    }
 
     /**
      * Include file
@@ -51,7 +51,7 @@ class Load{
      * @access  private
      * @param   string  $fileName   file name
      * @param   string  $type       file type (e.g: model, lib, helper)
-     * @return	boolean	true on success false on error
+     * @return  boolean true on success false on error
      */
     private function incFile( $fileName, $type = 'model' ){
         $this->_log->write( 'Load::incFile( "' . $fileName . '")' );
@@ -145,23 +145,23 @@ class Load{
             }else{
                 throw new Collide_exception( 'Model "' . $fileName . '" not found!' );
             }
-        }		
+        }
 
-		return true;
+        return true;
     }
 
     /**
-	 * Instantiate class
-	 *
-	 * @access	private
-	 * @param	mixed   $className      class name
-     * @param	mixed   $type           class type (e.g: lib, model, helper)
-     * @param	boolean $multiple       multiple class loaded
-     * @param	array   $params         parameters to give to constructor
-     * @param	mixed   $newClassName   new class name or array with new names
-     * @return	boolean	true on success false on error
-	 */
-	private function instantiate( $className, $type, $multiple, $params = array(), $newClassName = '' ){
+     * Instantiate class
+     *
+     * @access  private
+     * @param   mixed   $className      class name
+     * @param   mixed   $type           class type (e.g: lib, model, helper)
+     * @param   boolean $multiple       multiple class loaded
+     * @param   array   $params         parameters to give to constructor
+     * @param   mixed   $newClassName   new class name or array with new names
+     * @return  boolean true on success false on error
+     */
+    private function instantiate( $className, $type, $multiple, $params = array(), $newClassName = '' ){
         $this->_log->write( 'Load::instantiate()' );
 
         // get framework instance
@@ -225,15 +225,15 @@ class Load{
     }
 
     /**
-	 * Load libraries, helpers, models, configs
-	 *
-	 * @access	private
-	 * @param	mixed   $name           class name or array with names
-     * @param	mixed   $type           class type (e.g: lib, model, helper)
-     * @param	array   $params         parameters to give to class constructor
-     * @param	mixed   $newClassName   new class name or array with new names
-     * @return	boolean	true on success false on error
-	 */
+     * Load libraries, helpers, models, configs
+     *
+     * @access  private
+     * @param   mixed   $name           class name or array with names
+     * @param   mixed   $type           class type (e.g: lib, model, helper)
+     * @param   array   $params         parameters to give to class constructor
+     * @param   mixed   $newClassName   new class name or array with new names
+     * @return  boolean true on success false on error
+     */
     private function load( $name, $type, $params = array(), $newClassName = '' ){
         $this->_log->write( 'Load::load("' . $name . '", "' . $type . '")' );
 
@@ -303,15 +303,15 @@ class Load{
     }
 
     /**
-	 * Load model
-	 *
-	 * @access	public
-	 * @param	mixed   $name       model name or array with names
-     * @param	array   $params     parameters to give to model constructor
-     * @param	mixed   $newName    new model name or array with new names
-     * @return	boolean	true on success false on error
-	 */
-	public function model( $name, $params = array(), $newName = '' ){
+     * Load model
+     *
+     * @access  public
+     * @param   mixed   $name       model name or array with names
+     * @param   array   $params     parameters to give to model constructor
+     * @param   mixed   $newName    new model name or array with new names
+     * @return  boolean true on success false on error
+     */
+    public function model( $name, $params = array(), $newName = '' ){
         $this->_log->write( 'Load::model()' );
 
         // load class
@@ -320,18 +320,18 @@ class Load{
         }
 
         return true;
-	}
+    }
 
     /**
-	 * Load library
-	 *
-	 * @access	public
-	 * @param	mixed   $name       library name or array with names
-     * @param	array   $params     parameters to give to library constructor
-     * @param	mixed   $newName    new library name or array with new names
-     * @return	boolean	true on success false on error
-	 */
-	public function lib( $name, $params = array(), $newName = '' ){
+     * Load library
+     *
+     * @access  public
+     * @param   mixed   $name       library name or array with names
+     * @param   array   $params     parameters to give to library constructor
+     * @param   mixed   $newName    new library name or array with new names
+     * @return  boolean true on success false on error
+     */
+    public function lib( $name, $params = array(), $newName = '' ){
         $this->_log->write( 'Load::lib()' );
 
         // load class
@@ -340,18 +340,18 @@ class Load{
         }
 
         return true;
-	}
+    }
 
     /**
-	 * Load helper
-	 *
-	 * @access	public
-	 * @param	mixed   $name       helper name or array with names
-     * @param	array   $params     parameters to give to helper constructor
-     * @param	mixed   $newName    new helper name or array with new names
-     * @return	boolean	true on success false on error
-	 */
-	public function helper( $name, $params = array(), $newName = '' ){
+     * Load helper
+     *
+     * @access  public
+     * @param   mixed   $name       helper name or array with names
+     * @param   array   $params     parameters to give to helper constructor
+     * @param   mixed   $newName    new helper name or array with new names
+     * @return  boolean true on success false on error
+     */
+    public function helper( $name, $params = array(), $newName = '' ){
         $this->_log->write( 'Load::helper()' );
 
         // load class
@@ -360,7 +360,7 @@ class Load{
         }
 
         return true;
-	}
+    }
 }
 
 /* end of file: ./core/lib/internal/load.php */

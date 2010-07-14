@@ -6,24 +6,24 @@
  * Has methods for framework actions executed from browser.
  * OBS: Rename this controller!
  *
- * @package		Collide MVC App
- * @subpackage	Controllers
- * @category	Utils
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC App
+ * @subpackage  Controllers
+ * @category    Utils
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class UtilsController extends _Controller{
-	/**
-	 * Constructor
-	 *
-	 * @access	public
+    /**
+     * Constructor
+     *
+     * @access  public
      * @return  void
-	 */
-	public function __construct(){
-		parent::__construct();
+     */
+    public function __construct(){
+        parent::__construct();
         
         $this->log->write( 'UtilsController::__construct()' );
-	}
+    }
 
     /**
      * Generate Doctrine models from database
@@ -33,7 +33,7 @@ class UtilsController extends _Controller{
      * @return  void
      * @todo    test all cases
      */
-	public function generateModelsFromDb(){
+    public function generateModelsFromDb(){
         $this->log->write( 'UtilsController::generateModelsFromDb()' );
 
         $options = array(

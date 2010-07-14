@@ -1,77 +1,77 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /******************************************************************************
- *																			  *
- * Collide PHP Framework													  *
- *																			  *
- * MVC framework for PHP.													  *
- *																			  *
- * @package		Collide	MVC Core											  *
- * @author		Collide Applications Development Team						  *
- * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license.txt               *
- * @link		http://mvc.collide-applications.com 						  *
- * @since		Version 1.0													  *
- *																			  *
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC Core                                              *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
  ******************************************************************************/
 
 /**
  * Controller class
  *
- * @package		Collide MVC Core
- * @subpackage	Libraries
- * @category	Controllers
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    Controllers
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 class Controller{
     /**
-	 * This controller instance
-	 *
-	 * @access	private
-	 * @var		object	this controller instance
-	 */
+     * This controller instance
+     *
+     * @access  private
+     * @var     object  this controller instance
+     */
     private static $thisInstance;
 
-	/**
-	 * Default model (a model with the same name as the called controller)
-	 *
-	 * @access	protected
-	 * @var		object	default model instance
-	 */
-	protected $model = null;
-
-	/**
-	 * Default view
-	 *
-	 * @access	protected
-	 * @var		object	default view instance
-	 */
-	protected $view = null;
+    /**
+     * Default model (a model with the same name as the called controller)
+     *
+     * @access  protected
+     * @var     object  default model instance
+     */
+    protected $model = null;
 
     /**
-	 * Load library reference
-	 *
-	 * @access	public
-	 * @var		object	load library reference
-	 */
-	public $load = null;
+     * Default view
+     *
+     * @access  protected
+     * @var     object  default view instance
+     */
+    protected $view = null;
 
     /**
-	 * Config reference
-	 *
-	 * @access	public
-	 * @var		object	config reference
-	 */
-	public $config = null;
+     * Load library reference
+     *
+     * @access  public
+     * @var     object  load library reference
+     */
+    public $load = null;
 
     /**
-	 * Log reference
-	 *
-	 * @access	public
-	 * @var		object	log reference
-	 */
-	public $log = null;
+     * Config reference
+     *
+     * @access  public
+     * @var     object  config reference
+     */
+    public $config = null;
+
+    /**
+     * Log reference
+     *
+     * @access  public
+     * @var     object  log reference
+     */
+    public $log = null;
 
     /**
      * This controller name
@@ -105,16 +105,16 @@ class Controller{
      */
     public $db = null;
 
-	/**
-	 * Constructor
+    /**
+     * Constructor
      *
      * Initialize this controller instance
      * Set this controller name
-	 *
-	 * @access	public
+     *
+     * @access  public
      * @return  void
-	 */
-	public function __construct(){
+     */
+    public function __construct(){
         self::$thisInstance =& $this;
 
         // instantiate log  
@@ -122,14 +122,14 @@ class Controller{
         $this->log->write( 'Controller::__construct()' );
 
         // get url segments
-		$arrUrl = explode( '/', URL );
+        $arrUrl = explode( '/', URL );
 
-		// get controller
-		if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
-			$this->_controllerName = $arrUrl[0];
+        // get controller
+        if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
+            $this->_controllerName = $arrUrl[0];
             unset( $arrUrl );
-		}
-	}
+        }
+    }
 
     /**
      * Getter for controller name
@@ -143,31 +143,31 @@ class Controller{
         return $this->_controllerName;
     }
 
-	/**
-	 * This function is called when method does not exists
-	 *
-	 * @access	public
-	 * @param	string	$name	method name
-	 * @param	array	$args	method arguments
+    /**
+     * This function is called when method does not exists
+     *
+     * @access  public
+     * @param   string  $name   method name
+     * @param   array   $args   method arguments
      * @return  void
-	 */
-	public function  __call( $name,  $args ){
-		$this->log->write( "Controller::__call()" );
+     */
+    public function  __call( $name,  $args ){
+        $this->log->write( "Controller::__call()" );
 
         require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
         throw new Collide_exception( 'Function "' . $name . '" does not exists!' );
-	}
+    }
 
     /**
-	 * Return this controller instance
-	 *
-	 * @access	public
+     * Return this controller instance
+     *
+     * @access	public
      * @return  object  this controller instance reference
-	 */
+     */
     public static function &getInstance(){
 
-		return self::$thisInstance;
-	}
+        return self::$thisInstance;
+    }
 
     /**
      * Getter for loaded array
@@ -258,7 +258,7 @@ class Controller{
  * @return  object  MVC instance
  */
 function &thisInstance(){
-	return Controller::getInstance();
+    return Controller::getInstance();
 }
 
 /* end of file: ./core/lib/internal/controller.php */

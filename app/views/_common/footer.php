@@ -3,11 +3,11 @@
 /**
  * Welcome page content
  *
- * @package		Collide MVC App
- * @subpackage	Views
- * @category	Welcome
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC App
+ * @subpackage  Views
+ * @category    Welcome
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
  ?>
 
