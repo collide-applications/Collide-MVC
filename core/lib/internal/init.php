@@ -115,7 +115,7 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  */
 if( !function_exists( 'initHook' ) ){
 	function initHook(){
-        $logClassName = incLib( 'collide_exception' );
+        incLib( 'collide_exception' );
 
         // load default application config
         require( APP_CONFIG_PATH . 'config' . EXT );
@@ -296,88 +296,27 @@ if( !function_exists( 'autoload' ) ){
  * Check if Collide MVC is prepared
  *
  * @access  public
- * @return  array   $msg    errors and warnings
+ * @return  void
  */
 if( !function_exists( 'checkCollide' ) ){
     function checkCollide(){
-        // messages
-        $msg    = array();
-        $html   = '';
-
-        // check if logs folder exists and is readable/writable
-        if( !is_dir( CORE_LOG_PATH ) ){
-            $msg[] = 'Logs dir (' . CORE_LOG_PATH . ') does not exist!';
-        }else{
-            $dir = @opendir( CORE_LOG_PATH );
-            if( $dir === false ){
-                $msg[] = 'Logs dir (' . CORE_LOG_PATH . ') is not readable!';
-            }else{
-                closedir( $dir );
-            }
-
-            $file = @fopen( CORE_LOG_PATH . 'test_writable', 'w' );
-            if( $file === false ){
-                $msg[] = 'Logs dir (' . CORE_LOG_PATH . ') is not writable!';
-            }else{
-                fclose( $file );
-                unlink( CORE_LOG_PATH . 'test_writable' );
-            }
-        }
+        incLib( 'collide_exception' );
 
         // check if default security key was changed
         require( APP_CONFIG_PATH . 'config.php' );
         if( isset( $cfg['security']['key'] ) && hash( 'md5', 'Collide MVC' ) == $cfg['security']['key'] ){
-            $msg[] = 'Default security key not changed. Change $cfg[\'security\'][\'key\'] value from ' . APP_CONFIG_PATH . 'config.php';
+            throw new Collide_exception( 'Default security key not changed. Change $cfg[\'security\'][\'key\'] value from application config.' );
         }
-
-        if( count( $msg ) ){
-            $html =<<<EOF
-<div style="position:absolute; bottom:0; margin:10px; padding:10px; border:1px dotted #555; font-family:Verdana, Arial; color:#555;">
-    <div style="font-weight:bold; font-size:1.1em; border-bottom:1px solid #f00; margin-bottom:5px; color:#f00;">Collide MVC Framework Errors</div>
-EOF;
-            foreach( $msg as $num => $text ){
-                $html .= '<strong>' . ( $num + 1 ) . '.</strong> ' . $text . '<br />';
-            }
-
-            $html .=<<<EOF
-</div>
-EOF;
-        }
-
-        echo $html;
     }
 }
-
-// @TODO: create autoload system
-/**
- * Autoload requested classes
- *
- * @param	string	$className	class to autoload
- */
-/*if( !function_exists( '__autoload' ) ){
-	function __autoload( $className ){
-		if( file_exists( CORE_PATH . DS . 'lib' . DS . 'internal' . DS .	// lib
-						 strtolower( $className ) . EXT ) ){
-			require_once( CORE_PATH . DS . 'lib' . DS . 'internal' . DS .
-						 strtolower( $className ) . EXT );
-		}else if( file_exists( APP_PATH . 'controllers' . DS .
-							   strtolower( $className ) . EXT ) ){			// controller
-			require_once( APP_PATH . 'controllers' . DS .
-						  strtolower( $className ) . EXT );
-		}else if( file_exists( APP_PATH . 'models' . DS .					// model
-							   strtolower( $className ) . EXT ) ){
-			require_once( APP_PATH . 'models' . DS .
-						  strtolower( $className ) . EXT );
-		}else{																// not found
-			throw new Collide_exception( 'Page not found!' );
-		}
-	}
-}*/
 
 // call each initialization function
 setDisplayErrors();
 removeMagicQuotes();
 unsetGlobalArrays();
+
+// check for framework errors
+checkCollide();
 
 // call initialization hook
 try{
@@ -387,8 +326,5 @@ try{
 
     return false;
 }
-
-// check for framework errors
-checkCollide();
 
 /* end of file: ./core/lib/internal/init.php */

@@ -30,7 +30,7 @@
  * Default security key is MD5( 'Collide MVC' )
  * !!!OBS: It is recommended to change default security key
  */
-$cfg['security']['key'] = 'c953a8af38791d0a6e0d5d7268152e56';
+$cfg['security']['key'] = 'c953a8af38791d0a6e0d5d7268152e560';
 
 /**
  * Defined log types: file, email, firephp

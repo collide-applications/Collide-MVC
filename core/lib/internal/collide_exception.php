@@ -49,15 +49,22 @@ class Collide_exception extends Exception{
         <title>Error</title>
         <style type="text/css">
             div#error{
-                border:1px solid #ff0000;
+                border:1px solid #dddddd;
                 font-family: Verdana, Arial;
                 color:#555555;
                 padding:10px;
+                -moz-border-radius:5px;     /* round corners (Firefox) */
+                -webkit-border-radius:5px;  /* round corners (Webkit) */
+                text-shadow: #aaa 1px 1px 1px;
+                -moz-box-shadow: 2px  2px 3px #969696;      /* box shadow (Firefox) */
+                -webkit-box-shadow: 2px 2px 3px #969696;    /* box shadow (Webkit) */
+                background-image: -moz-linear-gradient(top, #ffffff, #dddddd);                                                  /* gradient (Firefox) */
+                background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #dddddd),color-stop(1, #ffffff));  /* gradient (Webkit) */
             }
             div#error div#title{
                 font-weight:bold;
                 font-size:1.1em;
-                border-bottom:1px dotted #555555;
+                border-bottom:1px dotted #ff0000;
             }
             div#error span#message{
                 font-weight:bold;

@@ -132,7 +132,7 @@ class Log{
      * @access  public
      * @param   string  $msg    message to log
      * @param   string  $level  log level (defined in config)
-     * @return  boolean check if at least one log was writed
+     * @return  void
      */
     public function write( $msg, $level = 'info', $exclusive_types = null ){
         // set parameters
@@ -175,14 +175,10 @@ class Log{
                     }
                     
                     // call method
-                    if( $this->$type( $options ) ){
-                        $writed = true;
-                    }
+                    $this->$type( $options );
                 }
             }
         }
-
-        return $writed;
     }
 
     /**
@@ -192,12 +188,23 @@ class Log{
      *
      * @access  private
      * @param   array   $opt    options for this log type
-     * @return  boolean
+     * @return  void
      */
     private function file( $opt = array() ){
         // check if folder is writable and do nothing otherwise
-        if( !is_writable( CORE_LOG_PATH ) ){
-            return false;
+        $dir = @opendir( CORE_LOG_PATH );
+        if( $dir === false ){
+            throw new Collide_exception( 'Logs dir is not readable!' );
+        }else{
+            closedir( $dir );
+        }
+
+        $file = @fopen( CORE_LOG_PATH . 'test_writable', 'w' );
+        if( $file === false ){
+            throw new Collide_exception( 'Logs dir is not writable!' );
+        }else{
+            fclose( $file );
+            unlink( CORE_LOG_PATH . 'test_writable' );
         }
 
         // text to write
@@ -230,7 +237,7 @@ EOF;
         }else{
             // check if existent file is writable and do nothing otherwise
             if( !is_writable( $fileName ) ){
-                return false;
+                throw new Collide_exception( 'Log file is now writable!' );
             }
         }
 
@@ -240,13 +247,11 @@ EOF;
         // write to log file
         $fp = @fopen( $fileName, $openType );
         if( $fp === false ){
-            return false;
+            throw new Collide_exception( 'Cannot open log file!' );
         }
         
         fwrite( $fp, $text );
         fclose( $fp );
-
-        return true;
     }
 
     /**
@@ -254,12 +259,11 @@ EOF;
      *
      * @access  private
      * @param   array   $opt    options for this log type
-     * @return  boolean
+     * @return  void
      * @todo    to be implemented when emailing sistem is done
      */
     private function email( $opt = array() ){
-
-        return true;
+        
     }
 
     /**
@@ -270,7 +274,7 @@ EOF;
      *
      * @access  private
      * @param   array   $opt    options for this log type
-     * @return  boolean
+     * @return  void
      */
     private function firephp( $opt = array() ){
         // set options if any
@@ -299,8 +303,6 @@ EOF;
         if( isset( $opt['trace'] ) && $opt['trace'] === true ){
             $this->_firephp->trace( 'Trace' );
         }
-
-        return true;
     }
 }
 
