@@ -1,28 +1,28 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /******************************************************************************
- *																			  *
- * Collide PHP Framework													  *
- *																			  *
- * MVC framework for PHP.													  *
- *																			  *
- * @package		Collide	MVC Core											  *
- * @author		Collide Applications Development Team						  *
- * @copyright	Copyright (c) 2009, Collide Applications					  *
- * @license		http://mvc.collide-applications.com/license.txt               *
- * @link		http://mvc.collide-applications.com 						  *
- * @since		Version 1.0													  *
- *																			  *
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC Core                                              *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
  ******************************************************************************/
 
 /**
  * Set up environment
  *
- * @package		Collide MVC Core
- * @subpackage	Libraries
- * @category	Initialization
- * @author		Collide Applications Development Team
- * @link		http://mvc.collide-applications.com/docs/
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    Initialization
+ * @author      Collide Applications Development Team
+ * @link        http://mvc.collide-applications.com/docs/
  */
 
  /************************
@@ -33,50 +33,50 @@
  * Check environment type and display or log errors
  */
 if( !function_exists( 'setDisplayErrors' ) ){
-	function setDisplayErrors(){
-		if( trim( strtolower( ENVIRONMENT ) ) == 'dev' ){	// dev
-			// display all errors
-			error_reporting( E_ALL );
-			ini_set( 'display_errors', 'On' );
-		}else{												// prod
-			// do not display errors
-			error_reporting( E_ALL );
-			ini_set( 'display_errors', 'Off' );
-			ini_set( 'log_errors', 'On' );
-			ini_set( 'error_log', CORE_PATH . DS . 'logs' . DS . 'std_error.log' );
-		}
-	}
+    function setDisplayErrors(){
+        if( trim( strtolower( ENVIRONMENT ) ) == 'dev' ){   // dev
+            // display all errors
+            error_reporting( E_ALL );
+            ini_set( 'display_errors', 'On' );
+        }else{                                              // prod
+            // do not display errors
+            error_reporting( E_ALL );
+            ini_set( 'display_errors', 'Off' );
+            ini_set( 'log_errors', 'On' );
+            ini_set( 'error_log', CORE_PATH . DS . 'logs' . DS . 'std_error.log' );
+        }
+    }
 }
 
 /**
  * Strip slashes on multidimensional arrays
  *
- * @param	array	$arr	array to strip slashes from
- * @return	array	$arr	array without slashes
+ * @param   array   $arr    array to strip slashes from
+ * @return  array   $arr    array without slashes
  */
 if( !function_exists( 'arrayStripSlashes' ) ){
-	function arrayStripSlashes( $arr ){
-		if( is_array( $arr ) ){
-			// go deep
-			array_map( 'arrayStripSlashes', $arr );
-		}else{
-			stripslashes( $arr );
-		}
-		return $arr;
-	}
+    function arrayStripSlashes( $arr ){
+        if( is_array( $arr ) ){
+            // go deep
+            array_map( 'arrayStripSlashes', $arr );
+        }else{
+            stripslashes( $arr );
+        }
+        return $arr;
+    }
 }
 
 /**
  * Strip slashes from $_GET, $_POST and $_COOKIE global arrays
  */
 if( !function_exists( 'removeMagicQuotes' ) ){
-	function removeMagicQuotes(){
-		if( get_magic_quotes_gpc() ){
-			$_GET    = arrayStripSlashes( $_GET );
-			$_POST   = arrayStripSlashes( $_POST );
-			$_COOKIE = arrayStripSlashes( $_COOKIE );
-		}
-	}
+    function removeMagicQuotes(){
+        if( get_magic_quotes_gpc() ){
+            $_GET    = arrayStripSlashes( $_GET );
+            $_POST   = arrayStripSlashes( $_POST );
+            $_COOKIE = arrayStripSlashes( $_COOKIE );
+        }
+    }
 }
 
 /**
@@ -84,22 +84,22 @@ if( !function_exists( 'removeMagicQuotes' ) ){
  * @TODO create methods for globals
  */
 if( !function_exists( 'unsetGlobalArrays' ) ){
-	function unsetGlobalArrays(){
-		if( ini_get( 'register_globals' ) ){
-			// put all global arrays together
-			$arr = array( '_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST',
-						  '_SERVER', '_ENV', '_FILES' );
+    function unsetGlobalArrays(){
+        if( ini_get( 'register_globals' ) ){
+            // put all global arrays together
+            $arr = array( '_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST',
+                          '_SERVER', '_ENV', '_FILES' );
 
-			// remove each global variable
-			foreach( $arr as $val ){
-				foreach( $GLOBALS[$val] as $key => $var ){
-					if( $var === $GLOBALS[$key] ){
-						unset( $GLOBALS[$key] );
-					}
-				}
-			}
-		}
-	}
+            // remove each global variable
+            foreach( $arr as $val ){
+                foreach( $GLOBALS[$val] as $key => $var ){
+                    if( $var === $GLOBALS[$key] ){
+                        unset( $GLOBALS[$key] );
+                    }
+                }
+            }
+        }
+    }
 }
 
 /**********************
@@ -114,36 +114,36 @@ if( !function_exists( 'unsetGlobalArrays' ) ){
  * @TODO    split in small functions ore move functionality to controller
  */
 if( !function_exists( 'initHook' ) ){
-	function initHook(){
+    function initHook(){
         incLib( 'collide_exception' );
 
         // load default application config
         require( APP_CONFIG_PATH . 'config' . EXT );
 
-		// set default values
-		$controller = $cfg['default']['controller'];
-		$method		= $cfg['default']['method'];
+        // set default values
+        $controller = $cfg['default']['controller'];
+        $method		= $cfg['default']['method'];
 
-		// get url segments
-		$arrUrl = explode( '/', URL );
-		
-		// get controller
-		if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
-			$controller = $arrUrl[0];
-			array_shift( $arrUrl );
-		}
+        // get url segments
+        $arrUrl = explode( '/', URL );
+        
+        // get controller
+        if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
+            $controller = $arrUrl[0];
+            array_shift( $arrUrl );
+        }
 
-		// get method
-		if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
-			$method = $arrUrl[0];
-			array_shift( $arrUrl );
-		}
-		
-		// query string
-		$params = $arrUrl;    
+        // get method
+        if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
+            $method = $arrUrl[0];
+            array_shift( $arrUrl );
+        }
+        
+        // query string
+        $params = $arrUrl;    
 
         // include standard controller library
-		incLib( 'controller' );
+        incLib( 'controller' );
 
         // include requested controller
         if( file_exists( APP_CONTROLLERS_PATH .
@@ -155,7 +155,7 @@ if( !function_exists( 'initHook' ) ){
         }
 
         // instantiate controller
-		$controllerClassName = ucfirst( $controller ) . $cfg['default']['controller_sufix'];
+        $controllerClassName = ucfirst( $controller ) . $cfg['default']['controller_sufix'];
 
         // include and instantiate log library to be visible in internal
         // controller constructor
@@ -170,23 +170,23 @@ if( !function_exists( 'initHook' ) ){
 
         // add config to controller
         $configClassName = incLib( 'config' );
-		$objConf = new $configClassName();
+        $objConf = new $configClassName();
         $objConf->load( 'config' );
         $objController->addObject( 'config', $objConf );
 
-		// include view library
-		$viewClassName = incLib( 'view' );
-		// instantiate view
-		$objView = new $viewClassName();
+        // include view library
+        $viewClassName = incLib( 'view' );
+        // instantiate view
+        $objView = new $viewClassName();
         $objController->addObject( 'view', $objView );
 
-		// include model library and initialize Doctrine
-		incLib( 'model' );
+        // include model library and initialize Doctrine
+        incLib( 'model' );
         Model::loadDoctrine();
 
         // include load library, instantiate and add it to this controller
-		$loadClassName = incLib( 'load' );
-		$objLoad = new $loadClassName();
+        $loadClassName = incLib( 'load' );
+        $objLoad = new $loadClassName();
         $objController->addObject( 'load', $objLoad );
 
         // autoload items from load config in application
@@ -199,25 +199,25 @@ if( !function_exists( 'initHook' ) ){
             throw new Collide_exception( 'Method not foud!' );
         }
 
-		return true;
-	}
+        return true;
+    }
 }
 
 /**
  * Include standard and custom libraries
  *
  * @access  public
- * @param	string	$libName	library name
- * @return	mixed   false on error or class name on success
+ * @param   string  $libName    library name
+ * @return  mixed   false on error or class name on success
  */
 if( !function_exists( 'incLib' ) ){
-	function incLib( $libName ){
+    function incLib( $libName ){
         require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
 
         require( APP_CONFIG_PATH . 'config' . EXT );
 
-		// prepare library name
-		$libName    = trim( strtolower( $libName ) );
+        // prepare library name
+        $libName    = trim( strtolower( $libName ) );
         $className  = ucfirst( $libName );
 
         if( empty( $libName ) ){
@@ -239,16 +239,16 @@ if( !function_exists( 'incLib' ) ){
             return false;
         }
 
-		// include requested custom library if exists
-		if( file_exists( APP_LIB_PATH . $cfg['default']['lib_prefix'] .
-						 $libName . EXT ) ){
-			require_once( APP_LIB_PATH . $cfg['default']['lib_prefix'] .
-						  $libName . EXT );
+        // include requested custom library if exists
+        if( file_exists( APP_LIB_PATH . $cfg['default']['lib_prefix'] .
+                         $libName . EXT ) ){
+            require_once( APP_LIB_PATH . $cfg['default']['lib_prefix'] .
+                          $libName . EXT );
             $className = $cfg['default']['lib_prefix'] . $className;
-		}
+        }
 
-		return $className;
-	}
+        return $className;
+    }
 }
 
 /**
@@ -261,7 +261,7 @@ if( !function_exists( 'incLib' ) ){
  * @return  void
  */
 if( !function_exists( 'autoload' ) ){
-	function autoload( &$objController ){
+    function autoload( &$objController ){
         // load application config
         require( APP_CONFIG_PATH . 'load' . EXT );
 
