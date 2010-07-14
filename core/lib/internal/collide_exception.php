@@ -51,7 +51,8 @@ class Collide_exception extends Exception{
             div#error{
                 border:1px solid #dddddd;
                 font-family: Verdana, Arial;
-                color:#555555;
+                font-size:16px;
+                color:#333333;
                 padding:10px;
                 -moz-border-radius:5px;     /* round corners (Firefox) */
                 -webkit-border-radius:5px;  /* round corners (Webkit) */
@@ -64,17 +65,30 @@ class Collide_exception extends Exception{
             div#error div#title{
                 font-weight:bold;
                 font-size:1.1em;
-                border-bottom:1px dotted #ff0000;
+                border-bottom:1px dashed #ff0000;
+                padding-bottom:5px;
+                margin-bottom:5px;
+            }
+            div#error div#title a{
+                color:#333333;
+                text-decoration:none;
+            }
+            div#error div#title a:hover{
+                color:#f70;
             }
             div#error span#message{
                 font-weight:bold;
-                color:#ff0000;
+                color:#e00000;
+            }
+            div#error code{
+                color:#0000ff;
+                font-size:1.1em;
             }
         </style>
     </head>
     <body>
         <div id="error">
-            <div id="title">Collide MVC Framework</div>
+            <div id="title"><a href="http://mvc.collide-applications.com">Collide MVC Framework</a></div>
             <span id="message">Error: </span>
 EOT;
         
@@ -92,4 +106,4 @@ EOT;
 
 }
 
-/* end of file: ./core/lib/internal/log.php */
+/* end of file: ./core/lib/internal/collide_exception.php */

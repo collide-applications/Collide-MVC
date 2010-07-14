@@ -305,7 +305,7 @@ if( !function_exists( 'checkCollide' ) ){
         // check if default security key was changed
         require( APP_CONFIG_PATH . 'config.php' );
         if( isset( $cfg['security']['key'] ) && hash( 'md5', 'Collide MVC' ) == $cfg['security']['key'] ){
-            throw new Collide_exception( 'Default security key not changed. Change $cfg[\'security\'][\'key\'] value from application config.' );
+            throw new Collide_exception( 'Default security key not changed. Change <code>$cfg[\'security\'][\'key\']</code> value from application config.' );
         }
     }
 }
