@@ -1,5 +1,4 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
-
 /******************************************************************************
  *                                                                            *
  * Collide PHP Framework                                                      *
@@ -16,7 +15,7 @@
  ******************************************************************************/
 
 /**
- * Application default config
+ * Blog config
  *
  * @package     Collide MVC App
  * @subpackage  Configs
@@ -25,35 +24,8 @@
  * @link        http://mvc.collide-applications.com/docs/
  */
 
-/**
- * Configure database connection.
- */
-
-// database driver to use
-$cfg['db']['driver']        = 'mysql';
-// database username
-$cfg['db']['user']          = 'root';
-// database password
-$cfg['db']['pass']          = 'keplerpass';
-// database host
-$cfg['db']['host']          = 'localhost';
-// database port
-// leave it blank to use default port
-$cfg['db']['port']          = '3306';
-// database name
-$cfg['db']['db_name']       = 'test1';
-// database configuration name (for multiple connections)
-$cfg['db']['conn_name']     = 'default';
-// tables prefix
-$cfg['db']['prefix']        = 'blog_';
-// use persistent connection
-$cfg['db']['persistent']    = FALSE;
-
-// Doctrine configs
-$cfg['db']['doctrine']['models_path']           = APP_MODELS_PATH;
-$cfg['db']['doctrine']['data_fixtures_path']    = $cfg['db']['doctrine']['models_path'] . 'fixtures';
-$cfg['db']['doctrine']['migrations_path']       = $cfg['db']['doctrine']['models_path'] . 'migrations';
-$cfg['db']['doctrine']['sql_path']              = $cfg['db']['doctrine']['models_path'] . 'sql';
-$cfg['db']['doctrine']['yaml_schema_path']      = $cfg['db']['doctrine']['models_path'] . 'yaml';
-
-/* end of file: ./app/config/db.php */
+// menu array (e.g: menu page title => controller name)
+$cfg['blog']['menu'] = array(
+    'All posts' => '',
+    'Add post' => 'blog/add'
+);

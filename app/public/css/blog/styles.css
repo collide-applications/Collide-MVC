@@ -1,0 +1,176 @@
+/* resets */
+*{
+    font-family:Verdana, Arial;
+    margin:0;
+    padding:0;
+    color:#222;
+}
+html,
+body{
+    font-size:14px;
+}
+
+.clear:after{
+	content:".";
+	display:block;
+	clear:both;
+	visibility:hidden;
+	line-height:0;
+	height:0;
+}
+.clear{
+	display:inline-block;
+    clear:both;
+}
+html[xmlns] .clear{
+	display:block;
+}
+* html .clear{
+	height:1%;
+}
+/* /resets */
+
+/* general */
+.float-left{
+    float:left;
+}
+.float-right{
+    float:right;
+}
+
+a{
+    text-decoration:none;
+    color:#f33;
+}
+a:hover{
+    color:#d00;
+}
+
+h3{
+    text-decoration:underline;
+}
+
+textarea{
+    width:100%;
+    height:100px;
+}
+
+table tr td{
+    padding:5px;
+}
+/* /general */
+
+/* template */
+div#page{
+    width:1000px;
+    margin:0 auto;
+}
+div#page div#header,
+div#page div#content,
+div#page div#footer{
+    border:1px solid #ccc;
+    padding:10px;
+    margin:5px;
+    overflow:hidden;
+    -moz-border-radius:5px;     /* round corners (Firefox) */
+    -webkit-border-radius:5px;  /* round corners (Webkit) */
+    -moz-box-shadow: 2px  2px 3px #969696;      /* box shadow (Firefox) */
+    -webkit-box-shadow: 2px 2px 3px #969696;    /* box shadow (Webkit) */
+    background-image: -moz-linear-gradient(top, #ffffff, #eeeeee);                                                  /* gradient (Firefox) */
+    background-image: -webkit-gradient(linear,left bottom,left top,color-stop(0, #eeeeee),color-stop(1, #ffffff));  /* gradient (Webkit) */
+}
+div#page div#menu{
+    width:100px;
+}
+div#page div#main{
+    width:840px;
+    border-left:1px dashed #f33;
+    margin-left:10px;
+    padding-left:10px;
+}
+div#page div#footer{
+}
+/* /template */
+
+/* header */
+div#header a{
+    display:block;
+    float:left;
+}
+div#header div.text{
+    float:left;
+    font-size:1.5em;
+    font-weight:bold;
+    line-height:70px;
+    margin-left:20px;
+    color:#ef7001;
+}
+/* /header */
+
+/* menu */
+div#menu ul{
+    list-style-type:none;
+}
+div#menu ul li a{
+    font-weight:bold;
+}
+div#menu ul li a.selected{
+    color:#d00;
+}
+/* /menu */
+
+/* main */
+div#main ul{
+    list-style-type:none;
+    margin:10px 0;
+}
+div#main ul li{
+    display:block;
+    overflow:hidden;
+}
+div#main ul li.even{
+    background-color:#ddd;
+}
+div#main ul li.odd{
+}
+div#main ul li a{
+    font-weight:bold;
+    color:#444;
+}
+div#main ul li a:hover{
+    color:#777;
+}
+div#main ul li a.selected{
+    color:#777;
+}
+div#main ul li div.controls{
+    color:#f33;
+}
+div#main ul li div.controls a{
+    color:#f33;
+}
+div#main ul li div.controls a:hover{
+    color:#d00;
+}
+
+div#main div.text{
+    margin:10px 0;
+    padding-bottom:10px;
+    border-bottom:1px dashed #f33;
+}
+
+div#main div.add{
+    margin:10px 0;
+}
+div#main div.comments ul li{
+    margin-bottom:10px;
+}
+/* /main */
+
+/* footer */
+div#footer,
+div#footer a{
+    font-size:0.8em;
+    text-align:right;
+}
+/* /footer */

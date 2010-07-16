@@ -36,17 +36,15 @@
  * )
  */
 $cfg['load'] = array(
-    'config'       => array( 
-        'welcome'
+    'config'       => array(
+        'blog'
     ),
     'lib'          => array(
-
     ),
     'model'        => array( 
-        'name' => array()
     ),
     'helper'       => array(
-        
+        'url'
     )
 );
 

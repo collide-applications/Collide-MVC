@@ -72,7 +72,7 @@ $cfg['log']['new'] = false;
  */
 
 // default controller (called when controller is missing from url)
-$cfg['default']['controller'] = 'welcome';
+$cfg['default']['controller'] = 'blog';
 
 // default method (called when method is missing from url)
 $cfg['default']['method'] = 'index';

@@ -1,16 +1,20 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /**
- * Welcome page content
+ * Blog demo page
  *
  * @package     Collide MVC App
  * @subpackage  Views
- * @category    Welcome
+ * @category    Blog
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
  ?>
 
-    <div id="lpanel">
-        <?=$content?>
-    </div>
+<?=$header?>
+
+    <?=$menu?>
+
+    <?=$main?>
+
+<?=$footer?>
