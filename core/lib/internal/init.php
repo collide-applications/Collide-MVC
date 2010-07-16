@@ -307,6 +307,11 @@ if( !function_exists( 'checkCollide' ) ){
         if( isset( $cfg['security']['key'] ) && hash( 'md5', 'Collide MVC' ) == $cfg['security']['key'] ){
             throw new Collide_exception( 'Default security key not changed. Change <code>$cfg[\'security\'][\'key\']</code> value from application config.' );
         }
+
+        // check if Utils class has default name (prevent using by others)
+        if( file_exists( APP_CONTROLLERS_PATH . 'collide' . EXT ) ){
+            throw new Collide_exception( '<code>collide.php</code> controller has the default name! Delete this controller or rename it (if you rename don\'t forget to rename the class name too).' );
+        }
     }
 }
 
