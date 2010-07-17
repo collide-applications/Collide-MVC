@@ -79,10 +79,25 @@ class BlogPosts extends BaseBlogPosts
         $this->log->write( 'BlogPosts::edit( $post )' );
         
         return Doctrine_Query::create()->
-        update( 'BlogPosts' )->
-        set( 'title', $post['title'] )->
-        set( 'content', $post['content'] )->
-        where( 'id = ?', array( $post['id'] ) )->
-        execute();
+            update( 'BlogPosts' )->
+            set( 'title', '?', $post['title'] )->
+            set( 'content', '?', $post['content'] )->
+            where( 'id = ?', $post['id'] )->
+            execute();
+    }
+
+    /**
+	 * Delete post
+     *
+	 * @access	public
+     * @param   array   $id post info to delete
+	 * @return	boolean
+	 */
+	public function delete( $id ){
+        $this->log->write( 'BlogPosts::delete( ' . $id . ' )' );
+
+        return Doctrine_Query::create()->
+            delete( 'BlogPosts' )->
+            where( 'id = ?', $id );
     }
 }

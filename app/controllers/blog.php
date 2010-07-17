@@ -178,7 +178,7 @@ class BlogController extends _Controller{
      * @return  void
      */
     public function edit( $id ){
-        $this->log->write( 'BlogController::edit()' );
+        $this->log->write( 'BlogController::edit(' . $id . ')' );
 
         // load tools
         $this->config->load( 'blog' );
@@ -210,5 +210,27 @@ class BlogController extends _Controller{
              */
             header( 'location: ' . siteUrl() . 'blog/post/' . $id );
         }
+    }
+
+    /**
+     * Delete post
+     *
+     * @access  public
+     * @param   integer $id post id to delete
+     * @return  void
+     */
+    public function delete( $id ){
+        $this->log->write( 'BlogController::delete(' . $id . ')' );
+
+        // load tools
+        $this->load->model( 'posts' );
+        $this->load->model( 'comments' );
+        $this->load->helper( 'url' );
+
+        // delete post and comments
+        $this->posts->delete( $id );
+        $this->comments->deleteByPostId( $id );
+
+        header( 'location: ' . siteUrl() );
     }
 }

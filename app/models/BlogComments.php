@@ -49,4 +49,19 @@ class BlogComments extends BaseBlogComments
         
         return $this->save();
     }
+
+    /**
+	 * Delete comments by post id
+     *
+	 * @access	public
+     * @param   array   $id post id
+	 * @return	boolean
+	 */
+	public function deleteByPostId( $id ){
+        $this->log->write( 'BlogPosts::deleteByPostId( ' . $id . ' )' );
+
+        return Doctrine_Query::create()->
+            delete( 'BlogComments' )->
+            where( 'post_id = ?', $id );
+    }
 }
