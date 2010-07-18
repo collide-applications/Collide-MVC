@@ -9,6 +9,7 @@ Collide MVC
 - logs generated in files and FirePHP console;
 - config files;
 - database access using Doctrine ORM;
+- CRUD demo application;
 
 ### TODO:
 
