@@ -136,10 +136,7 @@ class BlogController extends _Controller{
 
         $this->comments->add( $_POST );
 
-        /**
-         * @todo implement redirect in url helper
-         */
-        header( 'location: ' . siteUrl() . 'blog/post/' . $_POST['post_id'] );
+        redirect( 'blog/post/' . $_POST['post_id'] );
     }
 
     /**
@@ -175,10 +172,7 @@ class BlogController extends _Controller{
             // insert post
             $this->posts->add( $_POST['post'] );
 
-            /**
-             * @todo implement redirect in url helper
-             */
-            header( 'location: ' . siteUrl() );
+            redirect( 'blog' );
         }
     }
 
@@ -219,10 +213,7 @@ class BlogController extends _Controller{
             // update post
             $this->posts->edit( $_POST['post'] );
 
-            /**
-             * @todo implement redirect in url helper
-             */
-            header( 'location: ' . siteUrl() . 'blog/post/' . $id );
+            redirect( 'blog/post/' . $id );
         }
     }
 
@@ -246,6 +237,6 @@ class BlogController extends _Controller{
             $this->comments->deleteByPostId( $id );
         }
 
-        header( 'location: ' . siteUrl() );
+        redirect( 'blog' );
     }
 }
