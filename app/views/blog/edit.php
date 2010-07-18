@@ -1,7 +1,7 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /**
- * Blog demo content
+ * Blog demo content for edit post
  *
  * @package     Collide MVC App
  * @subpackage  Views

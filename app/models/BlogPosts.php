@@ -1,4 +1,19 @@
-<?php
+<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+
+/******************************************************************************
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC App                                               *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
+ ******************************************************************************/
 
 /**
  * BlogPosts
@@ -23,29 +38,29 @@ class BlogPosts extends BaseBlogPosts
 	public function getAll(){
         $this->log->write( 'BlogPosts::getAll()' );
 
-        $res = Doctrine_Query::create()->
+        return Doctrine_Query::create()->
         from( 'BlogPosts' )->
+        orderBy( 'id DESC' )->
         fetchArray();
-
-		return $res;
     }
 
     /**
-	 * Get all posts
+	 * Get one post
 	 *
 	 * @access	public
      * @param   integer $id post id
-	 * @return	array   one post
+	 * @return	mixed   one post or false if no post founded
 	 */
 	public function getOne( $id ){
         $this->log->write( 'BlogPosts::getOne(' . $id . ')' );
 
         $res = Doctrine_Query::create()->
         from( 'BlogPosts' )->
-        where( 'id = ?', array( $id ) )->
+        where( 'id = ?', $id )->
         fetchArray();
 
-        if( !isset( $res[0] ) ){
+        // if no post founded return false
+        if( count( $res ) < 1 ){
             return false;
         }
 
@@ -90,7 +105,7 @@ class BlogPosts extends BaseBlogPosts
 	 * Delete post
      *
 	 * @access	public
-     * @param   array   $id post info to delete
+     * @param   integer $id post id to delete
 	 * @return	boolean
 	 */
 	public function delete( $id ){
@@ -98,6 +113,7 @@ class BlogPosts extends BaseBlogPosts
 
         return Doctrine_Query::create()->
             delete( 'BlogPosts' )->
-            where( 'id = ?', $id );
+            where( 'id = ?', $id )->
+            execute();
     }
 }

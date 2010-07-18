@@ -1,7 +1,7 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /**
- * Blog demo content
+ * Blog demo content for add post
  *
  * @package     Collide MVC App
  * @subpackage  Views
@@ -35,7 +35,8 @@
                         </td>
                     </tr>
                     <tr align="left">
-                        <td colspan="2">
+                        <td></td>
+                        <td>
                             <input type="submit" value="Add" />
                         </td>
                     </tr>

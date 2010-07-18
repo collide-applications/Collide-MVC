@@ -1,4 +1,19 @@
-<?php
+<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+
+/******************************************************************************
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC App                                               *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 1.0                                                   *
+ *                                                                            *
+ ******************************************************************************/
 
 /**
  * BlogComments
@@ -19,18 +34,16 @@ class BlogComments extends BaseBlogComments
 	 *
 	 * @access	public
      * @param   integer $id post id
-	 * @return	array   all comments for this post id
+	 * @return	array   all comments for this post
 	 */
 	public function getAll( $id ){
         $this->log->write( 'BlogComments::getAll(' . $id . ')' );
 
-        $res = Doctrine_Query::create()->
+        return Doctrine_Query::create()->
         from( 'BlogComments' )->
-        where( 'post_id = ?', array( $id ) )->
+        where( 'post_id = ?', $id )->
         orderBy( 'id DESC')->
         fetchArray();
-
-		return $res;
     }
 
     /**
@@ -43,7 +56,7 @@ class BlogComments extends BaseBlogComments
 	public function add( $comment ){
         $this->log->write( 'BlogComments::add( $comment )' );
 
-        $this->email    = $comment['email'];
+        $this->name     = $comment['name'];
         $this->message  = $comment['message'];
         $this->post_id  = $comment['post_id'];
         
@@ -62,6 +75,7 @@ class BlogComments extends BaseBlogComments
 
         return Doctrine_Query::create()->
             delete( 'BlogComments' )->
-            where( 'post_id = ?', $id );
+            where( 'post_id = ?', $id )->
+            execute();
     }
 }

@@ -16,7 +16,16 @@
  ******************************************************************************/
 
 /**
- * Blog page
+ * Blog demo page
+ *
+ * Demonstrates a simple blog CRUD application.
+ * 
+ * Features:
+ * - view posts;
+ * - add new post;
+ * - add comments to post;
+ * - edit post;
+ * - delete post;
  *
  * @package     Collide MVC App
  * @subpackage  Controllers
@@ -28,8 +37,11 @@ class BlogController extends _Controller{
     /**
      * Main menu
      *
+     * Initialized with values from blog config
+     *
      * @access  private
      * @var     array   $_menu   main menu
+     * @todo    initialize from constructor
      */
     private $_menu = array();
 
@@ -63,9 +75,10 @@ class BlogController extends _Controller{
         $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
 
         // get all posts using posts model
-        $mainInfo['posts'] = $this->posts->getAll();
+        $mainInfo['posts']      = $this->posts->getAll();
+        $mainInfo['numPosts']   = count( $mainInfo['posts'] );
 
-        // load common views
+        // load views
         $info['header']     = $this->view->render( '_common/header', null, true );
         $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
         $info['main']       = $this->view->render( 'blog/posts', $mainInfo, true );
@@ -76,9 +89,10 @@ class BlogController extends _Controller{
     }
 
     /**
-     * Show post
+     * Show post and comments for this post
      *
      * @access  public
+     * @param   integer $id post id
      * @return  void
      */
     public function post( $id ){
@@ -97,7 +111,7 @@ class BlogController extends _Controller{
         $mainInfo['post']       = $this->posts->getOne( $id );
         $mainInfo['comments']   = $this->comments->getAll( $id );
 
-        // load common views
+        // load views
         $info['header']     = $this->view->render( '_common/header', null, true );
         $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
         $info['main']       = $this->view->render( 'blog/post', $mainInfo, true );
@@ -131,7 +145,7 @@ class BlogController extends _Controller{
     /**
      * Add new post
      *
-     * Show add page if not post or insert post
+     * Show add page if post array not set or insert post
      *
      * @access  public
      * @return  void
@@ -149,7 +163,7 @@ class BlogController extends _Controller{
             // get menu items from config
             $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
 
-            // load common views
+            // load views
             $info['header']     = $this->view->render( '_common/header', null, true );
             $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
             $info['main']       = $this->view->render( 'blog/add', null, true );
@@ -171,7 +185,7 @@ class BlogController extends _Controller{
     /**
      * Edit post
      *
-     * Show edit page if no post or insert post
+     * Show edit page if post array not set or insert post
      *
      * @access  public
      * @param   integer $id post id to edit
@@ -193,7 +207,7 @@ class BlogController extends _Controller{
             // get post info
             $mainInfo['post'] = $this->posts->getOne( $id );
 
-            // load common views
+            // load views
             $info['header']     = $this->view->render( '_common/header', null, true );
             $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
             $info['main']       = $this->view->render( 'blog/edit', $mainInfo, true );
@@ -227,9 +241,10 @@ class BlogController extends _Controller{
         $this->load->model( 'comments' );
         $this->load->helper( 'url' );
 
-        // delete post and comments
-        $this->posts->delete( $id );
-        $this->comments->deleteByPostId( $id );
+        // if post deleted delete comments too
+        if( $this->posts->delete( $id ) ){
+            $this->comments->deleteByPostId( $id );
+        }
 
         header( 'location: ' . siteUrl() );
     }

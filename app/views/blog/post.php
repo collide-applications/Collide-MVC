@@ -1,7 +1,7 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /**
- * Blog demo content
+ * Blog demo content for post page
  *
  * @package     Collide MVC App
  * @subpackage  Views
@@ -29,10 +29,10 @@
                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>
                                 <td width="50" align="right">
-                                    <label for="email">E-mail:</label><br />
+                                    <label for="name">Name:</label><br />
                                 </td>
                                 <td>
-                                    <input type="text" name="email" id="email" maxlength="255" />
+                                    <input type="text" name="name" id="name" maxlength="255" />
                                 </td>
                             </tr>
                             <tr valign="top">
@@ -44,7 +44,8 @@
                                 </td>
                             </tr>
                             <tr align="left">
-                                <td colspan="2">
+                                <td></td>
+                                <td>
                                     <input type="submit" value="Add" />
                                 </td>
                             </tr>
@@ -52,11 +53,15 @@
                     </form>
                 </div>
 
+                <!-- comments -->
                 <?php if( count( $comments ) > 0 ): ?>
                     <ul>
-                    <?php foreach( $comments as $comment ): ?>
+                    <?php
+                    $count = 1;
+                    foreach( $comments as $comment ):
+                    ?>
                         <li>
-                            <h4><?=$comment['email']?></h4>
+                            <h4><?=$count++?>. <?=$comment['name']?></h4>
                             <?=$comment['message']?>
                         </li>
                     <?php endforeach; ?>
@@ -64,9 +69,13 @@
                 <?php else: ?>
                     No comments on this post
                 <?php endif; ?>
+                <!-- /comments -->
+                    
             </div>
+
         <?php else: ?>
             No post founded
         <?php endif; ?>
+            
     </div>
     <!-- /content -->

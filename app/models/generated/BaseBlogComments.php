@@ -39,7 +39,7 @@ abstract class BaseBlogComments extends Doctrine_Record
              'notnull' => true,
              'autoincrement' => false,
              ));
-        $this->hasColumn('email', 'string', 255, array(
+        $this->hasColumn('name', 'string', 255, array(
              'type' => 'string',
              'length' => 255,
              'fixed' => false,

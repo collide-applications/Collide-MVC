@@ -1,7 +1,7 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
 
 /**
- * Blog demo content
+ * Blog demo content for posts page
  *
  * @package     Collide MVC App
  * @subpackage  Views
@@ -11,12 +11,12 @@
  */
  ?>
 
-    <!-- content -->
     <div id="main" class="float-left">
-        <h3>All posts</h3>
+        <h3><?=$numPosts?> Posts</h3>
 
-        <?php if( count( $posts ) > 0 ): ?>
+        <?php if( $numPosts > 0 ): ?>
             <ul>
+
             <?php
             $count = 0;
             foreach( $posts as $post ):
@@ -28,6 +28,7 @@
             ?>
                 <li class="<?=$liClass?>">
                     <div class="float-left">
+                        <?=$count?>.
                         <a href="<?=siteUrl()?>blog/post/<?=$post['id']?>">
                             <?=$post['title']?>
                         </a>
@@ -42,9 +43,9 @@
                     </div>
                 </li>
             <?php endforeach; ?>
+                
             </ul>
         <?php else: ?>
             No entries founded
         <?php endif; ?>
     </div>
-    <!-- /content -->
