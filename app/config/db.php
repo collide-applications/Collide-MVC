@@ -30,24 +30,19 @@
  */
 
 // database driver to use
-$cfg['db']['driver']        = 'mysql';
+$cfg['db']['default']['driver']        = 'mysql';
 // database username
-$cfg['db']['user']          = 'root';
+$cfg['db']['default']['user']          = 'root';
 // database password
-$cfg['db']['pass']          = 'keplerpass';
+$cfg['db']['default']['pass']          = 'keplerpass';
 // database host
-$cfg['db']['host']          = 'localhost';
+$cfg['db']['default']['host']          = 'localhost';
 // database port
-// leave it blank to use default port
-$cfg['db']['port']          = '3306';
+$cfg['db']['default']['port']          = '3306';
 // database name
-$cfg['db']['db_name']       = 'test1';
-// database configuration name (for multiple connections)
-$cfg['db']['conn_name']     = 'default';
+$cfg['db']['default']['db_name']       = 'test1';
 // tables prefix
-$cfg['db']['prefix']        = 'blog_';
-// use persistent connection
-$cfg['db']['persistent']    = FALSE;
+$cfg['db']['default']['prefix']        = 'blog_';
 
 // Doctrine configs
 $cfg['db']['doctrine']['models_path']           = APP_MODELS_PATH;

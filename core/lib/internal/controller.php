@@ -89,21 +89,14 @@ class Controller{
       * @todo   add here for each item loaded
       */
      private $_loaded = array(
-        'lib'       => array(
-            'model', 'view', 'load', 'config', 'log'
+        'lib'           => array(
+            'model', 'view', 'load', 'config', 'log'    // default loaded
         ),
-        'model'     => array(),
-        'config'    => array(),
-        'helper'    => array()
+        'model'         => array(),
+        'config'        => array(),
+        'helper'        => array(),
+        'connection'    => array()
      );
-
-    /**
-     * Database object (singleton)
-     *
-     * @access  public
-     * @var     object  $db database object
-     */
-    public $db = null;
 
     /**
      * Constructor
@@ -135,9 +128,9 @@ class Controller{
         $objView = new $viewClassName();
         $this->view = $objView;
 
-         // include model library and initialize Doctrine
+         // include model library and initialize default Doctrine connection
         incLib( 'model' );
-        Model::loadDoctrine();
+        $this->_loaded['connection'][] = Model::loadDoctrine();
 
         // instantiate load library
         $loadClassName = incLib( 'load' );

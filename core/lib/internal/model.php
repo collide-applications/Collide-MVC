@@ -49,11 +49,17 @@ class Model{
      * Add doctrine to models
      *
      * @access  public
-     * @return  void
+     * @param   string  $connName   connection name
+     * @return  array   connection name => connection object
      * @todo    add extra configuration for doctrine
      */
-    public static function loadDoctrine(){
+    public static function loadDoctrine( $connName = 'default' ){
         //$this->log->write( 'Model::loadDoctrine()' );
+
+        // prepare param
+        if( empty( $connName ) ){
+            $connName = 'default';
+        }
 
         // include doctrine
         require_once( DOCTRINE_PATH . 'lib' . DS . 'Doctrine' . EXT );
@@ -66,17 +72,20 @@ class Model{
         require( APP_CONFIG_PATH . 'db' . EXT );
 
         // create database connection
-        $dsn =  $cfg['db']['driver']    . '://' .
-                $cfg['db']['user']      . ':'   .
-                $cfg['db']['pass']      . '@'   .
-                $cfg['db']['host']      . ':'   .
-                $cfg['db']['port']      . '/'   .
-                $cfg['db']['db_name'];
+        $dsn =  $cfg['db'][$connName]['driver']    . '://' .
+                $cfg['db'][$connName]['user']      . ':'   .
+                $cfg['db'][$connName]['pass']      . '@'   .
+                $cfg['db'][$connName]['host']      . ':'   .
+                $cfg['db'][$connName]['port']      . '/'   .
+                $cfg['db'][$connName]['db_name'];
 
-        $db = Doctrine_Manager::connection( $dsn, $cfg['db']['conn_name'] );
+        $conn = Doctrine_Manager::connection( $dsn, $connName );
 
         // set table prefix
-        $db->setAttribute( Doctrine_Core::ATTR_TBLNAME_FORMAT, $cfg['db']['prefix'] . '%s' );
+        $conn->setAttribute( Doctrine_Core::ATTR_TBLNAME_FORMAT, $cfg['db'][$connName]['prefix'] . '%s' );
+        $resp = array( $connName => $conn );
+        
+        return $resp;
     }
 }
 
