@@ -64,7 +64,7 @@ class Collide_utilsController extends _Controller{
         // load config to get fixtures path
         $this->config->load( 'db' );
         $sqlPath = $this->config->get( array( 'db', 'doctrine', 'sql_path' ) );
-
+        
         if( Doctrine::generateSqlFromModels( $sqlPath ) ){
             echo 'SQL generated';
         }else{
