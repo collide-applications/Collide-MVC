@@ -117,9 +117,35 @@ class Controller{
     public function __construct(){
         self::$thisInstance =& $this;
 
-        // instantiate log  
-        $this->log =& Log::getInstance();
+        // instantiate log library
+        $logClassName = incLib( 'log' );
+        $objLog = new $logClassName();
+        $this->log = $objLog;
+
         $this->log->write( 'Controller::__construct()' );
+
+        // instantiate config library and load application config
+        $configClassName = incLib( 'config' );
+        $objConf = new $configClassName();
+        $objConf->load( 'config' );
+        $this->config = $objConf;
+
+        // instantiate view library
+        $viewClassName = incLib( 'view' );
+        $objView = new $viewClassName();
+        $this->view = $objView;
+
+         // include model library and initialize Doctrine
+        incLib( 'model' );
+        Model::loadDoctrine();
+
+        // instantiate load library
+        $loadClassName = incLib( 'load' );
+        $objLoad = new $loadClassName();
+        $this->load = $objLoad;
+
+        // autoload items from load config in application
+        autoload( $this );
 
         // get url segments
         $arrUrl = explode( '/', URL );

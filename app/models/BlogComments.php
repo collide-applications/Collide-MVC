@@ -30,13 +30,13 @@ class BlogComments extends BaseBlogComments
     public $log;
 
     /**
-	 * Get all comments for one post
-	 *
-	 * @access	public
+     * Get all comments for one post
+     *
+     * @access  public
      * @param   integer $id post id
-	 * @return	array   all comments for this post
-	 */
-	public function getAll( $id ){
+     * @return  array   all comments for this post
+     */
+    public function getAll( $id ){
         $this->log->write( 'BlogComments::getAll(' . $id . ')' );
 
         return Doctrine_Query::create()->
@@ -47,13 +47,13 @@ class BlogComments extends BaseBlogComments
     }
 
     /**
-	 * Add comment to post
-	 *
-	 * @access	public
+     * Add comment to post
+     *
+     * @access  public
      * @param   array   $comment    comment info to insert
-	 * @return	boolean
-	 */
-	public function add( $comment ){
+     * @return  boolean
+     */
+    public function add( $comment ){
         $this->log->write( 'BlogComments::add( $comment )' );
 
         $this->name     = $comment['name'];
@@ -64,13 +64,13 @@ class BlogComments extends BaseBlogComments
     }
 
     /**
-	 * Delete comments by post id
+     * Delete comments by post id
      *
-	 * @access	public
+     * @access  public
      * @param   array   $id post id
-	 * @return	boolean
-	 */
-	public function deleteByPostId( $id ){
+     * @return  boolean
+     */
+    public function deleteByPostId( $id ){
         $this->log->write( 'BlogPosts::deleteByPostId( ' . $id . ' )' );
 
         return Doctrine_Query::create()->

@@ -31,7 +31,7 @@ class Log{
      * @access  private
      * @var     object  this instance
      */
-    private static $instance;
+    private static $_instance;
 
     /**
      * Application config array
@@ -90,7 +90,7 @@ class Log{
      * @return  void
      */
     public function __construct(){
-        self::$instance =& $this;
+        self::$_instance =& $this;
 
         // load config file
         require( APP_CONFIG_PATH . 'config' . EXT );
@@ -121,7 +121,7 @@ class Log{
      * @return  object  this instance reference
      */
     public static function &getInstance(){
-        return self::$instance;
+        return self::$_instance;
     }
 
     /**

@@ -55,6 +55,14 @@ class BlogController extends _Controller{
         parent::__construct();
         
         $this->log->write( 'BlogController::__construct()' );
+
+        // get menu items from config
+        $this->config->load( 'blog' );
+        $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
+
+        $this->load->helper( 'url' );
+        $this->load->model( 'posts' );
+        $this->load->model( 'comments' );
     }
 
     /**
@@ -65,14 +73,6 @@ class BlogController extends _Controller{
      */
     public function index(){
         $this->log->write( 'BlogController::index()' );
-
-        // load tools
-        $this->config->load( 'blog' );
-        $this->load->helper( 'url' );
-        $this->load->model( 'posts' );
-
-        // get menu items from config
-        $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
 
         // get all posts using posts model
         $mainInfo['posts']      = $this->posts->getAll();
@@ -98,15 +98,6 @@ class BlogController extends _Controller{
     public function post( $id ){
         $this->log->write( 'BlogController::post(' . $id . ')' );
 
-        // load tools
-        $this->config->load( 'blog' );
-        $this->load->helper( 'url' );
-        $this->load->model( 'posts' );
-        $this->load->model( 'comments' );
-
-        // get menu items from config
-        $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
-
         // get post and comments
         $mainInfo['post']       = $this->posts->getOne( $id );
         $mainInfo['comments']   = $this->comments->getAll( $id );
@@ -130,10 +121,6 @@ class BlogController extends _Controller{
     public function comment(){
         $this->log->write( 'BlogController::comment()' );
 
-        // load tools
-        $this->load->model( 'comments' );
-        $this->load->helper( 'url' );
-
         $this->comments->add( $_POST );
 
         redirect( 'blog/post/' . $_POST['post_id'] );
@@ -149,17 +136,9 @@ class BlogController extends _Controller{
      */
     public function add(){
         $this->log->write( 'BlogController::add()' );
-
-        // load tools
-        $this->config->load( 'blog' );
-        $this->load->model( 'posts' );
-        $this->load->helper( 'url' );
         
         // load add view
         if( !isset( $_POST['post'] ) ){
-            // get menu items from config
-            $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
-
             // load views
             $info['header']     = $this->view->render( '_common/header', null, true );
             $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
@@ -188,16 +167,8 @@ class BlogController extends _Controller{
     public function edit( $id ){
         $this->log->write( 'BlogController::edit(' . $id . ')' );
 
-        // load tools
-        $this->config->load( 'blog' );
-        $this->load->model( 'posts' );
-        $this->load->helper( 'url' );
-
         // load edit view
         if( !isset( $_POST['post'] ) ){
-            // get menu items from config
-            $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
-
             // get post info
             $mainInfo['post'] = $this->posts->getOne( $id );
 
@@ -226,11 +197,6 @@ class BlogController extends _Controller{
      */
     public function delete( $id ){
         $this->log->write( 'BlogController::delete(' . $id . ')' );
-
-        // load tools
-        $this->load->model( 'posts' );
-        $this->load->model( 'comments' );
-        $this->load->helper( 'url' );
 
         // if post deleted delete comments too
         if( $this->posts->delete( $id ) ){

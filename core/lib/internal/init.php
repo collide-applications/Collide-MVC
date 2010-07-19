@@ -156,41 +156,7 @@ if( !function_exists( 'initHook' ) ){
 
         // instantiate controller
         $controllerClassName = ucfirst( $controller ) . $cfg['default']['controller_sufix'];
-
-        // include and instantiate log library to be visible in internal
-        // controller constructor
-        $logClassName = incLib( 'log' );
-        $objLog = new $logClassName();
-
-        // instantiate controller
         $objController = new $controllerClassName();
-
-        // add log object to controller
-        $objController->addObject( 'log', $objLog );
-
-        // add config to controller
-        $configClassName = incLib( 'config' );
-        $objConf = new $configClassName();
-        $objConf->load( 'config' );
-        $objController->addObject( 'config', $objConf );
-
-        // include view library
-        $viewClassName = incLib( 'view' );
-        // instantiate view
-        $objView = new $viewClassName();
-        $objController->addObject( 'view', $objView );
-
-        // include model library and initialize Doctrine
-        incLib( 'model' );
-        Model::loadDoctrine();
-
-        // include load library, instantiate and add it to this controller
-        $loadClassName = incLib( 'load' );
-        $objLoad = new $loadClassName();
-        $objController->addObject( 'load', $objLoad );
-
-        // autoload items from load config in application
-        autoload( $objController );
 
         // try to call method
         if( (int)method_exists( $controllerClassName, $method ) ){

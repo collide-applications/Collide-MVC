@@ -30,12 +30,12 @@ class BlogPosts extends BaseBlogPosts
     public $log;
 
     /**
-	 * Get all posts
-	 *
-	 * @access	public
-	 * @return	array   all posts
-	 */
-	public function getAll(){
+     * Get all posts
+     *
+     * @access  public
+     * @return  array   all posts
+     */
+    public function getAll(){
         $this->log->write( 'BlogPosts::getAll()' );
 
         return Doctrine_Query::create()->
@@ -45,13 +45,13 @@ class BlogPosts extends BaseBlogPosts
     }
 
     /**
-	 * Get one post
-	 *
-	 * @access	public
+     * Get one post
+     *
+     * @access  public
      * @param   integer $id post id
-	 * @return	mixed   one post or false if no post founded
-	 */
-	public function getOne( $id ){
+     * @return  mixed   one post or false if no post founded
+     */
+    public function getOne( $id ){
         $this->log->write( 'BlogPosts::getOne(' . $id . ')' );
 
         $res = Doctrine_Query::create()->
@@ -64,17 +64,17 @@ class BlogPosts extends BaseBlogPosts
             return false;
         }
 
-		return $res[0];
+        return $res[0];
     }
 
     /**
-	 * Add post
-	 *
-	 * @access	public
+     * Add post
+     *
+     * @access  public
      * @param   array   $post   post info to insert
-	 * @return	boolean
-	 */
-	public function add( $post ){
+     * @return  boolean
+     */
+    public function add( $post ){
         $this->log->write( 'BlogPosts::add( $post )' );
 
         $this->title    = $post['title'];
@@ -84,13 +84,13 @@ class BlogPosts extends BaseBlogPosts
     }
 
     /**
-	 * Edit post
-	 *
-	 * @access	public
+     * Edit post
+     *
+     * @access  public
      * @param   array   $post   post info to edit
-	 * @return	boolean
-	 */
-	public function edit( $post ){
+     * @return  boolean
+     */
+    public function edit( $post ){
         $this->log->write( 'BlogPosts::edit( $post )' );
         
         return Doctrine_Query::create()->
@@ -102,13 +102,13 @@ class BlogPosts extends BaseBlogPosts
     }
 
     /**
-	 * Delete post
+     * Delete post
      *
-	 * @access	public
+     * @access  public
      * @param   integer $id post id to delete
-	 * @return	boolean
-	 */
-	public function delete( $id ){
+     * @return  boolean
+     */
+    public function delete( $id ){
         $this->log->write( 'BlogPosts::delete( ' . $id . ' )' );
 
         return Doctrine_Query::create()->
