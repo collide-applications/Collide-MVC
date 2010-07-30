@@ -79,10 +79,10 @@ class BlogController extends _Controller{
         $mainInfo['numPosts']   = count( $mainInfo['posts'] );
 
         // load views
-        $info['header']     = $this->view->render( '_common/header', null, true );
-        $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
-        $info['main']       = $this->view->render( 'blog/posts', $mainInfo, true );
-        $info['footer']     = $this->view->render( '_common/footer', null, true );
+        $info['header']     = $this->view->get( '_common/header' );
+        $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
+        $info['main']       = $this->view->get( 'blog/posts', $mainInfo );
+        $info['footer']     = $this->view->get( '_common/footer' );
         
         // load template
         $this->view->template( $info );
@@ -103,10 +103,10 @@ class BlogController extends _Controller{
         $mainInfo['comments']   = $this->comments->getAll( $id );
 
         // load views
-        $info['header']     = $this->view->render( '_common/header', null, true );
-        $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
-        $info['main']       = $this->view->render( 'blog/post', $mainInfo, true );
-        $info['footer']     = $this->view->render( '_common/footer', null, true );
+        $info['header']     = $this->view->get( '_common/header' );
+        $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
+        $info['main']       = $this->view->get( 'blog/post', $mainInfo );
+        $info['footer']     = $this->view->get( '_common/footer' );
 
         // load template
         $this->view->template( $info );
@@ -140,10 +140,10 @@ class BlogController extends _Controller{
         // load add view
         if( !isset( $_POST['post'] ) ){
             // load views
-            $info['header']     = $this->view->render( '_common/header', null, true );
-            $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
-            $info['main']       = $this->view->render( 'blog/add', null, true );
-            $info['footer']     = $this->view->render( '_common/footer', null, true );
+            $info['header']     = $this->view->get( '_common/header' );
+            $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
+            $info['main']       = $this->view->get( 'blog/add' );
+            $info['footer']     = $this->view->get( '_common/footer' );
 
             // load template
             $this->view->template( $info );
@@ -173,10 +173,10 @@ class BlogController extends _Controller{
             $mainInfo['post'] = $this->posts->getOne( $id );
 
             // load views
-            $info['header']     = $this->view->render( '_common/header', null, true );
-            $info['menu']       = $this->view->render( '_common/menu', array( 'menu' => $this->_menu), true );
-            $info['main']       = $this->view->render( 'blog/edit', $mainInfo, true );
-            $info['footer']     = $this->view->render( '_common/footer', null, true );
+            $info['header']     = $this->view->get( '_common/header' );
+            $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
+            $info['main']       = $this->view->get( 'blog/edit', $mainInfo );
+            $info['footer']     = $this->view->get( '_common/footer' );
 
             // load template
             $this->view->template( $info );

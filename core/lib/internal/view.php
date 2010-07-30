@@ -69,16 +69,16 @@ class View{
     }
 
     /**
-     * Render requested views
+     * Get requested views
      *
      * @access  public
-     * @param   mixed   $views  views to include and display<br>
-     *                          if null, display default view
-     * @param   array   $info   variables to assign to views
-     * @param   boolean $return render output or return it?
+     * @param   mixed   $views      views to include and display<br>
+     *                              if null, display default view
+     * @param   array   $info       variables to assign to views
+     * @param   mixed   $filters    array or string with filters to apply
      * @return  void
      */
-    public function render( $views = null, $info = array(), $return = false, $filters = null ){
+    public function get( $views = null, $info = array(), $filters = null ){
         $this->_log->write( 'View::render()' );
 
         // define this controller object
@@ -122,13 +122,7 @@ class View{
             $this->applyFilters( $filters, $output );
         }
 
-        if( $return ){          // if return output is activated return output
-            return $output;
-        }else{                  // display the output
-            echo $output;
-        }
-
-        return null;
+        return $output;
     }
 
     /**
