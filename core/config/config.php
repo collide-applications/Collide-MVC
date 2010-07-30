@@ -88,6 +88,8 @@ define( 'APP_CONTROLLERS_PATH', APP_PATH . 'controllers' . DS );
 define( 'APP_LIB_PATH', APP_PATH . 'lib' . DS );
 // path to application helpers folder
 define( 'APP_HELPERS_PATH', APP_PATH . 'helpers' . DS );
+// path to public section
+define( 'APP_PUBLIC_PATH', APP_PATH . 'public' . DS );
 
 // path to custom templates
 define( 'APP_CUST_VIEWS_PATH', APP_VIEWS_PATH . 'standard' . DS );

@@ -84,8 +84,8 @@ class BlogController extends _Controller{
         $info['main']       = $this->view->render( 'blog/posts', $mainInfo, true );
         $info['footer']     = $this->view->render( '_common/footer', null, true );
         
-        // load main view
-        $this->view->render( 'blog/index', $info );
+        // load template
+        $this->view->template( $info );
     }
 
     /**
@@ -108,8 +108,8 @@ class BlogController extends _Controller{
         $info['main']       = $this->view->render( 'blog/post', $mainInfo, true );
         $info['footer']     = $this->view->render( '_common/footer', null, true );
 
-        // load main view
-        $this->view->render( 'blog/index', $info );
+        // load template
+        $this->view->template( $info );
     }
 
     /**
@@ -145,8 +145,8 @@ class BlogController extends _Controller{
             $info['main']       = $this->view->render( 'blog/add', null, true );
             $info['footer']     = $this->view->render( '_common/footer', null, true );
 
-            // load main view
-            $this->view->render( 'blog/index', $info );
+            // load template
+            $this->view->template( $info );
         }else{
             // insert post
             $this->posts->add( $_POST['post'] );
@@ -178,8 +178,8 @@ class BlogController extends _Controller{
             $info['main']       = $this->view->render( 'blog/edit', $mainInfo, true );
             $info['footer']     = $this->view->render( '_common/footer', null, true );
 
-            // load main view
-            $this->view->render( 'blog/index', $info );
+            // load template
+            $this->view->template( $info );
         }else{
             // update post
             $this->posts->edit( $_POST['post'] );

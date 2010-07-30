@@ -132,6 +132,37 @@ class View{
     }
 
     /**
+     * Render site template
+     *
+     * Best practice:
+     * Load site sections in views with render method and add response in array.
+     * Load site template and provide sections array as parameter.
+     *
+     * @access  public
+     * @param   array   $info   variables to assign to template
+     * @param   string  $name   template name (path allowed)
+     * @return  void
+     */
+    public function template( $info = array(), $name = 'templates/default' ){
+        $this->_log->write( 'View::template( array(), "' . $name . '" )' );
+
+        // prepare template name (remove extension and separator)
+        $name = rtrim( $name , EXT );
+        $name = ltrim( $name, DS );
+
+        // write variables into symbol table
+        extract( $info );
+
+        // load template
+        $template = APP_PUBLIC_PATH . $name . EXT;
+        if( is_file( $template ) ){
+            include( $template );
+        }else{
+            throw new Collide_exception( 'Template "' . $name . '" does not exist!' );
+        }
+    }
+
+    /**
      * Include view
      *
      * @access  private
@@ -147,7 +178,7 @@ class View{
         // what to print
         $output = '';
 
-        // vrite variables into symbol table
+        // write variables into symbol table
         extract( $this->_info );
         
         // prepare file name
