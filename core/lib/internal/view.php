@@ -137,18 +137,28 @@ class View{
      * @param   string  $name   template name (path allowed)
      * @return  void
      */
-    public function template( $info = array(), $name = 'templates/default' ){
+    public function template( $info = array(), $name = null ){
         $this->_log->write( 'View::template( array(), "' . $name . '" )' );
+
+        // if no template get default template from app config
+        if( is_null( $name ) || empty( $name ) ){
+            // define this controller object
+            $collide = Controller::getInstance();
+            
+            $name = $collide->config->get( array( 'default', 'template' ) );
+        }
 
         // prepare template name (remove extension and separator)
         $name = rtrim( $name , EXT );
         $name = ltrim( $name, DS );
 
         // write variables into symbol table
-        extract( $info );
+        if( is_array( $info ) && count( $info ) ){
+            extract( $info );
+        }
 
         // load template
-        $template = APP_PUBLIC_PATH . $name . EXT;
+        $template = APP_PUBLIC_PATH . 'tpl' . DS . $name . EXT;
         if( is_file( $template ) ){
             include( $template );
         }else{

@@ -78,11 +78,11 @@ class BlogController extends _Controller{
         $mainInfo['posts']      = $this->posts->getAll();
         $mainInfo['numPosts']   = count( $mainInfo['posts'] );
 
-        // load views
-        $info['header']     = $this->view->get( '_common/header' );
-        $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
-        $info['main']       = $this->view->get( 'blog/posts', $mainInfo );
-        $info['footer']     = $this->view->get( '_common/footer' );
+        // load view
+        $info['main'] = $this->view->get( 'blog/posts', $mainInfo );
+
+        // provide menu
+        $info['menu'] = $this->_menu;
         
         // load template
         $this->view->template( $info );
@@ -102,11 +102,11 @@ class BlogController extends _Controller{
         $mainInfo['post']       = $this->posts->getOne( $id );
         $mainInfo['comments']   = $this->comments->getAll( $id );
 
-        // load views
-        $info['header']     = $this->view->get( '_common/header' );
-        $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
-        $info['main']       = $this->view->get( 'blog/post', $mainInfo );
-        $info['footer']     = $this->view->get( '_common/footer' );
+        // load view
+        $info['main'] = $this->view->get( 'blog/post', $mainInfo );
+
+        // provide menu
+        $info['menu'] = $this->_menu;
 
         // load template
         $this->view->template( $info );
@@ -139,11 +139,11 @@ class BlogController extends _Controller{
         
         // load add view
         if( !isset( $_POST['post'] ) ){
-            // load views
-            $info['header']     = $this->view->get( '_common/header' );
-            $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
-            $info['main']       = $this->view->get( 'blog/add' );
-            $info['footer']     = $this->view->get( '_common/footer' );
+            // load view
+            $info['main'] = $this->view->get( 'blog/add' );
+
+            // provide menu
+            $info['menu'] = $this->_menu;
 
             // load template
             $this->view->template( $info );
@@ -172,11 +172,11 @@ class BlogController extends _Controller{
             // get post info
             $mainInfo['post'] = $this->posts->getOne( $id );
 
-            // load views
-            $info['header']     = $this->view->get( '_common/header' );
-            $info['menu']       = $this->view->get( '_common/menu', array( 'menu' => $this->_menu) );
-            $info['main']       = $this->view->get( 'blog/edit', $mainInfo );
-            $info['footer']     = $this->view->get( '_common/footer' );
+            // load view
+            $info['main'] = $this->view->get( 'blog/edit', $mainInfo );
+
+            // provide menu
+            $info['menu'] = $this->_menu;
 
             // load template
             $this->view->template( $info );

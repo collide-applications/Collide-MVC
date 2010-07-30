@@ -89,4 +89,7 @@ $cfg['default']['lib_prefix'] = '_';
 // default view name
 $cfg['default']['view'] = 'index';
 
+// default template name (relative to "tpl" folder in public folder)
+$cfg['default']['template'] = 'default';
+
 /* end of file: ./app/config/config.php */

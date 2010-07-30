@@ -28,6 +28,10 @@ html[xmlns] .clear{
 * html .clear{
 	height:1%;
 }
+
+a img{
+    border:0;
+}
 /* /resets */
 
 /* general */
