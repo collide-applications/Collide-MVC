@@ -121,7 +121,8 @@ class BlogController extends _Controller{
     public function comment(){
         $this->log->write( 'BlogController::comment()' );
 
-        $this->comments->add( $this->globals->get( null, 'post' ) );
+        // add $_POST['post'] as parameter to add function
+        $this->comments->add( $this->globals->get( 'post' ) );
 
         redirect( 'blog/post/' . $this->globals->get( 'post_id' ) );
     }
