@@ -82,13 +82,14 @@ class Config{
 
         // default result (variable not found)
         $result = null;
+
+        // get config array to search for variable
+        $config = $this->_cfg;
         
         if( is_array( $var ) && count( $var ) ){
-            $config = $this->_cfg;
-
             // loop config array and try to return requested element
             foreach( $var as $key => $index ){
-                if( isset( $config[$index] ) ){
+                if( is_array( $config ) && isset( $config[$index] ) ){
                     $config = $config[$index];
                 }else{
                     // if variable not found stop

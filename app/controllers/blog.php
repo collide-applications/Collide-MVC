@@ -121,9 +121,9 @@ class BlogController extends _Controller{
     public function comment(){
         $this->log->write( 'BlogController::comment()' );
 
-        $this->comments->add( $_POST );
+        $this->comments->add( $this->globals->get( null, 'post' ) );
 
-        redirect( 'blog/post/' . $_POST['post_id'] );
+        redirect( 'blog/post/' . $this->globals->get( 'post_id' ) );
     }
 
     /**
@@ -138,7 +138,7 @@ class BlogController extends _Controller{
         $this->log->write( 'BlogController::add()' );
         
         // load add view
-        if( !isset( $_POST['post'] ) ){
+        if( is_null( $this->globals->get( 'post' ) ) ){
             // load view
             $info['main'] = $this->view->get( 'blog/add' );
 
@@ -149,7 +149,7 @@ class BlogController extends _Controller{
             $this->view->template( $info );
         }else{
             // insert post
-            $this->posts->add( $_POST['post'] );
+            $this->posts->add( $this->globals->get( 'post' ) );
 
             redirect( 'blog' );
         }
@@ -168,7 +168,7 @@ class BlogController extends _Controller{
         $this->log->write( 'BlogController::edit(' . $id . ')' );
 
         // load edit view
-        if( !isset( $_POST['post'] ) ){
+        if( is_null( $this->globals->get( 'post' ) ) ){
             // get post info
             $mainInfo['post'] = $this->posts->getOne( $id );
 
@@ -182,7 +182,7 @@ class BlogController extends _Controller{
             $this->view->template( $info );
         }else{
             // update post
-            $this->posts->edit( $_POST['post'] );
+            $this->posts->edit( $this->globals->get( 'post' ) );
 
             redirect( 'blog/post/' . $id );
         }

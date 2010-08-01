@@ -218,47 +218,6 @@ if( !function_exists( 'incLib' ) ){
 }
 
 /**
- * Autoload items and add them to controller
- *
- * Autoloaded items are set in load config in application
- *
- * @access  public
- * @param   object  $objController  controller reference
- * @return  void
- */
-if( !function_exists( 'autoload' ) ){
-    function autoload( &$objController ){
-        // load application config
-        require( APP_CONFIG_PATH . 'load' . EXT );
-
-        // autoload items from load config in application
-        foreach( $cfg['load'] as $type => $items ){            
-            // if any item to load in this type
-            if( count( $items ) > 0 ){
-                foreach( $items as $item => $attr ){
-                    // configs are using their own loading method
-                    if( $type != 'config' ){
-                        // set default parameters and new name
-                        if( !isset( $attr['params'] ) ){
-                            $attr['params'] = array();
-                        }
-                        if( !isset( $attr['name'] ) ){
-                            $attr['name'] = '';
-                        }
-
-                        // load item
-                        $objController->load->$type( $item, $attr['params'], $attr['name'] );
-                    }else{
-                        // load configs here
-                        $objController->config->load( $item );
-                    }
-                }
-            }
-        }
-    }
-}
-
-/**
  * Check if Collide MVC is prepared
  *
  * @access  public
@@ -284,7 +243,6 @@ if( !function_exists( 'checkCollide' ) ){
 // call each initialization function
 setDisplayErrors();
 removeMagicQuotes();
-unsetGlobalArrays();
 
 // check for framework errors
 checkCollide();

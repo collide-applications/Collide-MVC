@@ -34,34 +34,33 @@
  */
 if( !function_exists( 'siteUrl' ) ){
     function siteUrl( $complete = false ){
+        // get collide object
+        $collide =& Controller::getInstance();
+
         // url segments
         $protocol       = 'http';
-        $domain         = $_SERVER['SERVER_NAME'];
+        $domain         = $collide->globals->get( 'SERVER_NAME', 'server' );
         $port           = '';
-        $queryString    = $_SERVER["REQUEST_URI"];
+        $queryString    = $collide->globals->get( 'REQUEST_URI', 'server' );
 
         // try to get subfolder from the root of the server to the folder of the site
-        $tmpDocRoot     = str_replace( '\\', '/', $_SERVER['DOCUMENT_ROOT'] );
+        $tmpDocRoot     = str_replace( '\\', '/', $collide->globals->get( 'DOCUMENT_ROOT', 'server' ) );
         $tmpRootPath    = str_replace( '\\', '/', ROOT_PATH );
         $subfolder      = trim( str_replace( $tmpDocRoot, '', $tmpRootPath ), '/' );
 
         // add "https" in required
-        if( isset( $_SERVER['HTTPS'] ) &&
-            !empty( $_SERVER['HTTPS'] ) &&
-            trim( strtolower( $_SERVER['HTTPS'] ) ) != 'off' ) {
-
+        $https = $collide->globals->get( 'HTTPS', 'server', array( 'strtolower', 'trim' ) );
+        if( !is_null( $https ) && !empty( $https ) && $https != 'off' ) {
             $protocol .= 's';
         }
         $protocol .= '://';
 
         $port = '';
         // if any port
-        if( strstr( $_SERVER["HTTP_HOST"], ':' ) ){
+        $httpHost = $collide->globals->get( 'HTTP_HOST', 'server' );
+        if( strstr( $httpHost, ':' ) ){
             // get port
-            $port = ':' . trim( substr( $_SERVER["HTTP_HOST"],
-                                  strpos( $_SERVER['HTTP_HOST'], ':' ) + 1
-                               )
-                          );
+            $port = ':' . trim( substr( $httpHost, strpos( $httpHost, ':' ) + 1 ) );
         }
 
         // if port is default do not add it

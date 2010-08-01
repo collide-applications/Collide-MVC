@@ -73,6 +73,14 @@ class Controller{
      */
     public $log = null;
 
+     /**
+      * Globals reference
+      *
+      * @access public
+      * @var    object  globals reference
+      */
+     public $globals = null;
+
     /**
      * This controller name
      *
@@ -137,8 +145,13 @@ class Controller{
         $objLoad = new $loadClassName();
         $this->load = $objLoad;
 
+        // load globals lib for PHP $GLOBALS array abstractization
+        $globalsClassName = incLib( 'globals' );
+        $objGlobals = new $globalsClassName();
+        $this->globals = $objGlobals;
+
         // autoload items from load config in application
-        autoload( $this );
+        $this->autoload();
 
         // get url segments
         $arrUrl = explode( '/', URL );
@@ -268,6 +281,46 @@ class Controller{
         $this->log->write( "Controller::addObject()" );
 
         $this->$name = $obj;
+    }
+
+    /**
+     * Autoload items and add them to controller
+     *
+     * Autoloaded items are set in load config in application
+     *
+     * @access  private
+     * @return  void
+     */
+    private function autoload(){
+        $this->log->write( "Controller::autoload()" );
+
+        // load application config
+        require( APP_CONFIG_PATH . 'load' . EXT );
+
+        // autoload items from load config in application
+        foreach( $cfg['load'] as $type => $items ){
+            // if any item to load in this type
+            if( count( $items ) > 0 ){
+                foreach( $items as $item => $attr ){
+                    // configs are using their own loading method
+                    if( $type != 'config' ){
+                        // set default parameters and new name
+                        if( !isset( $attr['params'] ) ){
+                            $attr['params'] = array();
+                        }
+                        if( !isset( $attr['name'] ) ){
+                            $attr['name'] = '';
+                        }
+
+                        // load item
+                        $this->load->$type( $item, $attr['params'], $attr['name'] );
+                    }else{
+                        // load configs here
+                        $this->config->load( $item );
+                    }
+                }
+            }
+        }
     }
 }
 
