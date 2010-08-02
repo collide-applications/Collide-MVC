@@ -1,4 +1,4 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 
 /******************************************************************************
  *                                                                            *
@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -30,5 +30,3 @@ require_once( CORE_PATH . 'config' . DS . 'config' . EXT );
 
 // include shared library
 require_once( CORE_LIB_INT_PATH . 'init' . EXT );
-
-/* end of file: ./core/bootstrap.php */

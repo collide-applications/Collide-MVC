@@ -14,8 +14,6 @@ Doctrine_Manager::getInstance()->bindComponent('BlogPosts', 'default');
  * 
  * @package    Collide MVC
  * @subpackage Model
- * @author     Radu Graur <radu.graur@gmail.com>
- * @version    SVN: $Id: Builder.php 7490 2010-03-29 19:53:27Z jwage $
  */
 abstract class BaseBlogPosts extends Doctrine_Record
 {

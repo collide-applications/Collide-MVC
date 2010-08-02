@@ -1,4 +1,4 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 
 /******************************************************************************
  *                                                                            *
@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -90,6 +90,8 @@ define( 'APP_LIB_PATH', APP_PATH . 'lib' . DS );
 define( 'APP_HELPERS_PATH', APP_PATH . 'helpers' . DS );
 // path to public section
 define( 'APP_PUBLIC_PATH', APP_PATH . 'public' . DS );
+// path to application templates
+define( 'APP_TPL_PATH', APP_PATH . 'tpl' . DS );
 
 // path to custom templates
 define( 'APP_CUST_VIEWS_PATH', APP_VIEWS_PATH . 'standard' . DS );
@@ -107,5 +109,3 @@ define( 'VERSION', '1.0' );
 
 // custom libraries prefix
 define( 'LIB_PREFIX', '_' );
-
-/* end of file: ./core/config/config.php */

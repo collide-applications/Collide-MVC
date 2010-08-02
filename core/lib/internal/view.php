@@ -1,4 +1,4 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 
 /******************************************************************************
  *                                                                            *
@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -82,7 +82,7 @@ class View{
         $this->_log->write( 'View::render()' );
 
         // define this controller object
-        $collide = Controller::getInstance();
+        $collide =& thisInstance();
         
         // initialization
         if( is_array( $info ) ){
@@ -143,7 +143,7 @@ class View{
         // if no template get default template from app config
         if( is_null( $name ) || empty( $name ) ){
             // define this controller object
-            $collide = Controller::getInstance();
+            $collide =& thisInstance();
             
             $name = $collide->config->get( array( 'default', 'template' ) );
         }
@@ -158,7 +158,7 @@ class View{
         }
 
         // load template
-        $template = APP_PUBLIC_PATH . 'tpl' . DS . $name . EXT;
+        $template = APP_TPL_PATH . $name . EXT;
         if( is_file( $template ) ){
             include( $template );
         }else{
@@ -177,7 +177,7 @@ class View{
         $this->_log->write( 'View::getView("' . $view . '")' );
 
         // define this controller object
-        $collide = Controller::getInstance();
+        $collide =& thisInstance();
 
         // what to print
         $output = '';
@@ -256,5 +256,3 @@ class View{
         return true;
     }
 }
-
-/* end of file: ./core/lib/internal/view.php */

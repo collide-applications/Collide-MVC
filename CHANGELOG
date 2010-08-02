@@ -1,0 +1,14 @@
+Version 0.1.0 (1 October 2010)
+
+- SEO friendly URL;
+- code organized in MVC structure;
+- models implemented using Doctrine ORM;
+- multiple templates support;
+- logging system using files and FirePHP;
+- config files;
+- HTML library;
+- HTML forms library with PHP validation;
+- session abstractization library;
+- PHP global arrays abstractization library;
+- multi language support;
+- CRUD demo application;

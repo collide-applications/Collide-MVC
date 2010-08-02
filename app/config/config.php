@@ -1,4 +1,4 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 /******************************************************************************
  *                                                                            *
  * Collide PHP Framework                                                      *
@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -91,5 +91,3 @@ $cfg['default']['view'] = 'index';
 
 // default template name (relative to "tpl" folder in public folder)
 $cfg['default']['template'] = 'default';
-
-/* end of file: ./app/config/config.php */

@@ -1,4 +1,4 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 
 /******************************************************************************
  *                                                                            *
@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -34,13 +34,13 @@ $cfg['db']['default']['driver']        = 'mysql';
 // database username
 $cfg['db']['default']['user']          = 'root';
 // database password
-$cfg['db']['default']['pass']          = 'lampp.pass123';
+$cfg['db']['default']['pass']          = 'keplerpass';
 // database host
 $cfg['db']['default']['host']          = 'localhost';
 // database port
 $cfg['db']['default']['port']          = '3306';
 // database name
-$cfg['db']['default']['db_name']       = 'collide';
+$cfg['db']['default']['db_name']       = 'test1';
 // tables prefix
 $cfg['db']['default']['prefix']        = 'blog_';
 
@@ -50,5 +50,3 @@ $cfg['db']['doctrine']['data_fixtures_path']    = $cfg['db']['doctrine']['models
 $cfg['db']['doctrine']['migrations_path']       = $cfg['db']['doctrine']['models_path'] . 'migrations';
 $cfg['db']['doctrine']['sql_path']              = $cfg['db']['doctrine']['models_path'] . 'sql';
 $cfg['db']['doctrine']['yaml_schema_path']      = $cfg['db']['doctrine']['models_path'] . 'yaml';
-
-/* end of file: ./app/config/db.php */

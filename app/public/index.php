@@ -10,7 +10,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -44,5 +44,3 @@ define( 'NO_ACCESS_MSG', 'Access to this script is forbidden!' );
 define( 'URL', rtrim( $_GET['url'], '/' ) );
 
 require_once( CORE_PATH . 'bootstrap' . EXT );
-
-/* end of file: ./app/public/index.php */

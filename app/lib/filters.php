@@ -1,4 +1,19 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
+
+/******************************************************************************
+ *                                                                            *
+ * Collide PHP Framework                                                      *
+ *                                                                            *
+ * MVC framework for PHP.                                                     *
+ *                                                                            *
+ * @package     Collide MVC App                                               *
+ * @author      Collide Applications Development Team                         *
+ * @copyright   Copyright (c) 2009, Collide Applications                      *
+ * @license     http://mvc.collide-applications.com/license.txt               *
+ * @link        http://mvc.collide-applications.com                           *
+ * @since       Version 0.1                                                   *
+ *                                                                            *
+ ******************************************************************************/
 
 /**
  * Output filters
@@ -9,20 +24,3 @@
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
-
-/**
- * This is a demo filter
- *
- * Transform "MVC" to "MVC (Model View Controller)"
- *
- * @access  public
- * @param   string  $output page output
- * @return  void
- */
-if( !function_exists( 'transformMVC ' ) ){
-    function transformMVC( &$output ){
-        $output = str_replace( 'MVC', 'MVC (Model View Controller)', $output );
-    }
-}
-
- /* end of file: ./app/lib/filters.php */
