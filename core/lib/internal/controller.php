@@ -64,15 +64,7 @@ class Controller{
      * @var     object  config reference
      */
     public $config = null;
-
-    /**
-     * Log reference
-     *
-     * @access  public
-     * @var     object  log reference
-     */
-    public $log = null;
-
+    
      /**
       * Globals reference
       *
@@ -118,12 +110,7 @@ class Controller{
     public function __construct(){
         self::$thisInstance =& $this;
 
-        // instantiate log library
-        $logClassName = incLib( 'log' );
-        $objLog = new $logClassName();
-        $this->log = $objLog;
-
-        $this->log->write( 'Controller::__construct()' );
+        log( 'Controller::__construct()' );
 
         // instantiate config library and load application config
         $configClassName = incLib( 'config' );
@@ -136,7 +123,7 @@ class Controller{
         $objView = new $viewClassName();
         $this->view = $objView;
 
-         // include model library and initialize default Doctrine connection
+        // include model library and initialize default Doctrine connection
         incLib( 'model' );
         $this->_loaded['connection'][] = Model::loadDoctrine();
 
@@ -149,6 +136,11 @@ class Controller{
         $globalsClassName = incLib( 'globals' );
         $objGlobals = new $globalsClassName();
         $this->globals = $objGlobals;
+
+        // load session lib for session abstractization
+        $sessionClassName = incLib( 'session' );
+        $objSession = new $sessionClassName();
+        $this->session = $objSession;
 
         // autoload items from load config in application
         $this->autoload();
@@ -170,7 +162,7 @@ class Controller{
      * @return  string
      */
     public function getControllerName(){
-        $this->log->write( 'Controller::getControllerName()' );
+        log( 'Controller::getControllerName()' );
 
         return $this->_controllerName;
     }
@@ -184,7 +176,7 @@ class Controller{
      * @return  void
      */
     public function  __call( $name,  $args ){
-        $this->log->write( "Controller::__call()" );
+        log( "Controller::__call()" );
 
         require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
         throw new Collide_exception( 'Function "' . $name . '" does not exists!' );
@@ -209,7 +201,7 @@ class Controller{
      * @return  array
      */
     public function getLoaded( $types = '' ){
-        $this->log->write( "Controller::getLoaded()" );
+        log( "Controller::getLoaded()" );
 
         // if empty array or empty string return all loaded items
         if( ( is_array( $types ) && count( $types ) < 1 ) ||
@@ -245,7 +237,7 @@ class Controller{
      * @return  boolean
      */
     public function addLoaded( $type, $item ){
-        $this->log->write( "Controller::addLoaded()" );
+        log( "Controller::addLoaded()" );
 
         // prepare type and item
         $type = strtolower( trim( $type ) );
@@ -278,7 +270,7 @@ class Controller{
      * @return  void
      */
     public function addObject( $name, $obj ){
-        $this->log->write( "Controller::addObject()" );
+        log( "Controller::addObject()" );
 
         $this->$name = $obj;
     }
@@ -292,7 +284,7 @@ class Controller{
      * @return  void
      */
     private function autoload(){
-        $this->log->write( "Controller::autoload()" );
+        log( "Controller::autoload()" );
 
         // load application config
         require( APP_CONFIG_PATH . 'load' . EXT );

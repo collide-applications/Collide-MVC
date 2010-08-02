@@ -25,8 +25,6 @@
  */
 class BlogPosts extends BaseBlogPosts
 {
-    public $log;
-
     /**
      * Get all posts
      *
@@ -34,7 +32,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  array   all posts
      */
     public function getAll(){
-        $this->log->write( 'BlogPosts::getAll()' );
+        logWrite( 'BlogPosts::getAll()' );
 
         return Doctrine_Query::create()->
         from( 'BlogPosts' )->
@@ -50,7 +48,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  mixed   one post or false if no post founded
      */
     public function getOne( $id ){
-        $this->log->write( 'BlogPosts::getOne(' . $id . ')' );
+        logWrite( 'BlogPosts::getOne(' . $id . ')' );
 
         $res = Doctrine_Query::create()->
         from( 'BlogPosts' )->
@@ -73,7 +71,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  boolean
      */
     public function add( $post ){
-        $this->log->write( 'BlogPosts::add( $post )' );
+        logWrite( 'BlogPosts::add( $post )' );
 
         $this->title    = $post['title'];
         $this->content  = $post['content'];
@@ -89,7 +87,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  boolean
      */
     public function edit( $post ){
-        $this->log->write( 'BlogPosts::edit( $post )' );
+        logWrite( 'BlogPosts::edit( $post )' );
         
         return Doctrine_Query::create()->
             update( 'BlogPosts' )->
@@ -107,7 +105,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  boolean
      */
     public function delete( $id ){
-        $this->log->write( 'BlogPosts::delete( ' . $id . ' )' );
+        logWrite( 'BlogPosts::delete( ' . $id . ' )' );
 
         return Doctrine_Query::create()->
             delete( 'BlogPosts' )->

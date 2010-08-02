@@ -54,7 +54,7 @@ class BlogController extends Controller{
     public function __construct(){
         parent::__construct();
         
-        $this->log->write( 'BlogController::__construct()' );
+        logWrite( 'BlogController::__construct()' );
 
         // get menu items from config
         $this->config->load( 'blog' );
@@ -72,7 +72,7 @@ class BlogController extends Controller{
      * @return  void
      */
     public function index(){
-        $this->log->write( 'BlogController::index()' );
+        logWrite( 'BlogController::index()' );
 
         // get all posts using posts model
         $mainInfo['posts']      = $this->posts->getAll();
@@ -96,7 +96,7 @@ class BlogController extends Controller{
      * @return  void
      */
     public function post( $id ){
-        $this->log->write( 'BlogController::post(' . $id . ')' );
+        logWrite( 'BlogController::post(' . $id . ')' );
 
         // get post and comments
         $mainInfo['post']       = $this->posts->getOne( $id );
@@ -119,10 +119,10 @@ class BlogController extends Controller{
      * @return  void
      */
     public function comment(){
-        $this->log->write( 'BlogController::comment()' );
+        logWrite( 'BlogController::comment()' );
 
         // add $_POST['post'] as parameter to add function
-        $this->comments->add( $this->globals->get( 'post' ) );
+        $this->comments->add( $this->globals->get() );
 
         redirect( 'blog/post/' . $this->globals->get( 'post_id' ) );
     }
@@ -136,7 +136,7 @@ class BlogController extends Controller{
      * @return  void
      */
     public function add(){
-        $this->log->write( 'BlogController::add()' );
+        logWrite( 'BlogController::add()' );
         
         // load add view
         if( is_null( $this->globals->get( 'post' ) ) ){
@@ -166,7 +166,7 @@ class BlogController extends Controller{
      * @return  void
      */
     public function edit( $id ){
-        $this->log->write( 'BlogController::edit(' . $id . ')' );
+        logWrite( 'BlogController::edit(' . $id . ')' );
 
         // load edit view
         if( is_null( $this->globals->get( 'post' ) ) ){
@@ -197,7 +197,7 @@ class BlogController extends Controller{
      * @return  void
      */
     public function delete( $id ){
-        $this->log->write( 'BlogController::delete(' . $id . ')' );
+        logWrite( 'BlogController::delete(' . $id . ')' );
 
         // if post deleted delete comments too
         if( $this->posts->delete( $id ) ){

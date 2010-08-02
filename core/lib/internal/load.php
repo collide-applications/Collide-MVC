@@ -26,23 +26,13 @@
  */
 class Load{
     /**
-     * Log object reference
-     *
-     * @access  protected
-     * @var     object  $log    log reference
-     */
-    protected $_log = null;
-
-    /**
      * Constructor
      *
      * @access	public
      * @return  void
      */
     public function __construct(){
-        // instantiate log
-        $this->_log =& Log::getInstance();
-        $this->_log->write( 'Load::__construct()' );
+        logWrite( 'Load::__construct()' );
     }
 
     /**
@@ -55,7 +45,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function incFile( $fileName, $type = 'model', $connName = 'default' ){
-        $this->_log->write( 'Load::incFile( "' . $fileName . '")' );
+        logWrite( 'Load::incFile( "' . $fileName . '")' );
 
         // check and prepare parameters
         if( empty( $fileName ) || empty( $type ) ){
@@ -164,7 +154,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function instantiate( $className, $type, $multiple, $params = array(), $newClassName = '', $connName = 'default' ){
-        $this->_log->write( 'Load::instantiate()' );
+        logWrite( 'Load::instantiate()' );
 
         // get framework instance
         $collide =& thisInstance();
@@ -211,11 +201,6 @@ class Load{
             $obj = $objReflection->newInstanceArgs();
         }
 
-        // add log object to model
-        if( $type == 'model' ){
-            $obj->log =& Log::getInstance();
-        }
-
         // add new object to this controller
         // if new name provided use this name
         if( !empty( $newClassName ) ){
@@ -238,7 +223,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function load( $name, $type, $params = array(), $newClassName = '', $connName = 'default' ){
-        $this->_log->write( 'Load::load("' . $name . '", "' . $type . '")' );
+        logWrite( 'Load::load("' . $name . '", "' . $type . '")' );
 
         // Collide instance
         $collide =& thisInstance();
@@ -315,7 +300,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     public function model( $name, $connName = 'default', $params = array(), $newName = '' ){
-        $this->_log->write( 'Load::model()' );
+        logWrite( 'Load::model()' );
 
         // load class
         if( !$this->load( $name, 'model', $params, $newName, $connName ) ){
@@ -335,7 +320,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     public function lib( $name, $params = array(), $newName = '' ){
-        $this->_log->write( 'Load::lib()' );
+        logWrite( 'Load::lib()' );
 
         // load class
         if( !$this->load( $name, 'lib', $params, $newName ) ){
@@ -355,7 +340,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     public function helper( $name, $params = array(), $newName = '' ){
-        $this->_log->write( 'Load::helper()' );
+        logWrite( 'Load::helper()' );
 
         // load class
         if( !$this->load( $name, 'helper', $params, $newName ) ){

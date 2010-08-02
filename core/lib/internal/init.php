@@ -48,60 +48,6 @@ if( !function_exists( 'setDisplayErrors' ) ){
     }
 }
 
-/**
- * Strip slashes on multidimensional arrays
- *
- * @param   array   $arr    array to strip slashes from
- * @return  array   $arr    array without slashes
- */
-if( !function_exists( 'arrayStripSlashes' ) ){
-    function arrayStripSlashes( $arr ){
-        if( is_array( $arr ) ){
-            // go deep
-            array_map( 'arrayStripSlashes', $arr );
-        }else{
-            stripslashes( $arr );
-        }
-        return $arr;
-    }
-}
-
-/**
- * Strip slashes from $_GET, $_POST and $_COOKIE global arrays
- */
-if( !function_exists( 'removeMagicQuotes' ) ){
-    function removeMagicQuotes(){
-        if( get_magic_quotes_gpc() ){
-            $_GET    = arrayStripSlashes( $_GET );
-            $_POST   = arrayStripSlashes( $_POST );
-            $_COOKIE = arrayStripSlashes( $_COOKIE );
-        }
-    }
-}
-
-/**
- * Remove global arrays
- * @TODO create methods for globals
- */
-if( !function_exists( 'unsetGlobalArrays' ) ){
-    function unsetGlobalArrays(){
-        if( ini_get( 'register_globals' ) ){
-            // put all global arrays together
-            $arr = array( '_SESSION', '_POST', '_GET', '_COOKIE', '_REQUEST',
-                          '_SERVER', '_ENV', '_FILES' );
-
-            // remove each global variable
-            foreach( $arr as $val ){
-                foreach( $GLOBALS[$val] as $key => $var ){
-                    if( $var === $GLOBALS[$key] ){
-                        unset( $GLOBALS[$key] );
-                    }
-                }
-            }
-        }
-    }
-}
-
 /**********************
  * End security setup *
  **********************/
@@ -119,6 +65,17 @@ if( !function_exists( 'initHook' ) ){
 
         // load default application config
         require( APP_CONFIG_PATH . 'config' . EXT );
+
+        // instantiate log library
+        $logClassName = incLib( 'log' );
+        $log = new Log();
+
+        // logs support
+        if( file_exists( APP_HELPERS_PATH . 'log' . EXT ) ){
+            require( APP_HELPERS_PATH . 'log' . EXT );
+        }else{
+            require( CORE_HELPERS_PATH . 'log' . EXT );
+        }
 
         // set default values
         $controller = $cfg['default']['controller'];
@@ -239,10 +196,6 @@ if( !function_exists( 'checkCollide' ) ){
         }
     }
 }
-
-// call each initialization function
-setDisplayErrors();
-removeMagicQuotes();
 
 // check for framework errors
 checkCollide();

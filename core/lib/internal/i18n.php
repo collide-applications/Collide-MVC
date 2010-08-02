@@ -20,11 +20,11 @@
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
- * @category    Html
+ * @category    i18n
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
-class Html{
+class I18n{
     /**
      * Constructor
      *
@@ -32,7 +32,7 @@ class Html{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Html::__construct()' );
+        logWrite( 'I18n::__construct()' );
     }
 
     /**

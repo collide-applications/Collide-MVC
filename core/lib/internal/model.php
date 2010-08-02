@@ -27,22 +27,12 @@
  */
 class Model{
     /**
-     * Log object reference
-     *
-     * @access  public
-     * @var     object  $log    log reference
-     */
-    public $log = null;
-
-    /**
      * Constructor
      *
      * @access  public
      */
     public function __construct(){
-        // instantiate log
-        $this->log =& Log::getInstance();
-        $this->log->write( 'Model::__construct()' );
+        logWrite( 'Model::__construct()' );
     }
 
     /**
@@ -54,7 +44,7 @@ class Model{
      * @todo    add extra configuration for doctrine
      */
     public static function loadDoctrine( $connName = 'default' ){
-        //$this->log->write( 'Model::loadDoctrine()' );
+        logWrite( 'Model::loadDoctrine()' );
 
         // prepare param
         if( empty( $connName ) ){

@@ -25,8 +25,6 @@
  */
 class BlogComments extends BaseBlogComments
 {
-    public $log;
-
     /**
      * Get all comments for one post
      *
@@ -35,7 +33,7 @@ class BlogComments extends BaseBlogComments
      * @return  array   all comments for this post
      */
     public function getAll( $id ){
-        $this->log->write( 'BlogComments::getAll(' . $id . ')' );
+        //log( 'BlogComments::getAll(' . $id . ')' );
 
         return Doctrine_Query::create()->
         from( 'BlogComments' )->
@@ -52,7 +50,7 @@ class BlogComments extends BaseBlogComments
      * @return  boolean
      */
     public function add( $comment ){
-        $this->log->write( 'BlogComments::add( $comment )' );
+        //log( 'BlogComments::add( $comment )' );
 
         $this->name     = $comment['name'];
         $this->message  = $comment['message'];
@@ -69,7 +67,7 @@ class BlogComments extends BaseBlogComments
      * @return  boolean
      */
     public function deleteByPostId( $id ){
-        $this->log->write( 'BlogPosts::deleteByPostId( ' . $id . ' )' );
+        //log( 'BlogPosts::deleteByPostId( ' . $id . ' )' );
 
         return Doctrine_Query::create()->
             delete( 'BlogComments' )->

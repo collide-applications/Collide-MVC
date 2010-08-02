@@ -16,34 +16,16 @@
  ******************************************************************************/
 
 /**
- * Globals class
- *
- * Abstractization of global arrays in PHP ($_GET, $_POST, $_COOKIE, $_SESSION)
+ * Html class
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
- * @category    Globals
+ * @category    Session
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
-class Globals{
-    /**
-     * Globals array
-     *
-     * @access  protected
-     * @var     array   $_globals   globals array
-     */
-    protected $_globals = array();
-
-    /**
-     * Avalilable global arrays
-     *
-     * @access  protected
-     * @var     array   $_availableTypes    available global arrays
-     */
-    protected $_availableTypes = array(
-        '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES'
-    );
+class Session{
+    protected $_sess = array();
 
     /**
      * Constructor
@@ -52,82 +34,62 @@ class Globals{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Globals::__construct()' );
+        logWrite( 'Session::__construct()' );
 
-        // unset globals array and create an internal one
-        foreach( $this->_availableTypes as $type ){
-            if( isset( $GLOBALS[$type] ) ){
-                $this->_globals[$type] = $GLOBALS[$type];                
-                unset( $GLOBALS[$type] );
+        // keep session in an internal array
+        session_start();
+        if( isset( $_SESSION ) ){
+            $this->_sess = $_SESSION;
 
-                // unset individual global array too
-                if( isset( $$type ) ){
-                    unset( $$type );
-                }
-            }
+            unset( $_SESSION );
         }
-
-        // unset globals too
-        unset( $GLOBALS );
     }
 
     /**
-     * Get variable from global array
+     * Get variable from session
      *
      * @access  public
      * @param   mixed   $var        if <code>null</code> return all array, else
      *                              return requested value<br>
      *
      *                              e.g:
-     *                              - $obj->get( null, 'post' ); //all $_POST
-     *                              - $obj->get( 'var', 'post' );
-     *                                // $_POST['var'];
-     *                              - $obj->get( array( 'var1', 'var2' ),
-     *                                                  'post' );
-     *                              // return $_POST['var1']['var2']
-     * @param   string  $type       array type to return (e.g: session, post,
-     *                              get, cookie, request, server, env, files)
+     *                              - $obj->get( null ); // all $_SESSION array
+     *                              - $obj->get( 'var' ); // $_SESSION['var'];
+     *                              - $obj->get( array( 'var1', 'var2' ) );
+     *                              // $_SESSION['var1']['var2']
      * @param   mixed   $callback   function name or array with functions to
      *                              apply on each element returned
      *                              OBS: if you use a Collide helper as callback
-     *                              load that helper first
+     *                                   load that helper first
      * @return  mixed   value from that index, null if not exists, false on
      *                  error
      */
-    public function get( $var = null, $type = 'post', $callback = null ){
-        //logWrite( 'Globals::get( $var, "' . $type . '", "' . $callback . '" )' );
-
-        // prepare parameters
-        $type = '_' . trim( strtoupper( $type ) );
-
-        // check if type exists
-        if( !in_array( $type, $this->_availableTypes ) ){
-            return false;
-        }
+    public function get( $var = null, $callback = null ){
+        logWrite( 'Session::get( ' . $var . ', ' . $callback . ' )' );
 
         // create an array from $var
         if( !is_null( $var ) && !is_array( $var ) ){
             $var = array( $var );
         }
 
-        // get array type from globals to search for variable
-        $globals = $this->_globals[$type];
+        // save session
+        $sess = $this->_sess;
 
         // loop through global array and try to return requested element
         if( is_array( $var ) && count( $var ) ){
             foreach( $var as $key => $index ){
-                if( is_array( $globals ) && isset( $globals[$index] ) ){
-                    $globals = $globals[$index];
+                if( is_array( $sess ) && isset( $sess[$index] ) ){
+                    $sess = $sess[$index];
                 }else{
                     // if variable not found stop
-                    $globals = null;
+                    $sess = null;
                     break;
                 }
             }
         }
 
         // apply callbacks on each array elements
-        if( !is_null( $globals ) ){
+        if( !is_null( $sess ) ){
             if( !is_null( $callback ) && !is_array( $callback ) ){
                 $callback = array( $callback );
             }
@@ -135,15 +97,19 @@ class Globals{
             if( is_array( $callback ) && count( $callback ) ){
                 // call each function for each element in array
                 foreach( $callback as $func ){
-                    if( is_array( $globals ) ){
-                        array_walk_recursive( $globals, $func );
+                    if( is_array( $sess ) ){
+                        array_walk_recursive( $sess, $func );
                     }else{
-                        $globals = $func( $globals );
+                        $sess = $func( $sess );
                     }
                 }
             }
         }
 
-        return $globals;
+        return $sess;
+    }
+
+    public function set(){
+        
     }
 }

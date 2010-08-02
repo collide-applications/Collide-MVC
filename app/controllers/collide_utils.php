@@ -37,7 +37,7 @@ class Collide_utilsController extends Controller{
     public function __construct(){
         parent::__construct();
         
-        $this->log->write( 'Collide_utilsController::__construct()' );
+        logWrite( 'Collide_utilsController::__construct()' );
     }
 
     /**
@@ -49,7 +49,7 @@ class Collide_utilsController extends Controller{
      * @todo    test all cases
      */
     public function generateModelsFromDb(){
-        $this->log->write( 'Collide_utilsController::generateModelsFromDb()' );
+        logWrite( 'Collide_utilsController::generateModelsFromDb()' );
 
         $options = array(
             'generateBaseClasses'   => true,
@@ -74,7 +74,7 @@ class Collide_utilsController extends Controller{
      * @todo    make it work
      */
     public function generateSqlFromModels(){
-        $this->log->write( 'Collide_utilsController::generateSqlFromModels()' );
+        logWrite( 'Collide_utilsController::generateSqlFromModels()' );
 
         // load config to get fixtures path
         $this->config->load( 'db' );
@@ -98,7 +98,7 @@ class Collide_utilsController extends Controller{
      * @return  void
      */
     public function exportDbData( $single = null ){
-        $this->log->write( 'Collide_utilsController::exportDbData()' );
+        logWrite( 'Collide_utilsController::exportDbData()' );
         
         // check if exporting to single file
         if( is_null( $single ) ){
@@ -128,7 +128,7 @@ class Collide_utilsController extends Controller{
      * @todo    test this
      */
     public function importDbData( $append = null ){
-        $this->log->write( 'Collide_utilsController::importDbData()' );
+        logWrite( 'Collide_utilsController::importDbData()' );
 
         // check if exporting to single file
         if( is_null( $append ) ){

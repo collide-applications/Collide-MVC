@@ -27,14 +27,6 @@
  */
 class View{
     /**
-     * Log object reference
-     *
-     * @access  protected
-     * @var     object  $log    log reference
-     */
-    protected $_log = null;
-
-    /**
      * Array with variables to be assigned to views
      *
      * @access  private
@@ -49,9 +41,7 @@ class View{
      * @return  void
      */
     public function __construct(){
-        // instantiate log
-        $this->_log =& Log::getInstance();
-        $this->_log->write( 'View::__construct()' );
+        logWrite( 'View::__construct()' );
     }
 
     /**
@@ -63,7 +53,7 @@ class View{
      * @return  void
      */
     public function  __call( $name,  $args ){
-        $this->_log->write( 'View::__call(' . $name . ', ' . $args . ')' );
+        logWrite( 'View::__call(' . $name . ', ' . $args . ')' );
 
         echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!<br />';
     }
@@ -79,7 +69,7 @@ class View{
      * @return  void
      */
     public function get( $views = null, $info = array(), $filters = null ){
-        $this->_log->write( 'View::render()' );
+        logWrite( 'View::render()' );
 
         // define this controller object
         $collide =& thisInstance();
@@ -138,7 +128,7 @@ class View{
      * @return  void
      */
     public function template( $info = array(), $name = null ){
-        $this->_log->write( 'View::template( array(), "' . $name . '" )' );
+        logWrite( 'View::template( array(), "' . $name . '" )' );
 
         // if no template get default template from app config
         if( is_null( $name ) || empty( $name ) ){
@@ -174,7 +164,7 @@ class View{
      * @return  mixed   boolean or content if <var>$return</var> is true
      */
     private function getView( $view ){
-        $this->_log->write( 'View::getView("' . $view . '")' );
+        logWrite( 'View::getView("' . $view . '")' );
 
         // define this controller object
         $collide =& thisInstance();
@@ -224,7 +214,7 @@ class View{
      * @return  boolean true on success or false on error
      */
     private function applyFilters( $filters, &$output ){
-        $this->_log->write( 'View::applyFilters( ' . print_r( $filters, 1) . ', $output)' );
+        logWrite( 'View::applyFilters( ' . print_r( $filters, 1) . ', $output)' );
 
         // include filters script
         if( is_file( APP_LIB_PATH . 'filters' . EXT ) ){
