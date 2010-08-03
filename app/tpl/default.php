@@ -74,7 +74,7 @@
 
     <!-- footer -->
     <div id="footer" class="clear">
-        copyright &copy; <a href="http://collide-applications.com">Collide Applications</a>
+        copyright &copy; <a href="http://www.collide-applications.com">Collide Applications</a>
     </div>
     <!-- /footer -->
 

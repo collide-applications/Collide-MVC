@@ -91,3 +91,5 @@ $cfg['default']['view'] = 'index';
 
 // default template name (relative to "tpl" folder in public folder)
 $cfg['default']['template'] = 'default';
+
+$cfg['xss']['enable'] = true;
