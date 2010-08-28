@@ -44,6 +44,6 @@ $cfg['load'] = array(
     'model'        => array( 
     ),
     'helper'       => array(
-        'url'
+        'url' => array()
     )
 );

@@ -60,7 +60,6 @@ class BlogController extends Controller{
         $this->config->load( 'blog' );
         $this->_menu = $this->config->get( array( 'blog', 'menu' ) );
 
-        $this->load->helper( 'url' );
         $this->load->model( 'posts' );
         $this->load->model( 'comments' );
     }
