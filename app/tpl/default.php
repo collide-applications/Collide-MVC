@@ -33,7 +33,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <title>Blog</title>
 
-    <link type="text/css" rel="stylesheet" href="<?=siteUrl()?>css/blog/styles.css" />
+    <!-- css -->
+    <?php echo loadRes( 'css' ); ?>
+    <!-- /css -->
 </head>
 <body>
 
@@ -43,7 +45,7 @@
     <!-- header -->
     <div id="header" class="clear">
         <a href="http://mvc.collide-applications.com/demo/">
-            <img src="<?=siteUrl()?>img/blog/logo.png" width="80" height="70"
+            <img src="<?php echo siteUrl(); ?>img/blog/logo.png" width="80" height="70"
                  alt="Collide Applications" title="Collide Applications" />
         </a>
         <div class="text">
@@ -60,14 +62,16 @@
             <ul>
             <?php foreach( $menu as $item => $page ): ?>
                 <li>
-                    <a href="<?=siteUrl() . $page?>"><?=$item?></a>
+                    <a href="<?php echo siteUrl() . $page; ?>">
+                        <?php echo $item; ?>
+                    </a>
                 </li>
             <?php endforeach; ?>
             </ul>
         </div>
         <!-- /menu -->
 
-        <?=$main?>
+        <?php echo $main; ?>
 
     </div>
     <!-- /content -->

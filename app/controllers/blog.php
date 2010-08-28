@@ -29,7 +29,7 @@
  *
  * @package     Collide MVC App
  * @subpackage  Controllers
- * @category    Welcome
+ * @category    Blog
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */

@@ -25,9 +25,12 @@
  */
 
 /**
- * Create loading config array
+ * Scripts loading array
  * 
  * All items here are loaded after controller initialization
+ *
+ * Format for config:
+ * 'config_1', 'config_2, 'config_N'
  *
  * Format for lib/model/helper:
  * 'item_name' => array(
@@ -36,14 +39,29 @@
  * )
  */
 $cfg['load'] = array(
-    'config'       => array(
+    'config'        => array(
         'blog'
     ),
-    'lib'          => array(
+    'lib'           => array(
     ),
-    'model'        => array( 
+    'model'         => array(
     ),
-    'helper'       => array(
-        'url' => array()
+    'helper'        => array(
+        'url'       => null
+    )
+);
+
+/**
+ * Resources loading array
+ *
+ * All items here are used by url helper to load files in templates
+ */
+$cfg['res'] = array(
+    'css'       => array(
+        'blog/styles.css'
+    ),
+    'js'        => array(
+    ),
+    'fav'       => array(
     )
 );

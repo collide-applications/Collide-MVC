@@ -116,3 +116,51 @@ if( !function_exists( 'redirect' ) ){
         }
     }
 }
+
+/**
+ * Load template resources (css/js/favicon)
+ *
+ * If $file parameter is provided as array or string, files from load config
+ * array will be ignored
+ *
+ * @access  public
+ * @param   string  $type  resource type (css/js/fav)
+ * @param   mixed   $files  resource file to load ignoring array from load config
+ * @return  string  html code for loaded resources
+ */
+if( !function_exists( 'loadRes' ) ){
+    function loadRes( $type, $files = null ){
+        $html = ''; // result
+
+        // prepare parameters
+        $type = strtolower( trim( $type ) );
+
+        // include load config file
+        require( APP_CONFIG_PATH . 'load' . EXT );
+
+        // define code templates
+        $tplCss = "<link type=\"text/css\" rel=\"stylesheet\" href=\"" . siteUrl() . "css/%s\" />\n";
+        $tplJs  = "<script type=\"text/javascript\" src=\"" . siteUrl() . "js/%s\"></script>\n";
+        $tplFav = "<link type=\"img/png\" rel=\"shortcut icon\" href=\"" . siteUrl() . "img/%s\" />\n" .
+                  "<link rel=\"apple-touch-icon\" href=\"" . siteUrl() . "img/%s\" />\n";
+
+        // check what to load
+        if( is_null( $files ) &&
+            // load default files
+            isset( $cfg['res'][$type] ) &&
+            is_array( $cfg['res'][$type] ) ){
+
+            $files = $cfg['res'][$type];
+        }else if( is_string( $files ) ){
+            $files[0] = $files;
+        }
+
+        // create html
+        foreach( $files as $file ){
+            $tpl = 'tpl' . ucfirst( $type );
+            $html .= sprintf( $$tpl, $file );
+        }
+
+        return $html;
+    }
+}
