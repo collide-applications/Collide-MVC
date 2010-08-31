@@ -50,18 +50,3 @@ $cfg['load'] = array(
         'url'       => null
     )
 );
-
-/**
- * Resources loading array
- *
- * All items here are used by url helper to load files in templates
- */
-$cfg['res'] = array(
-    'css'       => array(
-        'blog/styles.css'
-    ),
-    'js'        => array(
-    ),
-    'fav'       => array(
-    )
-);

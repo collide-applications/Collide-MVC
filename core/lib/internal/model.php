@@ -69,7 +69,7 @@ class Model{
                 $cfg['db'][$connName]['port']      . '/'   .
                 $cfg['db'][$connName]['db_name'];
 
-        $conn = Doctrine_Manager::connection( $dsn, $connName );
+        $conn = $manager->connection( $dsn, $connName );
 
         // set table prefix
         $conn->setAttribute( Doctrine_Core::ATTR_TBLNAME_FORMAT, $cfg['db'][$connName]['prefix'] . '%s' );

@@ -47,7 +47,7 @@ class Controller{
      * @access  protected
      * @var     object  default view instance
      */
-    protected $view = null;
+     protected $view = null;
 
     /**
      * Load library reference

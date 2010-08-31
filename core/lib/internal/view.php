@@ -34,6 +34,16 @@ class View{
      */
     private $_info = array();
 
+    private $_tplTitle = '';
+    private $_tplKey = '';
+    private $_tplDesc = '';
+    private $_tplFav = '';
+    private $_tplFavCdn = '';
+    private $_tplCss = array();
+    private $_tplCssCdn = array();
+    private $_tplJs = array();
+    private $_tplJsCdn = array();
+
     /**
      * Constructor
      *
@@ -42,20 +52,13 @@ class View{
      */
     public function __construct(){
         logWrite( 'View::__construct()' );
-    }
 
-    /**
-     * This function is called when method does not exists
-     *
-     * @access  public
-     * @param   string  $name   method name
-     * @param   array   $args   method arguments
-     * @return  void
-     */
-    public function  __call( $name,  $args ){
-        logWrite( 'View::__call(' . $name . ', ' . $args . ')' );
-
-        echo 'Function ' . $name . '(' . implode( ',', $args ) . ') does not exists!<br />';
+        // set values for template from config (could be overwrited with setters)
+        // define this controller object
+        $collide =& thisInstance();
+        $tplInfo = $collide->config->get( array( 'default', 'template' ) );
+        $this->setTplInfo( $tplInfo );
+        unset( $collide );
     }
 
     /**
@@ -129,13 +132,13 @@ class View{
      */
     public function template( $info = array(), $name = null ){
         logWrite( 'View::template( array(), "' . $name . '" )' );
+        
+        // define this controller object
+        $collide =& thisInstance();
 
         // if no template get default template from app config
         if( is_null( $name ) || empty( $name ) ){
-            // define this controller object
-            $collide =& thisInstance();
-            
-            $name = $collide->config->get( array( 'default', 'template' ) );
+            $name = $collide->config->get( array( 'default', 'template', 'name' ) );
         }
 
         // prepare template name (remove extension and separator)
@@ -171,7 +174,7 @@ class View{
 
         // what to print
         $output = '';
-
+        
         // write variables into symbol table
         extract( $this->_info );
         
@@ -244,5 +247,295 @@ class View{
         }
 
         return true;
+    }
+
+    /**
+     * Set template info based on an array
+     *
+     * Will set template title, keywords, description, favicon
+     *
+     * @access  public
+     * @param   array   $info   template info
+     * @return  boolean
+     */
+    private function setTplInfo( $info ){
+        logWrite( 'View::setTplInfo( $info )' );
+
+        if( !is_array( $info ) || !count( $info ) ){
+            return false;
+        }
+
+        $this->setTplTitle( isset( $info['title'] ) ? $info['title'] : '' );
+        $this->setTplKeywords( isset( $info['keywords'] ) ? $info['keywords'] : '' );
+        $this->setTplDescription( isset( $info['description'] ) ? $info['description'] : '' );
+        $this->setTplFavicon( isset( $info['favicon']['file'] ) ? $info['favicon']['file'] : '',
+                              isset( $info['favicon']['cdn'] ) ? $info['favicon']['cdn'] : '' );
+        $this->setTplCss( isset( $info['css']['files'] ) ? $info['css']['files'] : array(),
+                          isset( $info['css']['cdn'] ) ? $info['css']['cdn'] : '' );
+        $this->setTplJs( isset( $info['js']['files'] ) ? $info['js']['files'] : array(),
+                         isset( $info['js']['cdn'] ) ? $info['js']['cdn'] : '' );
+
+        return true;
+    }
+
+    /**
+     * Setter for template title
+     *
+     * @access  public
+     * @param   string  $title  template title
+     * @return  void
+     */
+    public function setTplTitle( $title ){
+        logWrite( 'View::setTplTitle( "' . $title . '" )' );
+
+        $this->_tplTitle = htmlentities( $title );
+    }
+
+    /**
+     * Setter for template keywords
+     *
+     * @access  public
+     * @param   string  $key    template keywords
+     * @return  void
+     */
+    public function setTplKeywords( $key ){
+        logWrite( 'View::setTplKeywords( "' . $key . '" )' );
+
+        $this->_tplKey = htmlentities( $key );
+    }
+
+    /**
+     * Setter for template description
+     *
+     * @access  public
+     * @param   string  $desc   template description
+     * @return  void
+     */
+    public function setTplDescription( $desc ){
+        logWrite( 'View::setTplDescription( "' . $desc . '" )' );
+
+        $this->_tplDesc = htmlentities( $desc );
+    }
+
+    /**
+     * Setter for template favicon
+     *
+     * @access  public
+     * @param   string  $fav    template favicon
+     * @param   string  $cdn    Content Delivery Network pattern
+     * @return  void
+     */
+    public function setTplFavicon( $fav, $cdn = '' ){
+        logWrite( 'View::setTplFavicon( "' . $fav . '" )' );
+
+        $this->_tplFav      = htmlentities( $fav );
+        $this->_tplFavCdn   = $cdn;
+    }
+
+    /**
+     * Setter for template css
+     *
+     * @access  public
+     * @param   mixed   $css    template css as string or array
+     * @param   string  $cdn    Content Delivery Network pattern
+     * @return  void
+     */
+    public function setTplCss( $css, $cdn = '' ){
+        logWrite( 'View::setTplCss( "' . $css . '" )' );
+
+        // create array of styles
+        if( is_string( $css ) ){
+            $css = array( $css );
+        }
+
+        $this->_tplCss      = array_merge_recursive( $this->_tplCss, $css );
+        $this->_tplCssCdn   = $cdn;
+    }
+
+    /**
+     * Setter for template js
+     *
+     * @access  public
+     * @param   mixed   $js     template javascript as string or array
+     * @param   string  $cdn    Content Delivery Network pattern
+     * @return  void
+     */
+    public function setTplJs( $js, $cdn = '' ){
+        logWrite( 'View::setTplJs( "' . $js . '" )' );
+
+        // create array of styles
+        if( is_string( $js ) ){
+            $js = array( $js );
+        }
+
+        $this->_tplJs       = array_merge_recursive( $this->_tplJs, $js );
+        $this->_tplJsCdn   = $cdn;
+    }
+
+    /**
+     * Getter for template title
+     *
+     * @access  public
+     * @return  string  template title
+     */
+    public function getTplTitle(){
+        logWrite( 'View::getTplTitle()' );
+
+        $html = "<title></title>\n";
+
+        if( !empty( $this->_tplKey ) ){
+            $html = "<title>" . $this->_tplTitle . "</title>\n";
+        }
+
+        return $html;
+    }
+
+    /**
+     * Getter for template keywords
+     *
+     * @access  public
+     * @return  string  template keywords
+     */
+    public function getTplKeywords(){
+        logWrite( 'View::getTplKeywords()' );
+
+        $html = '';
+
+        if( !empty( $this->_tplKey ) ){
+            $html .= "<meta name=\"keywords\" content=\"" . $this->_tplKey . "\" />\n";
+        }
+
+        return $html;
+    }
+
+    /**
+     * Getter for template description
+     *
+     * @access  public
+     * @return  string  template description
+     */
+    public function getTplDescription(){
+        logWrite( 'View::getTplDescription()' );
+
+        $html = '';
+
+        if( !empty( $this->_tplDesc ) ){
+            $html .= "<meta name=\"description\" content=\"" . $this->_tplDesc . "\" />\n";
+        }
+
+        return $html;
+    }
+
+    /**
+     * Getter for template favicon
+     *
+     * @access  public
+     * @return  string  template favicon
+     */
+    public function getTplFavicon(){
+        logWrite( 'View::getTplFavicon()' );
+
+        $html = '';
+
+        // add CDN if any to file url
+        $fileUrl = $this->addCdn( $this->_tplFav, $this->_tplFavCdn );
+
+        if( !empty( $this->_tplDesc ) ){
+            $html .= <<<EOF
+<link rel="shortcut icon" type="img/png" href="{$fileUrl}" />
+<link rel="apple-touch-icon" href="{$fileUrl}" />
+    
+EOF;
+        }
+
+        return $html;
+    }
+    
+    /**
+     * Getter for template css
+     *
+     * @access  public
+     * @return  void
+     */
+    public function getTplCss(){
+        logWrite( 'View::getTplCss()' );
+
+        $html = '';
+
+        // add each file to html
+        if( count( $this->_tplCss ) ){
+            foreach( $this->_tplCss as $file ){
+                // add CDN if any to file url
+                $fileUrl = $this->addCdn( $file, $this->_tplCssCdn );
+
+                $html .= "<link type=\"text/css\" rel=\"stylesheet\" href=\"" . $fileUrl . "\" />\n";
+            }
+        }
+
+        return $html;
+    }
+
+    /**
+     * Getter for template js
+     *
+     * @access  public
+     * @return  void
+     */
+    public function getTplJs(){
+        logWrite( 'View::getTplJs()' );
+
+        $html = '';
+
+        // add each file to html
+        if( count( $this->_tplJs ) ){
+            foreach( $this->_tplJs as $file ){
+                // add CDN if any to file url
+                $fileUrl = $this->addCdn( $file, $this->_tplJsCdn );
+
+                $html .= "<script type=\"text/javascript\" src=\"" . $fileUrl . "\"></script>\n";
+            }
+        }
+
+        return $html;
+    }
+
+    /**
+     * Add CDN (Content Delivery Network) subdomain to one url
+     *
+     * Example for 'cdn[0-9]':
+     * http://example.com/file.ext
+     * changed to:
+     * http://cdn0.example.com/file.ext
+     *
+     * !OBS1: the new url should be cookie free domain
+     * !OBS2: if CDN pattern is empty or invalid siteUrl() will be applied
+     *
+     * @access  public
+     * @param   string  $file   file to complete
+     * @param   string  $cdn    pattern to generate CDN
+     * @return  string  url prefixed with CDN
+     */
+    private function addCdn( $file, $cdn = '' ){
+        logWrite( 'View::addCdn( $file, $pattern )' );
+
+        $file = ltrim( $file, '/' );
+
+        // load url helper for favicon url
+        $collide =& thisInstance();
+        $collide->load->helper( 'url' );
+        
+        if( is_string( $cdn ) && !empty( $cdn ) &&
+            // if full url provided
+            preg_match( '/^https?:\/\/[a-z0-9_-]+\.?[a-z0-9_-]+\.[a-z]{3,5}\/?$/i', $cdn ) ){
+            return rtrim( $cdn, '/' ) . '/' . $file;
+        }else if( is_array( $cdn ) && count( $cdn ) ){
+            // if array of subdomains provided pick one
+            $cdn = $cdn[mt_rand( 0, count( $cdn ) - 1 )];
+            
+            preg_match( '/^(https?:\/\/)([a-z0-9\._-]+\.[a-z]{3,5}[a-z0-9-_\/]*)$/i', siteUrl(), $matches );
+            return $matches[1] . $cdn . '.' . rtrim( $matches[2], '/' ) . '/' . $file;
+        }
+
+        return siteUrl() . $file;
     }
 }

@@ -34,13 +34,13 @@ $cfg['db']['default']['driver']        = 'mysql';
 // database username
 $cfg['db']['default']['user']          = 'root';
 // database password
-$cfg['db']['default']['pass']          = 'lampp.pass123';
+$cfg['db']['default']['pass']          = 'keplerpass';
 // database host
 $cfg['db']['default']['host']          = 'localhost';
 // database port
 $cfg['db']['default']['port']          = '3306';
 // database name
-$cfg['db']['default']['db_name']       = 'collide';
+$cfg['db']['default']['db_name']       = 'test1';
 // tables prefix
 $cfg['db']['default']['prefix']        = 'blog_';
 

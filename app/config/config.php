@@ -90,6 +90,25 @@ $cfg['default']['lib_prefix'] = '_';
 $cfg['default']['view'] = 'index';
 
 // default template name (relative to "tpl" folder in public folder)
-$cfg['default']['template'] = 'default';
+$cfg['default']['template']['name']         = 'default';
+$cfg['default']['template']['title']        = 'Collide MVC - Blog Demo';
+$cfg['default']['template']['keywords']     = 'blog, demo';
+$cfg['default']['template']['description']  = 'Blog Demo using Collide MVC';
+$cfg['default']['template']['favicon']      = array(
+    'cdn'   => '',
+    'file'  => 'img/blog/favicon.png'
+);
+$cfg['default']['template']['css']          = array(
+    'cdn'   => '',
+    'files' => array(
+        'css/blog/styles.css'
+    )
+);
+$cfg['default']['template']['js']          = array(
+    'cdn'   => '',
+    'files' => array(
+        
+    )
+);
 
 $cfg['xss']['enable'] = true;

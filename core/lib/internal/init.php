@@ -70,12 +70,11 @@ if( !function_exists( 'initHook' ) ){
         $logClassName = incLib( 'log' );
         $log = new Log();
 
-        // logs support
+        // include log helper
         if( file_exists( APP_HELPERS_PATH . 'log' . EXT ) ){
             require( APP_HELPERS_PATH . 'log' . EXT );
-        }else{
-            require( CORE_HELPERS_PATH . 'log' . EXT );
         }
+        require( CORE_HELPERS_PATH . 'log' . EXT );
 
         // set default values
         $controller = $cfg['default']['controller'];
@@ -147,17 +146,11 @@ if( !function_exists( 'incLib' ) ){
             return false;
         }
         
-        try{
-            // include requested standard library first
-            if( file_exists( CORE_LIB_INT_PATH . $libName . EXT ) ){
-                require_once( CORE_LIB_INT_PATH . $libName . EXT );
-            }else{
-                throw new Collide_exception( 'Standard library not found!' );
-
-                return false;
-            }
-        }catch( Collide_exception $e ){
-            $e->__toString();
+        // include requested standard library first
+        if( file_exists( CORE_LIB_INT_PATH . $libName . EXT ) ){
+            require_once( CORE_LIB_INT_PATH . $libName . EXT );
+        }else{
+            throw new Collide_exception( 'Standard library not found!' );
 
             return false;
         }
