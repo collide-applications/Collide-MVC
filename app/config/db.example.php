@@ -34,13 +34,13 @@ $cfg['db']['default']['driver']        = 'mysql';
 // database username
 $cfg['db']['default']['user']          = 'root';
 // database password
-$cfg['db']['default']['pass']          = 'keplerpass';
+$cfg['db']['default']['pass']          = 'pass123';
 // database host
 $cfg['db']['default']['host']          = 'localhost';
 // database port
 $cfg['db']['default']['port']          = '3306';
 // database name
-$cfg['db']['default']['db_name']       = 'test1';
+$cfg['db']['default']['db_name']       = 'mvc';
 // tables prefix
 $cfg['db']['default']['prefix']        = 'blog_';
 

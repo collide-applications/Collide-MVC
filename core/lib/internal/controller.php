@@ -110,7 +110,7 @@ class Controller{
     public function __construct(){
         self::$thisInstance =& $this;
 
-        log( 'Controller::__construct()' );
+        logWrite( 'Controller::__construct()' );
 
         // instantiate config library and load application config
         $configClassName = incLib( 'config' );
@@ -162,7 +162,7 @@ class Controller{
      * @return  string
      */
     public function getControllerName(){
-        log( 'Controller::getControllerName()' );
+        logWrite( 'Controller::getControllerName()' );
 
         return $this->_controllerName;
     }
@@ -176,7 +176,7 @@ class Controller{
      * @return  void
      */
     public function  __call( $name,  $args ){
-        log( "Controller::__call()" );
+        logWrite( "Controller::__call()" );
 
         require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
         throw new Collide_exception( 'Function "' . $name . '" does not exists!' );
@@ -201,7 +201,7 @@ class Controller{
      * @return  array
      */
     public function getLoaded( $types = '' ){
-        log( "Controller::getLoaded()" );
+        logWrite( "Controller::getLoaded()" );
 
         // if empty array or empty string return all loaded items
         if( ( is_array( $types ) && count( $types ) < 1 ) ||
@@ -237,7 +237,7 @@ class Controller{
      * @return  boolean
      */
     public function addLoaded( $type, $item ){
-        log( "Controller::addLoaded()" );
+        logWrite( "Controller::addLoaded()" );
 
         // prepare type and item
         $type = strtolower( trim( $type ) );
@@ -270,7 +270,7 @@ class Controller{
      * @return  void
      */
     public function addObject( $name, $obj ){
-        log( "Controller::addObject()" );
+        logWrite( "Controller::addObject()" );
 
         $this->$name = $obj;
     }
@@ -284,7 +284,7 @@ class Controller{
      * @return  void
      */
     private function autoload(){
-        log( "Controller::autoload()" );
+        logWrite( "Controller::autoload()" );
 
         // load application config
         require( APP_CONFIG_PATH . 'load' . EXT );
