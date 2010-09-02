@@ -13,3 +13,4 @@ Version 0.1.0 (1 October 2010)
 - PHP global arrays abstractization library;
 - multi language support;
 - CRUD demo application;
+- test;
