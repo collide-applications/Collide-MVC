@@ -5,6 +5,6 @@
     #RewriteCond $1 !^(folder1|file1.\ext|folder2)
 
     # redirect to public folder
-    RewriteRule ^$ app/public/ [L]
+    # RewriteRule ^$ app/public/ [L]
     RewriteRule (.*) app/public/$1 [L]
 </IfModule>
