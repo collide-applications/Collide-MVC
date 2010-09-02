@@ -4,6 +4,7 @@ Version 0.1.0 (1 October 2010)
 - code organized in MVC structure;
 - models implemented using Doctrine ORM;
 - multiple templates support;
+- template files loaders;
 - logging system using files and FirePHP;
 - config files;
 - HTML library;
