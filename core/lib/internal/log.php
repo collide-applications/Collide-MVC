@@ -134,7 +134,7 @@ class Log{
      * @param   string  $level  log level (defined in config)
      * @return  void
      */
-    public function write( $msg, $level = 'info', $exclusive_types = null ){
+    public function write( $msg, $level = 'info', $exclusiveTypes = null ){
         // set parameters
         $this->_msg     = $msg;
         $this->_level   = strtolower( trim( $level ) );
@@ -145,18 +145,18 @@ class Log{
         // check if at least one log was writed
         $writed = false;
 
-        if( !is_null( $exclusive_types ) && !is_array( $exclusive_types ) ){
-            $exclusive_types = array( $exclusive_types );
+        if( !is_null( $exclusiveTypes ) && !is_array( $exclusiveTypes ) ){
+            $exclusiveTypes = array( $exclusiveTypes );
         }
 
         // for each enabled type try to write log
         foreach( $logTypes as $type => $properties ){
-            if( is_array( $exclusive_types ) && !in_array( $type, $exclusive_types ) ){
+            if( is_array( $exclusiveTypes ) && !in_array( $type, $exclusiveTypes ) ){
                 continue;
             }
 
             // if type not enabled continue
-            if( is_array( $exclusive_types ) && !$properties['enabled'] ){
+            if( is_array( $exclusiveTypes ) && !$properties['enabled'] ){
                 continue;
             }
 
@@ -282,7 +282,7 @@ EOF;
             $this->_firephp->getOptions();
             $this->_firephp->setOptions( $opt );
         }
-
+        
         // call log function
         switch( $this->_level ){
             case 'info':

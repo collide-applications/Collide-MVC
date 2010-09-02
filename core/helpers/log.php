@@ -16,39 +16,30 @@
  ******************************************************************************/
 
 /**
- * Html class
+ * Log Helper
  *
  * @package     Collide MVC Core
- * @subpackage  Libraries
- * @category    Html
+ * @subpackage  Standard Helper
+ * @category    Helpers
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
-class Html{
-    /**
-     * Constructor
-     *
-     * @access  public
-     * @return  void
-     */
-    public function __construct(){
-        logWrite( 'Html::__construct()' );
-    }
 
-    /**
-     * Load static content (images, javascript, styles)
-     *
-     * @access  public
-     * @param   string  $type   e.g: img, js, css
-     * @param   string  $file   file to load
-     * @param   mixed   $attr   string or array with html attributes
-     * @return  string  html or empty string if error
-     */
-    public function load( $type, $file, $attr = array() ){
-        logWrite( 'Html::load( "' . $type . '", "' . $attr . '" )' );
+/**
+ * Write to logs
+ *
+ * This helper calls Log::write() method and is used to avoid loading log object
+ * in all classes
+ *
+ * @access  public
+ * @param   string  $msg    message to log
+ * @param   string  $level  log level (defined in config)
+ * @return  void
+ */
+if( !function_exists( 'logWrite' ) ){
+    function logWrite( $msg, $level = 'info', $exclusiveTypes = null ){
+        $log =& Log::getInstance();
 
-        $html = '';
-
-        return $html;
+        $log->write( $msg, $level, $exclusiveTypes );
     }
 }

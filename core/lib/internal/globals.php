@@ -1,4 +1,4 @@
-<?php if( !defined( 'ROOT_PATH' ) ) die( NO_ACCESS_MSG );
+<?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 
 /******************************************************************************
  *                                                                            *
@@ -11,7 +11,7 @@
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
  * @link        http://mvc.collide-applications.com                           *
- * @since       Version 1.0                                                   *
+ * @since       Version 0.1                                                   *
  *                                                                            *
  ******************************************************************************/
 
@@ -28,91 +28,83 @@
  */
 class Globals{
     /**
-     * Log object reference
+     * XSS enabled from application config
      *
-     * @access  protected
-     * @var     object  $_log    log reference
+     * @access  private
+     * @var     boolean $_xss   xss enabled from app config
      */
-    protected $_log = null;
-
-    /**
-     * Globals array
-     *
-     * @access  protected
-     * @var     array   $_globals   globals array
-     */
-    protected $_globals = array();
-
-    /**
-     * Avalilable global arrays
-     *
-     * @access  protected
-     * @var     array   $_availableTypes    available global arrays
-     */
-    protected $_availableTypes = array(
-        '_POST', '_GET', '_COOKIE', '_REQUEST', '_SERVER', '_ENV', '_FILES'
-    );
+    private $_xss = false;
 
     /**
      * Constructor
+     *
+     * Unset $_GET global array
+     * Get xss enabled from config
      *
      * @access  public
      * @return  void
      */
     public function __construct(){
-        // instantiate log
-        $this->_log =& Log::getInstance();
-        $this->_log->write( 'Globals::__construct()' );
+        logWrite( 'Globals::__construct()' );
 
-        // unset globals array and create an internal one
-        foreach( $this->_availableTypes as $type ){
-            if( isset( $GLOBALS[$type] ) ){
-                $this->_globals[$type] = $GLOBALS[$type];
-                unset( $GLOBALS[$type] );
-
-                // unset individual global array too
-                if( isset( $$type ) ){
-                    unset( $$type );
-                }
-            }
+        // unset get array (method parameters used instead)
+        if( isset( $_GET ) ){
+            unset( $_GET );
         }
 
-        // unset globals too
-        unset( $GLOBALS );
+        // if xss cleanup required add it to callback functions
+        $collide =& thisInstance();
+        $this->_xss = $collide->config->get( array( 'xss', 'enable' ) );
     }
 
     /**
      * Get variable from global array
      *
      * @access  public
-     * @param   mixed   $var  if <code>null</code> return all array, else return requested value<br>
-     *                        e.g:
-     *                        - $obj->get( null, 'post' ); // return all $_POST array
-     *                        - $obj->get( 'var', 'post' ); // return $_POST['var'];
-     *                        - $obj->get( array( 'var1', 'var2' ), 'post' ); // return $_POST['var1']['var2']
-     * @param   string  $type array type to return (e.g: session, post, get, cookie, request, server, env, files)
-     * @param   mixed   $callback   function name or array with functions to apply on each element returned
-     *                              OBS: if you use a Collide helper as callback load that helper first
-     * @return  mixed   value from that index, null in not exists, false on error
+     * @param   mixed   $var        if <code>null</code> return all array, else
+     *                              return requested value<br>
+     *
+     *                              e.g:
+     *                              - $obj->get( null, 'post' ); //all $_POST
+     *                              - $obj->get( 'var', 'post' );
+     *                                // $_POST['var'];
+     *                              - $obj->get( array( 'var1', 'var2' ),
+     *                                                  'post' );
+     *                              // return $_POST['var1']['var2']
+     * @param   string  $type       array type to return (e.g: session, post,
+     *                              get, cookie, request, server, env, files)
+     * @param   boolean $xss        apply an xss filter on each element
+     * @param   mixed   $callback   function name or array with functions to
+     *                              apply on each element returned
+     *                              OBS: if you use a Collide helper as callback
+     *                              load that helper first
+     * @return  mixed   value from that index, null if not exists, false on
+     *                  error
      */
-    public function get( $var, $type = 'post', $callback = null ){
-        $this->_log->write( 'Globals::get( $var, "' . $type . '", "' . $callback . '" )' );
+    public function get( $var = null, $type = 'post', $xss = false, $callback = null ){
+        //logWrite( 'Globals::get( $var, "' . $type . '", "' . $callback . '" )' );
 
-        // prepare parameters
-        $type = '_' . trim( strtoupper( $type ) );
+        $globals = false;
 
-        // check if type exists
-        if( !in_array( $type, $this->_availableTypes ) ){
-            return false;
-        }
+        // available types
+        $types = array( 'post', 'cookie', 'request', 'server', 'env', 'files' );
 
         // create an array from $var
         if( !is_null( $var ) && !is_array( $var ) ){
             $var = array( $var );
         }
 
+        // check if type is valid
+        $type = trim( $type );
+        if( !in_array( $type, $types ) ){
+            return false;
+        }
+
+        // prepare parameters
+        $type = '_' . strtoupper( $type );
+
         // get array type from globals to search for variable
-        $globals = $this->_globals[$type];
+        $globals = $GLOBALS[$type];
 
         // loop through global array and try to return requested element
         if( is_array( $var ) && count( $var ) ){
@@ -126,11 +118,17 @@ class Globals{
                 }
             }
         }
-
+        
         // apply callbacks on each array elements
         if( !is_null( $globals ) ){
             if( !is_null( $callback ) && !is_array( $callback ) ){
                 $callback = array( $callback );
+            }            
+
+            // global xss (from app config) or xss parameter must be enabled
+            if( $xss || $this->_xss ){
+                // call xss method from this class
+                $callback[] = array( $this, 'xss' );
             }
 
             if( is_array( $callback ) && count( $callback ) ){
@@ -138,8 +136,14 @@ class Globals{
                 foreach( $callback as $func ){
                     if( is_array( $globals ) ){
                         array_walk_recursive( $globals, $func );
+                        $x=3;
                     }else{
-                        $globals = $func( $globals );
+                        // if method from class called
+                        if( is_array( $func ) ){
+                            $func[0]->$func[1]( $flobals );
+                        }else{
+                            $globals = $func( $globals );
+                        }
                     }
                 }
             }
@@ -147,6 +151,23 @@ class Globals{
 
         return $globals;
     }
-}
 
-/* end of file: ./core/lib/internal/globals.php */
+    /**
+     * XSS filter on globals
+     * 
+     * Could be set in app config or as get method parameter
+     * "htmlentities" php function used to filter globals
+     *
+     * @access  private
+     * @param   mixed   $item   any element (only strings will be escaped)
+     * @return  void
+     */
+    private function xss( &$item ){
+        //logWrite( 'Globals::xss()' );
+
+        // apply htmlentities on strings
+        if( is_string( $item ) ){
+            $item = htmlentities( $item );
+        }
+    }
+}

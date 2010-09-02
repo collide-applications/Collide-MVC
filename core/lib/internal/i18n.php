@@ -16,37 +16,39 @@
  ******************************************************************************/
 
 /**
- * Application default config
+ * Html class
  *
- * @package     Collide MVC App
- * @subpackage  Configs
- * @category    Application config
+ * @package     Collide MVC Core
+ * @subpackage  Libraries
+ * @category    i18n
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
+class I18n{
+    /**
+     * Constructor
+     *
+     * @access  public
+     * @return  void
+     */
+    public function __construct(){
+        logWrite( 'I18n::__construct()' );
+    }
 
-/**
- * Configure database connection.
- */
+    /**
+     * Load static content (images, javascript, styles)
+     *
+     * @access  public
+     * @param   string  $type   e.g: img, js, css
+     * @param   string  $file   file to load
+     * @param   mixed   $attr   string or array with html attributes
+     * @return  string  html or empty string if error
+     */
+    public function load( $type, $file, $attr = array() ){
+        logWrite( 'Html::load( "' . $type . '", "' . $attr . '" )' );
 
-// database driver to use
-$cfg['db']['default']['driver']        = 'mysql';
-// database username
-$cfg['db']['default']['user']          = 'root';
-// database password
-$cfg['db']['default']['pass']          = 'keplerpass';
-// database host
-$cfg['db']['default']['host']          = 'localhost';
-// database port
-$cfg['db']['default']['port']          = '3306';
-// database name
-$cfg['db']['default']['db_name']       = 'test1';
-// tables prefix
-$cfg['db']['default']['prefix']        = 'blog_';
+        $html = '';
 
-// Doctrine configs
-$cfg['db']['doctrine']['models_path']           = APP_MODELS_PATH;
-$cfg['db']['doctrine']['data_fixtures_path']    = $cfg['db']['doctrine']['models_path'] . 'fixtures';
-$cfg['db']['doctrine']['migrations_path']       = $cfg['db']['doctrine']['models_path'] . 'migrations';
-$cfg['db']['doctrine']['sql_path']              = $cfg['db']['doctrine']['models_path'] . 'sql';
-$cfg['db']['doctrine']['yaml_schema_path']      = $cfg['db']['doctrine']['models_path'] . 'yaml';
+        return $html;
+    }
+}

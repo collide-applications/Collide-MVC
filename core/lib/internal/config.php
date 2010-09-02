@@ -34,14 +34,6 @@ class Config{
     protected $_collide;
 
     /**
-     * Log object reference
-     *
-     * @access  protected
-     * @var     object      $log    log reference
-     */
-    protected $_log = null;
-
-    /**
      * All config arrays merged
      *
      * @access  protected
@@ -56,9 +48,7 @@ class Config{
      * @return  void
      */
     public function __construct(){
-        // instantiate log
-        $this->_log =& Log::getInstance();
-        $this->_log->write( 'Config::__construct()' );
+        logWrite( 'Config::__construct()' );
     }
 
     /**
@@ -73,7 +63,7 @@ class Config{
      * @return  mixed   value from that index or null in not exists
      */
     public function get( $var = null ){
-        $this->_log->write( 'Config::get()' );
+        logWrite( 'Config::get()' );
 
         // create an array from $var
         if( !is_null( $var ) && !is_array( $var ) ){
@@ -113,7 +103,7 @@ class Config{
      * @return  mixed           modified value
      */
     public function set( $var, $val ){
-        $this->_log->write( 'Config::get("' . $var . '", ' . $val . ')' );
+        logWrite( 'Config::get("' . $var . '", ' . $val . ')' );
 
         $this->_cfg[$var] = $val;
 
@@ -129,7 +119,7 @@ class Config{
      * @return  boolean
      */
     public function load( $file, $force = false ){
-        $this->_log->write( 'Config::load("' . $file . '")' );
+        logWrite( 'Config::load("' . $file . '")' );
 
         // collide instance
         $collide =& thisInstance();
