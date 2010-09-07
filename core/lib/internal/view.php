@@ -44,6 +44,8 @@ class View{
     private $_tplJs = array();
     private $_tplJsCdn = array();
 
+    public $url = null;
+
     /**
      * Constructor
      *
@@ -59,6 +61,11 @@ class View{
         $tplInfo = $collide->config->get( array( 'default', 'template' ) );
         $this->setTplInfo( $tplInfo );
         unset( $collide );
+        
+        // instantiate url library
+        $urlClassName = incLib( 'url' );
+        $objUrl = new $urlClassName();
+        $this->url = $objUrl;
     }
 
     /**
@@ -508,7 +515,7 @@ EOF;
      * http://cdn0.example.com/file.ext
      *
      * !OBS1: the new url should be cookie free domain
-     * !OBS2: if CDN pattern is empty or invalid siteUrl() will be applied
+     * !OBS2: if CDN pattern is empty or invalid $this->url->get() will be applied
      *
      * @access  public
      * @param   string  $file   file to complete
@@ -522,7 +529,6 @@ EOF;
 
         // load url helper for favicon url
         $collide =& thisInstance();
-        $collide->load->helper( 'url' );
         
         if( is_string( $cdn ) && !empty( $cdn ) &&
             // if full url provided
@@ -532,10 +538,10 @@ EOF;
             // if array of subdomains provided pick one
             $cdn = $cdn[mt_rand( 0, count( $cdn ) - 1 )];
             
-            preg_match( '/^(https?:\/\/)([a-z0-9\._-]+\.[a-z]{3,5}[a-z0-9-_\/]*)$/i', siteUrl(), $matches );
+            preg_match( '/^(https?:\/\/)([a-z0-9\._-]+\.[a-z]{3,5}[a-z0-9-_\/]*)$/i', $this->url->get(), $matches );
             return $matches[1] . $cdn . '.' . rtrim( $matches[2], '/' ) . '/' . $file;
         }
 
-        return siteUrl() . $file;
+        return $this->url->get() . $file;
     }
 }

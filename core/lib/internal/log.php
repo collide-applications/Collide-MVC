@@ -16,7 +16,7 @@
  ******************************************************************************/
  
 /**
- * Controller class
+ * Logs class
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries

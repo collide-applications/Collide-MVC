@@ -39,7 +39,7 @@
             
             <div class="comments">
                 <div class="add">
-                    <form method="post" action="<?=siteUrl()?>blog/comment">
+                    <form method="post" action="<?=$this->url->get()?>blog/comment">
                         <input type="hidden" name="post_id" value="<?=$post['id']?>" />
                         <table cellspacing="0" cellpadding="0" border="0" width="100%">
                             <tr>

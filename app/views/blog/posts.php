@@ -44,15 +44,15 @@
                 <li class="<?=$liClass?>">
                     <div class="float-left">
                         <?=$count?>.
-                        <a href="<?=siteUrl()?>blog/post/<?=$post['id']?>">
+                        <a href="<?=$this->url->get()?>blog/post/<?=$post['id']?>">
                             <?=$post['title']?>
                         </a>
                     </div>
                     <div class="controls float-right">
-                        <a href="<?=siteUrl()?>blog/edit/<?=$post['id']?>">
+                        <a href="<?=$this->url->get()?>blog/edit/<?=$post['id']?>">
                             Edit
                         </a>&nbsp;|&nbsp;
-                        <a href="<?=siteUrl()?>blog/delete/<?=$post['id']?>">
+                        <a href="<?=$this->url->get()?>blog/delete/<?=$post['id']?>">
                             Delete
                         </a>
                     </div>

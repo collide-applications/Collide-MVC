@@ -31,7 +31,7 @@
         <h3>Add new post</h3>
 
         <div class="add">
-            <form method="post" action="<?=siteUrl()?>blog/add">
+            <form method="post" action="<?=$this->url->get()?>blog/add">
                 <table cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>
                         <td width="50" align="right">

@@ -48,7 +48,7 @@
     <!-- header -->
     <div id="header" class="clear">
         <a href="http://mvc.collide-applications.com/demo/">
-            <img src="<?php echo siteUrl(); ?>img/blog/logo.png" width="80" height="70"
+            <img src="<?php echo $this->url->get(); ?>img/blog/logo.png" width="80" height="70"
                  alt="Collide Applications" title="Collide Applications" />
         </a>
         <div class="text">
@@ -65,7 +65,7 @@
             <ul>
             <?php foreach( $menu as $item => $page ): ?>
                 <li>
-                    <a href="<?php echo siteUrl() . $page; ?>">
+                    <a href="<?php echo $this->url->get() . $page; ?>">
                         <?php echo $item; ?>
                     </a>
                 </li>

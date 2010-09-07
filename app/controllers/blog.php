@@ -123,7 +123,7 @@ class BlogController extends Controller{
         // add $_POST['post'] as parameter to add function
         $this->comments->add( $this->globals->get() );
 
-        redirect( 'blog/post/' . $this->globals->get( 'post_id' ) );
+        $this->url->go( 'blog/post/' . $this->globals->get( 'post_id' ) );
     }
 
     /**
@@ -151,7 +151,7 @@ class BlogController extends Controller{
             // insert post
             $this->posts->add( $this->globals->get( 'post' ) );
 
-            redirect( 'blog' );
+            $this->url->go( 'blog' );
         }
     }
 
@@ -184,7 +184,7 @@ class BlogController extends Controller{
             // update post
             $this->posts->edit( $this->globals->get( 'post' ) );
 
-            redirect( 'blog/post/' . $id );
+            $this->url->go( 'blog/post/' . $id );
         }
     }
 
@@ -203,6 +203,6 @@ class BlogController extends Controller{
             $this->comments->deleteByPostId( $id );
         }
 
-        redirect( 'blog' );
+        $this->url->go( 'blog' );
     }
 }

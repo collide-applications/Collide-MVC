@@ -26,14 +26,6 @@
  */
 class Config{
     /**
-     * Collide MVC instance
-     *
-     * @access  protected
-     * @var     object      $_collide
-     */
-    protected $_collide;
-
-    /**
      * All config arrays merged
      *
      * @access  protected

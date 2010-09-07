@@ -31,7 +31,7 @@
         <h3>Edit post</h3>
 
         <div class="add">
-            <form method="post" action="<?=siteUrl()?>blog/edit/<?=$post['id']?>">
+            <form method="post" action="<?=$this->url->get()?>blog/edit/<?=$post['id']?>">
                 <input type="hidden" name="post[id]" value="<?=$post['id']?>" />
                 <table cellspacing="0" cellpadding="0" border="0" width="100%">
                     <tr>

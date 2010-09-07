@@ -73,6 +73,14 @@ class Controller{
       */
      public $globals = null;
 
+     /**
+     * URL library reference
+     *
+     * @access  public
+     * @var     object  URL library reference
+     */
+    public $url = null;
+
     /**
      * This controller name
      *
@@ -90,7 +98,7 @@ class Controller{
       */
      private $_loaded = array(
         'lib'           => array(
-            'model', 'view', 'load', 'config', 'log'    // default loaded
+            'model', 'view', 'load', 'config', 'log', 'url'    // default loaded
         ),
         'model'         => array(),
         'config'        => array(),
@@ -136,6 +144,11 @@ class Controller{
         $globalsClassName = incLib( 'globals' );
         $objGlobals = new $globalsClassName();
         $this->globals = $objGlobals;
+
+        // instantiate url library
+        $urlClassName = incLib( 'url' );
+        $objUrl = new $urlClassName();
+        $this->url = $objUrl;
 
         // load session lib for session abstractization
         $sessionClassName = incLib( 'session' );
