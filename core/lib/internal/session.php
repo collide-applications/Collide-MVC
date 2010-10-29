@@ -16,7 +16,7 @@
  ******************************************************************************/
 
 /**
- * Html class
+ * Session library
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries

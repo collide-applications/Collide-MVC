@@ -189,6 +189,8 @@ class Url{
      * @return  mixed   array of segments if no position provided or string
      */
     public function getSegments( $position = null ){
+        logWrite( "Url::getSegments( {$position} )" );
+        
         $segments = explode( '/', $this->_segments );
 
         if( !is_null( $position ) ){
@@ -230,14 +232,15 @@ class Url{
      *
      * @access  public
      * @param   string  $url    url to redirect to
+     * @param   boolean $force  redirect using javascript
      * @return  string  site url (with tailing slash)
      */
-    public function go( $url = '', $hard = false ){
-        logWrite( 'Url::go( "' . $url . '", ' . (int)$hard . ' )' );
+    public function go( $url = '', $force = false ){
+        logWrite( "Url::go( '{$url}', '" . (int)$force . "' )" );
         
-        // check if headers already sent or hard redirect specified
-        if( $hard === false && headers_sent() === true ){
-            $hard = true;
+        // check if headers already sent or force redirect specified
+        if( $force === false && headers_sent() === true ){
+            $force = true;
         }
 
         // prepare url
@@ -250,12 +253,32 @@ class Url{
             $url = $this->get() . $url;
         }
 
-        // if hard url needed echo javascript refresh in page (no warning returned)
-        if( $hard === true ){
+        // if force url needed echo javascript refresh in page (no warning returned)
+        if( $force === true ){
             die( '<script type="text/javascript">window.location="' . $url . '";' );
         }else{
             // redirect using headers
             header( 'Location: ' . $url );
         }
+    }
+
+    /**
+     * Go to previews page
+     *
+     * @access  public
+     * @return  void
+     */
+    public function back(){
+        logWrite( "Url::back()" );
+
+        // strip generic info (protocol, domain, port, subfolder) from referer
+        $url = str_replace( 
+                $this->getProtocol() . $this->getDomain() . 
+                ( $this->getPort() != '80' ? $this->getPort() : '' ) . '/' .
+                $this->getSubfolder(),
+                '', $_SERVER['HTTP_REFERER'] );
+
+        // go to previews url
+        $this->go( $url );
     }
 }
