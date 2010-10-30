@@ -69,6 +69,8 @@ class Collide_utilsController extends Controller{
     /**
      * Generate sql from Doctrine models
      *
+     * File will be generated in app/models/sql/ folder
+     *
      * @access  public
      * @return  void
      * @todo    make it work
@@ -78,12 +80,41 @@ class Collide_utilsController extends Controller{
 
         // load config to get fixtures path
         $this->config->load( 'db' );
-        $sqlPath = $this->config->get( array( 'db', 'doctrine', 'sql_path' ) );
-        
-        if( Doctrine::generateSqlFromModels( $sqlPath ) ){
-            echo 'SQL generated';
+        $sqlPath = $this->config->get( array( 'db', 'doctrine', 'models_path' ) );
+        $modelPrefix = $this->config->get( array( 'db', 'default', 'prefix' ) );
+        $modelPrefix = rtrim( ucfirst( $modelPrefix ), '_' );
+
+        // load all models based on models files in app/models folder
+        $files = scandir( $sqlPath );
+        foreach( $files as $file ){
+            if( filetype( $sqlPath . '/' . $file ) == 'file' && $file != 'index.html' ){
+                // exclude model prefix and extension
+                preg_match( '/^' . $modelPrefix . '(.*)\.php/', $file, $matches );
+
+                // load model
+                $this->load->model( strtolower( $matches[1] ) );
+            }
+        }
+
+        // generate sql
+        $sql = Doctrine::generateSqlFromModels( $sqlPath );
+
+        if( !empty( $sql ) ){
+            // try to write sql to file
+            $file = $this->config->get( array( 'db', 'doctrine', 'sql_path' ) ) .
+                    '/' . date( 'h-i-s_d-m-Y' ) . '.sql';
+
+            $fp = @fopen( $file, 'w');
+            if( !$fp === false ){
+                fwrite( $fp, $sql );
+                fclose( $fp );
+
+                echo 'SQL generated';
+            }else{
+                throw new Collide_exception( "Cannot create file <code>{$file}</code>" );
+            }
         }else{
-            echo 'SQL not generated!';
+            throw new Collide_exception( "Cannot create file <code>{$file}</code>" );
         }
     }
 
