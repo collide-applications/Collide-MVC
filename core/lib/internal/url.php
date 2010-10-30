@@ -102,7 +102,7 @@ class Url{
         $this->_subfolder   = trim( str_replace( $tmpDocRoot, '', $tmpRootPath ), '/' ) . '/';
 
         // add "https" if required
-        $https = strtolower( $_SERVER['HTTPS'] );
+        $https = isset( $_SERVER['HTTPS'] ) ? strtolower( $_SERVER['HTTPS'] ) : null;
         if( !is_null( $https ) && !empty( $https ) && $https != 'off' ) {
             $protocol .= 's';
         }

@@ -29,10 +29,10 @@
   * Begin security setup *
   ************************/
 
-/**
- * Check environment type and display or log errors
- */
 if( !function_exists( 'setDisplayErrors' ) ){
+    /**
+     * Check environment type and display or log errors
+     */
     function setDisplayErrors(){
         if( trim( strtolower( ENVIRONMENT ) ) == 'dev' ){   // dev
             // display all errors
@@ -52,14 +52,14 @@ if( !function_exists( 'setDisplayErrors' ) ){
  * End security setup *
  **********************/
 
-/**
- * Instantiate controller and required libraries and call requested methods
- *
- * @access  public
- * @return  boolean true on success false on error
- * @TODO    split in small functions ore move functionality to controller
- */
 if( !function_exists( 'initHook' ) ){
+    /**
+     * Instantiate controller and required libraries and call requested methods
+     *
+     * @access  public
+     * @return  boolean true on success false on error
+     * @TODO    split in small functions ore move functionality to controller
+     */
     function initHook(){
         incLib( 'collide_exception' );
 
@@ -96,7 +96,7 @@ if( !function_exists( 'initHook' ) ){
         }
         
         // query string
-        $params = $arrUrl;    
+        $params = $arrUrl;
 
         // include standard controller library
         incLib( 'controller' );
@@ -125,18 +125,22 @@ if( !function_exists( 'initHook' ) ){
     }
 }
 
-/**
- * Include standard and custom libraries
- *
- * @access  public
- * @param   string  $libName    library name
- * @return  mixed   false on error or class name on success
- */
 if( !function_exists( 'incLib' ) ){
+    /**
+     * Include standard and custom libraries
+     *
+     * @access  public
+     * @param   string  $libName    library name
+     * @return  mixed   false on error or class name on success
+     */
     function incLib( $libName ){
         require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
 
-        require( APP_CONFIG_PATH . 'config' . EXT );
+        if( file_exists( APP_CONFIG_PATH . 'config' . EXT ) ){
+            require( APP_CONFIG_PATH . 'config' . EXT );
+        }else{
+            throw new Collide_exception( 'Cannot find application config file <code>app/config/config.php</code>' );
+        }
 
         // prepare library name
         $libName    = trim( strtolower( $libName ) );
@@ -167,13 +171,13 @@ if( !function_exists( 'incLib' ) ){
     }
 }
 
-/**
- * Check if Collide MVC is prepared
- *
- * @access  public
- * @return  void
- */
 if( !function_exists( 'checkCollide' ) ){
+    /**
+     * Check if Collide MVC is prepared
+     *
+     * @access  public
+     * @return  void
+     */
     function checkCollide(){
         incLib( 'collide_exception' );
 
@@ -190,14 +194,11 @@ if( !function_exists( 'checkCollide' ) ){
     }
 }
 
-// check for framework errors
+// first set display errors based on environment mode set in app config
+setDisplayErrors();
+
+// check for framework fatal errors
 checkCollide();
 
 // call initialization hook
-try{
-    initHook();
-}catch( Collide_exception $e ){
-    $e->__toString();
-
-    return false;
-}
+initHook();
