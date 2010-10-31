@@ -91,10 +91,11 @@ class BlogController extends Controller{
      * Show post and comments for this post
      *
      * @access  public
-     * @param   integer $id post id
+     * @param   integer $id     post id
+     * @param   string  $error  errors
      * @return  void
      */
-    public function post( $id ){
+    public function post( $id, $error = '' ){
         logWrite( 'BlogController::post(' . $id . ')' );
 
         // get post and comments
@@ -120,10 +121,20 @@ class BlogController extends Controller{
     public function comment(){
         logWrite( 'BlogController::comment()' );
 
-        // add $_POST['post'] as parameter to add function
-        $this->comments->add( $this->globals->get() );
+        // load validation library and array
+        $this->load->lib( 'validation' );
+        $this->validation->load( 'comments' );
 
-        $this->url->go( 'blog/post/' . $this->globals->get( 'post_id' ) );
+        // add $_POST['post'] as parameter to add function
+        $form = $this->globals->get();
+
+        // validate input
+        if( $this->validation->check( $form ) ){
+            $this->comments->add( $form );
+            $this->url->go( 'blog/post/' . $this->globals->get( 'post_id' ) );
+        }else{
+            $this->url->go( 'blog/post/' . $this->globals->get( 'post_id' ) . '/comment' );
+        }
     }
 
     /**

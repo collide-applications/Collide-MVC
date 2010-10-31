@@ -61,7 +61,7 @@ class Config{
      * @return  mixed   value from that index or null in not exists
      */
     public function get( $var = null ){
-        logWrite( 'Config::get()' );
+        logWrite( 'Config::get( $var )' );
 
         // create an array from $var
         if( !is_null( $var ) && !is_array( $var ) ){
@@ -101,7 +101,7 @@ class Config{
      * @return  mixed           modified value
      */
     public function set( $var, $val ){
-        logWrite( 'Config::get("' . $var . '", ' . $val . ')' );
+        logWrite( "Config::get( '{$var}', {$val} )" );
 
         $this->_cfg[$var] = $val;
 
@@ -117,7 +117,7 @@ class Config{
      * @return  boolean
      */
     public function load( $file, $force = false ){
-        logWrite( 'Config::load("' . $file . '")' );
+        logWrite( "Config::load( '{$file}' )" );
 
         // collide instance
         $collide =& thisInstance();
@@ -146,9 +146,9 @@ class Config{
             // merge current config with the new one
             if( isset( $cfg ) && is_array( $cfg ) ){
                 $this->_cfg = array_merge( $this->_cfg, $cfg );
+
+                return true;
             }
-            
-            return true;
         }
 
         return false;

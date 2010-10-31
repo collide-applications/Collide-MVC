@@ -44,20 +44,6 @@ define( 'CORE_HELPERS_PATH', CORE_PATH . 'helpers' . DS );
  * Define paths to external libraries
  */
 
-/**
- * Smarty
- */
-
-// Smarty version
-define( 'SMARTY_VERSION', '2.6.26' );
-// path to Smarty
-define( 'SMARTY_PATH', 'Smarty-' . SMARTY_VERSION . DS . 'libs' . DS );
-// path to Smarty templates_c folder (770 permissions)
-define( 'SMARTY_TEMPLATES_C_PATH', CORE_PATH . 'templates_c' . DS );
-// path to Smarty templates folder
-define( 'SMARTY_TEMPLATES_PATH', CORE_PATH . 'templates' . DS );
-// smarty debug status
-define( 'SMARTY_DEBUG', FALSE );
 
 /**
  * Doctrine
@@ -92,6 +78,8 @@ define( 'APP_HELPERS_PATH', APP_PATH . 'helpers' . DS );
 define( 'APP_PUBLIC_PATH', APP_PATH . 'public' . DS );
 // path to application templates
 define( 'APP_TPL_PATH', APP_PATH . 'tpl' . DS );
+// path to application validation rules
+define( 'APP_VALIDATION_PATH', APP_PATH . 'validation' . DS );
 
 // path to custom templates
 define( 'APP_CUST_VIEWS_PATH', APP_VIEWS_PATH . 'standard' . DS );
