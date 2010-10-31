@@ -2,7 +2,7 @@
 
 /******************************************************************************
  *                                                                            *
- * Collide PHP Framework                                                      *
+ * Collide MVC Framework                                                      *
  *                                                                            *
  * MVC framework for PHP.                                                     *
  *                                                                            *

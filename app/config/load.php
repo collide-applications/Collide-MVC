@@ -1,7 +1,7 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
 /******************************************************************************
  *                                                                            *
- * Collide PHP Framework                                                      *
+ * Collide MVC Framework                                                      *
  *                                                                            *
  * MVC framework for PHP.                                                     *
  *                                                                            *

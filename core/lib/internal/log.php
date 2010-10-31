@@ -2,7 +2,7 @@
 
 /******************************************************************************
  *                                                                            *
- * Collide PHP Framework                                                      *
+ * Collide MVC Framework                                                      *
  *                                                                            *
  * MVC framework for PHP.                                                     *
  *                                                                            *
@@ -228,7 +228,7 @@ class Log{
 
 /******************************************************************************
  *                                                                            *
- * Collide PHP Framework                                                      *
+ * Collide MVC Framework                                                      *
  *                                                                            *
  * Log file generated automaticaly                                            *
  *                                                                            *
