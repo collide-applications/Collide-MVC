@@ -16,7 +16,11 @@
  ******************************************************************************/
 
 /**
- * Controller class
+ * Controller library
+ *
+ * The main component of the MVC Framework.
+ * Provides methods and objects to for the most common tasks in the application.
+ *
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries

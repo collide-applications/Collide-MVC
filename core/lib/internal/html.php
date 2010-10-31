@@ -16,7 +16,9 @@
  ******************************************************************************/
 
 /**
- * Html class
+ * Html library
+ *
+ * Provides methods for HTML code generated from PHP
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries

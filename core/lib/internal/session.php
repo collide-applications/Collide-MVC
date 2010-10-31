@@ -16,15 +16,24 @@
  ******************************************************************************/
 
 /**
- * Html class
+ * Session library
+ *
+ * Provides support for session arrays
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
  * @category    Session
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
+ * @todo        implement set method
  */
 class Session{
+    /**
+     * Internal session array
+     *
+     * @access  protected
+     * @var     array   $_sess  session array
+     */
     protected $_sess = array();
 
     /**
@@ -107,9 +116,5 @@ class Session{
         }
 
         return $sess;
-    }
-
-    public function set(){
-        
     }
 }

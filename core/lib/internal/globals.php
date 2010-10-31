@@ -16,7 +16,7 @@
  ******************************************************************************/
 
 /**
- * Globals class
+ * Globals library
  *
  * Abstractization of global arrays in PHP ($_GET, $_POST, $_COOKIE, $_SESSION)
  *

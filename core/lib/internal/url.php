@@ -16,7 +16,9 @@
  ******************************************************************************/
  
 /**
- * URL class
+ * URL library
+ *
+ * Provides support for URL manipulation
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries

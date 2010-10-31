@@ -16,13 +16,16 @@
  ******************************************************************************/
 
 /**
- * Html class
+ * Internationalization library
+ *
+ * Provides methods for multilanguage environments
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
  * @category    i18n
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
+ * @todo        finish implementation
  */
 class I18n{
     /**

@@ -16,7 +16,9 @@
  ******************************************************************************/
  
 /**
- * Logs class
+ * Logs library
+ *
+ * Provides methods to work with log files, FirePHP logs and email logs
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
@@ -237,7 +239,7 @@ EOF;
         }else{
             // check if existent file is writable and do nothing otherwise
             if( !is_writable( $fileName ) ){
-                throw new Collide_exception( 'Log file is now writable!' );
+                throw new Collide_exception( 'Log file is not writable!' );
             }
         }
 

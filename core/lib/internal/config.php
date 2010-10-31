@@ -18,6 +18,12 @@
 /**
  * Config class
  *
+ * Provides an interface to work with configuration arrays.
+ * Features:
+ * - load config file
+ * - read config entry
+ * - set config entry for the entire life of the current session
+ *
  * @package     Collide MVC Core
  * @subpackage  Libraries
  * @category    Config

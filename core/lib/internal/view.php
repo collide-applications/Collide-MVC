@@ -16,7 +16,11 @@
  ******************************************************************************/
 
 /**
- * View class
+ * View library
+ *
+ * Provides methods for views/templates handling
+ * View: html code section (code will be returned)
+ * Template: multiple views (code will be displayed)
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
@@ -34,6 +38,12 @@ class View{
      */
     private $_info = array();
 
+    /**
+     * Template parameters
+     *
+     * @access  private
+     * @var     mixed
+     */
     private $_tplTitle = '';
     private $_tplKey = '';
     private $_tplDesc = '';

@@ -16,7 +16,9 @@
  ******************************************************************************/
 
 /**
- * Load class
+ * Load library
+ *
+ * Provides methods for loading framework libraries/models/helpers
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries

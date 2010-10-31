@@ -16,14 +16,15 @@
  ******************************************************************************/
 
 /**
- * Model class
+ * Model library
+ *
+ * Support for Doctrine ORM
  *
  * @package     Collide MVC Core
  * @subpackage  Libraries
  * @category    Models
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
- * @TODO        Add Doctrine support
  */
 class Model{
     /**

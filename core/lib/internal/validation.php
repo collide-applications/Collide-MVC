@@ -16,17 +16,26 @@
  ******************************************************************************/
 
 /**
- * Include other required standard scripts
+ * Validation library
+ *
+ * Provides methods for variables validation.
+ * Could be extended to provide new validation patterns.
  *
  * @package     Collide MVC Core
- * @subpackage  Core
- * @category    Initialization
+ * @subpackage  Libraries
+ * @category    Html
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
+ * @todo        to be implemented
  */
-
-// include core config
-require_once( CORE_PATH . 'config' . DS . 'config' . EXT );
-
-// include shared library
-require_once( CORE_PATH . 'init' . EXT );
+class Html{
+    /**
+     * Constructor
+     *
+     * @access  public
+     * @return  void
+     */
+    public function __construct(){
+        logWrite( 'Validation::__construct()' );
+    }
+}
