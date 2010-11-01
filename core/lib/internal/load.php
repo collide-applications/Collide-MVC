@@ -47,7 +47,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function incFile( $fileName, $type = 'model', $connName = 'default' ){
-        logWrite( 'Load::incFile( "' . $fileName . '")' );
+        logWrite( "Load::incFile( {$fileName} )" );
 
         // check and prepare parameters
         if( empty( $fileName ) || empty( $type ) ){
@@ -225,7 +225,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function load( $name, $type, $params = array(), $newClassName = '', $connName = 'default' ){
-        logWrite( 'Load::load("' . $name . '", "' . $type . '")' );
+        logWrite( "Load::load( '{$name}, '{$type}')" );
 
         // Collide instance
         $collide =& thisInstance();
