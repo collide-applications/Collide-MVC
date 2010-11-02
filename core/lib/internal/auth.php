@@ -26,13 +26,36 @@
  */
 class Auth{
     /**
+     * Collide MVC object
+     *
+     * @access  protected
+     * @var     object      $collide    collide mvc object
+     */
+    protected $collide;
+
+    /**
+     * Auth config array
+     *
+     * Located in "app/config" folder
+     *
+     * @access  protected
+     * @var     array       $cfg   config array
+     */
+    protected $cfg = array();
+
+    /**
      * Constructor
      *
      * @access  public
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Auth::__construct()' );   
+        logWrite( 'Auth::__construct()' );
+
+        // initialize config array
+        $this->collide =& Controller::getInstance();
+        $this->collide->config->load( 'auth' );
+        $this->cfg = $this->collide->config->get( array( 'auth' ) );
     }
 
     /**
@@ -44,25 +67,33 @@ class Auth{
      * @param   string  $user   username
      * @param   string  $pass   password
      * @param   array   $config config array
-     * <code>
-     * array( 'back' => 'error/page', 'fwd' => 'success/page' )
-     * </code>
      * @return  mixed   user id or false on error
      */
     public function login( $user, $pass, $config = array() ){
-        logWrite( "Auth::login( {$user}, \$pass )" );
+        logWrite( "Auth::login( {$user}, \$pass, \$config )" );
 
-        $collide =& thisInstance();
+        // merge array
+        $this->cfg = array_merge( $this->cfg, $config );
 
-        if( true ){
+        // load users model
+        $this->collide->load->model( $this->cfg['model'] );
+
+        $method = $this->cfg['method'];
+        
+        // call function to check if username and password matches
+        if( $isUser = $this->collide->users->$method( $user, $this->encryptPassword( $pass ) ) ){
+            // register session variables
+
+            // go to logged in page
             if( isset( $config['fwd'] ) ){
-                $collide->url->go( $config['fwd'] );
+                $this->collide->url->go( $config['fwd'] );
             }
         }else{
+            // go to login page
             if( isset( $config['back'] ) ){
-                $collide->url->go( $config['back'] );
+                $this->collide->url->go( $config['back'] );
             }else{
-                $collide->url->back();
+                $this->collide->url->back();
             }
         }
     }
@@ -70,7 +101,7 @@ class Auth{
     /**
      * Logout user from application
      *
-     * Check if user logged in and delete sesson, then redirect to login page
+     * Check if user logged in and delete session, then redirect to login page
      *
      * @access  public
      * @return  boolean true on success or false if already logged out
@@ -89,5 +120,23 @@ class Auth{
     public function check(){
         logWrite( "Auth::check()" );
 
+    }
+
+    /**
+     * Get plain password and encrypt it
+     *
+     * Overwrite this method to change encryption
+     *
+     * @access  protected
+     * @param   string  $pass   password to encrypt
+     * @return  string  encrypted password
+     */
+    protected function encryptPassword( $pass ){
+        $pass = (string)$pass;
+
+        $this->collide->config->load( 'config' );
+        $key = $this->collide->config->get( array( 'security', 'key' ) );
+
+        return hash( $this->cfg['algorithm'], $pass . ' ' . $key );
     }
 }

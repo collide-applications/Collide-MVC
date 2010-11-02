@@ -121,9 +121,9 @@ class Config{
 
         // collide instance
         $collide =& thisInstance();
-        
+
         // clean file name
-        $file = rtrim( trim( strtolower( $file ) ), EXT );
+        $file = preg_replace( '/' . EXT . '$/i', '', $file );
         $config = $file;
         $file   = APP_CONFIG_PATH . $file . EXT;
 

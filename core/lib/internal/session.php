@@ -32,9 +32,9 @@ class Session{
      * Internal session array
      *
      * @access  protected
-     * @var     array   $_sess  session array
+     * @var     array   $sess  session array
      */
-    protected $_sess = array();
+    protected $sess = array();
 
     /**
      * Constructor
@@ -48,7 +48,7 @@ class Session{
         // keep session in an internal array
         session_start();
         if( isset( $_SESSION ) ){
-            $this->_sess = $_SESSION;
+            $this->sess = array_merge_recursive( $this->sess, $_SESSION );
 
             unset( $_SESSION );
         }
@@ -82,7 +82,7 @@ class Session{
         }
 
         // save session
-        $sess = $this->_sess;
+        $sess = $this->sess;
 
         // loop through global array and try to return requested element
         if( is_array( $var ) && count( $var ) ){
