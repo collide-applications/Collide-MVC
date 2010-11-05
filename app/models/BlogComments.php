@@ -23,8 +23,7 @@
  * @package    Collide MVC
  * @subpackage Model
  */
-class BlogComments extends BaseBlogComments
-{
+class BlogComments extends BaseBlogComments{
     /**
      * Get all comments for one post
      *
@@ -33,13 +32,13 @@ class BlogComments extends BaseBlogComments
      * @return  array   all comments for this post
      */
     public function getAll( $id ){
-        //log( 'BlogComments::getAll(' . $id . ')' );
+        logWrite( "BlogComments::getAll( {$id} )" );
 
         return Doctrine_Query::create()->
-        from( 'BlogComments' )->
-        where( 'post_id = ?', $id )->
-        orderBy( 'id DESC')->
-        fetchArray();
+            from( 'BlogComments' )->
+            where( 'post_id = ?', $id )->
+            orderBy( 'id DESC')->
+            fetchArray();
     }
 
     /**
@@ -50,7 +49,7 @@ class BlogComments extends BaseBlogComments
      * @return  boolean
      */
     public function add( $comment ){
-        //log( 'BlogComments::add( $comment )' );
+        logWrite( "BlogComments::add( '" . substr( $comment, 0, 25 ) . "' )" );
 
         $this->name     = $comment['name'];
         $this->message  = $comment['message'];
@@ -67,7 +66,7 @@ class BlogComments extends BaseBlogComments
      * @return  boolean
      */
     public function deleteByPostId( $id ){
-        //log( 'BlogPosts::deleteByPostId( ' . $id . ' )' );
+        logWrite( "BlogPosts::deleteByPostId( {$id} )" );
 
         return Doctrine_Query::create()->
             delete( 'BlogComments' )->

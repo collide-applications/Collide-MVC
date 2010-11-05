@@ -38,9 +38,9 @@ abstract class BaseBlogUsers extends Doctrine_Record
              'notnull' => false,
              'autoincrement' => false,
              ));
-        $this->hasColumn('pass', 'string', 20, array(
+        $this->hasColumn('pass', 'string', 64, array(
              'type' => 'string',
-             'length' => 20,
+             'length' => 64,
              'fixed' => false,
              'unsigned' => false,
              'primary' => false,

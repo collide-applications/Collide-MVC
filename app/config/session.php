@@ -15,17 +15,18 @@
  ******************************************************************************/
 
 /**
- * Blog config
+ * Session config
  *
  * @package     Collide MVC App
  * @subpackage  Configs
- * @category    Blog
+ * @category    Session
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
 
-// menu array (e.g: menu page title => controller name)
-$cfg['blog']['menu'] = array(
-    'All posts' => '',
-    'Add post' => 'blog/add'
+// global session configuration
+$cfg['session'] = array(
+    'overwrite' => false,   // overwrite all session array when session set
+    'expire'    => 5,       // session life time (in seconds)
+    'cleanup'   => 25       // garbage collector frequency (between 0% and 100%)
 );

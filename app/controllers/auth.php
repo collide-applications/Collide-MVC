@@ -51,6 +51,16 @@ class AuthController extends Controller{
         // load view
         $info['main'] = $this->view->get( 'auth/index' );
 
+        $this->load->lib( 'session' );
+        
+        $this->session->set( 'val1' );
+        $this->session->set( 2, array( 'test' => 'val3', 8 => 5 ) );
+//        $this->session->config( array( 'overwrite' => true ) );
+        $this->session->set( array( 3 => 'val7', 8 => 5 ) );
+        $this->session->set( 'val5' );
+        $sess = $this->session->get();
+        var_dump( $sess );
+
         // load template
         $this->view->template( $info, 'simple' );
     }

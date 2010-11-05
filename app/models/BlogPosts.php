@@ -23,8 +23,7 @@
  * @package    Collide MVC
  * @subpackage Model
  */
-class BlogPosts extends BaseBlogPosts
-{
+class BlogPosts extends BaseBlogPosts{
     /**
      * Get all posts
      *
@@ -32,12 +31,12 @@ class BlogPosts extends BaseBlogPosts
      * @return  array   all posts
      */
     public function getAll(){
-        logWrite( 'BlogPosts::getAll()' );
+        logWrite( "BlogPosts::getAll()" );
 
         return Doctrine_Query::create()->
-        from( 'BlogPosts' )->
-        orderBy( 'id DESC' )->
-        fetchArray();
+            from( 'BlogPosts' )->
+            orderBy( 'id DESC' )->
+            fetchArray();
     }
 
     /**
@@ -48,14 +47,14 @@ class BlogPosts extends BaseBlogPosts
      * @return  mixed   one post or false if no post founded
      */
     public function getOne( $id ){
-        logWrite( 'BlogPosts::getOne(' . $id . ')' );
+        logWrite( "BlogPosts::getOne( {$id} )" );
 
         $res = Doctrine_Query::create()->
-        from( 'BlogPosts' )->
-        where( 'id = ?', $id )->
-        fetchArray();
+            from( 'BlogPosts' )->
+            where( 'id = ?', $id )->
+            fetchArray();
 
-        // if no post founded return false
+        // if no post found return false
         if( count( $res ) == 0 ){
             return false;
         }
@@ -71,7 +70,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  boolean
      */
     public function add( $post ){
-        logWrite( 'BlogPosts::add( $post )' );
+        logWrite( "BlogPosts::add( \$post )" );
 
         $this->title    = $post['title'];
         $this->content  = $post['content'];
@@ -87,7 +86,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  boolean
      */
     public function edit( $post ){
-        logWrite( 'BlogPosts::edit( $post )' );
+        logWrite( "BlogPosts::edit( \$post )" );
         
         return Doctrine_Query::create()->
             update( 'BlogPosts' )->
@@ -105,7 +104,7 @@ class BlogPosts extends BaseBlogPosts
      * @return  boolean
      */
     public function delete( $id ){
-        logWrite( 'BlogPosts::delete( ' . $id . ' )' );
+        logWrite( "BlogPosts::delete( {$id} )" );
 
         return Doctrine_Query::create()->
             delete( 'BlogPosts' )->

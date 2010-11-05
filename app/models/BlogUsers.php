@@ -23,8 +23,7 @@
  * @package    Collide MVC
  * @subpackage Model
  */
-class BlogUsers extends BaseBlogUsers
-{
+class BlogUsers extends BaseBlogUsers{
     /**
      * Check if this user could be logged in
      *
@@ -36,7 +35,7 @@ class BlogUsers extends BaseBlogUsers
      * @return  boolean
      */
     public function login( $user, $pass ){
-        logWrite( "BlogUsers::login( '{$user}', '{$pass}' )" );
+        logWrite( "BlogUsers::login( \$user, \$pass )" );
 
         // get user by username and password
         $res = Doctrine_Query::create()->

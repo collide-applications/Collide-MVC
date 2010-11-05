@@ -19,7 +19,7 @@
  *
  * @package     Collide MVC App
  * @subpackage  Configs
- * @category    Application loading config
+ * @category    Load
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
