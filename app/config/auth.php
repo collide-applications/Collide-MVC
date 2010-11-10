@@ -25,9 +25,14 @@
  */
 
 $cfg['auth'] = array(
-    'back'      => '',              // page to go if login fails
-    'fwd'       => '',              // page to go if login succeeded
+    'back'      => 'auth',          // page to go if login fails
+    'fwd'       => 'blog',          // page to go if login succeeded
     'model'     => 'users',         // model to load for checking users
     'method'    => 'login',         // method to call to check user and pass
-    'algorithm' => 'sha1'           // password encryption algorithm
+    'algorithm' => 'sha1',          // password encryption algorithm
+    'session'   => 'user',          // session array name
+    'fields'   => array(            // what user fields to keep in session
+        'id',
+        'user'
+    )
 );

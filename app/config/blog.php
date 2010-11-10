@@ -27,5 +27,6 @@
 // menu array (e.g: menu page title => controller name)
 $cfg['blog']['menu'] = array(
     'All posts' => '',
-    'Add post' => 'blog/add'
+    'Add post'  => 'blog/add',
+    'Logout'    => 'auth/logout'
 );

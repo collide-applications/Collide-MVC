@@ -24,7 +24,7 @@
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
-class AuthController extends Controller{
+class AuthController extends _Controller{
     /**
      * Constructor
      *
@@ -35,8 +35,6 @@ class AuthController extends Controller{
         parent::__construct();
         
         logWrite( 'AuthController::__construct()' );
-
-        $this->load->lib( 'auth' );
     }
 
     /**
@@ -58,7 +56,7 @@ class AuthController extends Controller{
     /**
      * Try to login user
      *
-     * Redirect to blog posts page on success or to login page on error
+     * Redirect to default page on success or to login page on error
      *
      * @access  public
      * @return  void
@@ -67,12 +65,20 @@ class AuthController extends Controller{
         logWrite( 'AuthController::login()' );
 
         $form = $this->globals->get( 'form' );
+        $this->auth->login( $form['user'], $form['pass'] );
+    }
 
-        $conf = array(
-            'back'  => 'auth',
-            'fwd'   => 'blog'
-        );
+    /**
+     * Try to logout user
+     *
+     * Redirect to login page
+     *
+     * @access  public
+     * @return  void
+     */
+    public function logout(){
+        logWrite( 'AuthController::logout()' );
 
-        $this->auth->login( $form['user'], $form['pass'], $conf );
+        $this->auth->logout();
     }
 }

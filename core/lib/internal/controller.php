@@ -102,7 +102,7 @@ class Controller{
       */
      private $_loaded = array(
         'lib'           => array(
-            'model', 'view', 'load', 'config', 'log', 'url'    // default loaded
+            'model', 'view', 'load', 'config', 'log', 'url', 'session' // default loaded
         ),
         'model'         => array(),
         'config'        => array(),

@@ -138,7 +138,7 @@ class Session{
             // merge provided array with current array overwriting original
             $this->sess = $key + $this->sess;
         }
-
+        
         // serialize session array
         $sess = serialize( $this->sess );
         
@@ -166,8 +166,7 @@ class Session{
      *                              apply on each element returned
      *                              OBS: if you use a Collide helper as callback
      *                                   load that helper first
-     * @return  mixed   value from that index, null if not exists, false on
-     *                  error
+     * @return  mixed   value from that index, null if not exists
      */
     public function get( $var = null, $callback = null ){
         logWrite( "Session::get( \$var, \$callback )" );
@@ -177,10 +176,10 @@ class Session{
 
         // get session from database
         $sess = $this->model->getSession( $this->cfg['expire'] );
-        if( $sess !== false ){
+        if( !is_null( $sess ) ){
             $sess = unserialize( $sess['data'] );
         }else{
-            return false;
+            return $sess;
         }
 
         // create an array from $var

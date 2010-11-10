@@ -1,11 +1,12 @@
 <?php if( !defined( 'ROOT_PATH' ) ) die( '403: Forbidden' );
+
 /******************************************************************************
  *                                                                            *
- * Collide MVC Framework                                                      *
+ * Collide PHP Framework                                                      *
  *                                                                            *
  * MVC framework for PHP.                                                     *
  *                                                                            *
- * @package     Collide MVC Core                                              *
+ * @package     Collide MVC App                                               *
  * @author      Collide Applications Development Team                         *
  * @copyright   Copyright (c) 2009, Collide Applications                      *
  * @license     http://mvc.collide-applications.com/license.txt               *
@@ -15,18 +16,28 @@
  ******************************************************************************/
 
 /**
- * Session config
+ * Controller library overwrited
  *
  * @package     Collide MVC App
- * @subpackage  Configs
- * @category    Session
+ * @subpackage  Libraries
+ * @category    Controller
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
+class _Controller extends Controller{
+    /**
+     * Constructor
+     *
+     * @access  public
+     * @return  void
+     */
+    public function __construct(){
+        parent::__construct();
+        
+        logWrite( '_Controller::__construct()' );
 
-// global session configuration
-$cfg['session'] = array(
-    'overwrite' => false,   // overwrite all session array when session set
-    'expire'    => 60,      // session life time (in seconds)
-    'cleanup'   => 25       // garbage collector frequency (between 0% and 100%)
-);
+        // check if user is logged in
+        $this->load->lib( 'auth' );
+        $this->auth->check();
+    }
+}

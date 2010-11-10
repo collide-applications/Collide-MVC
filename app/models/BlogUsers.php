@@ -32,14 +32,26 @@ class BlogUsers extends BaseBlogUsers{
      * @access  public
      * @param   string  $user   username
      * @param   string  $pass   password
+     * @param   array   $fields fields to return and keep in session after login
      * @return  boolean
      */
-    public function login( $user, $pass ){
-        logWrite( "BlogUsers::login( \$user, \$pass )" );
+    public function login( $user, $pass, $fields ){
+        logWrite( "BlogUsers::login( \$user, \$pass, \$fields )" );
 
         // get user by username and password
-        $res = Doctrine_Query::create()->
-            from( 'BlogUsers' )->
+        $query = Doctrine_Query::create();
+
+        // add fields to be selected (by default id)
+        if( is_array( $fields ) && count( $fields ) ){
+            foreach( $fields as $field ){
+                $query->select( $field );
+            }
+        }else{
+            $query->select( 'id' );
+        }
+
+        // execute query
+        $res = $query->from( 'BlogUsers' )->
             where( 'user = ?', $user )->
             andWhere( 'pass = ?', $pass )->
             limit( 1 )->
@@ -47,7 +59,7 @@ class BlogUsers extends BaseBlogUsers{
 
         // check if user returned
         if( count( $res ) ){
-            return true;
+            return $res[0];
         }
 
         return false;

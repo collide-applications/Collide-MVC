@@ -33,7 +33,7 @@
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
  */
-class BlogController extends Controller{
+class BlogController extends _Controller{
     /**
      * Main menu
      *

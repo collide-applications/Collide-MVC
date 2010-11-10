@@ -23,16 +23,10 @@
  * @category    Auth
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
+ * @todo
+ * - check permissions;
  */
 class Auth{
-    /**
-     * Collide MVC object
-     *
-     * @access  protected
-     * @var     object      $collide    collide mvc object
-     */
-    protected $collide;
-
     /**
      * Auth config array
      *
@@ -53,9 +47,26 @@ class Auth{
         logWrite( 'Auth::__construct()' );
 
         // initialize config array
-        $this->collide =& Controller::getInstance();
-        $this->collide->config->load( 'auth' );
-        $this->cfg = $this->collide->config->get( array( 'auth' ) );
+        $collide =& Controller::getInstance();
+        $collide->config->load( 'auth' );
+        $this->cfg = $collide->config->get( array( 'auth' ) );
+    }
+
+    /**
+     * Reinitialize config array
+     *
+     * Original config array (from app/config/auth.php) will be merged with
+     * <code>$config</code> array provided here
+     *
+     * @access  public
+     * @param   array   $config new config values
+     * @return  void
+     */
+    public function config( $config = array() ){
+        logWrite( "Auth::config( \$config )" );
+
+        // merge array
+        $this->cfg = array_merge( $this->cfg, $config );
     }
 
     /**
@@ -66,36 +77,31 @@ class Auth{
      * @access  public
      * @param   string  $user   username
      * @param   string  $pass   password
-     * @param   array   $config config array
      * @return  mixed   user id or false on error
      */
-    public function login( $user, $pass, $config = array() ){
+    public function login( $user, $pass ){
         logWrite( "Auth::login( {$user}, \$pass, \$config )" );
 
-        // merge array
-        $this->cfg = array_merge( $this->cfg, $config );
+        // check if already logged in
+        $this->check();
+
+        // is logged in or not?
+        $logged = false;
 
         // load users model
-        $this->collide->load->model( $this->cfg['model'] );
+        $collide =& Controller::getInstance();
+        $collide->load->model( $this->cfg['model'] );
 
         $method = $this->cfg['method'];
         
         // call function to check if username and password matches
-        if( $isUser = $this->collide->users->$method( $user, $this->encryptPassword( $pass ) ) ){
+        if( $userInfo = $collide->users->$method( $user, $this->encryptPassword( $pass ), $this->cfg['fields'] ) ){
             // register session variables
-
-            // go to logged in page
-            if( isset( $config['fwd'] ) ){
-                $this->collide->url->go( $config['fwd'] );
-            }
-        }else{
-            // go to login page
-            if( isset( $config['back'] ) ){
-                $this->collide->url->go( $config['back'] );
-            }else{
-                $this->collide->url->back();
-            }
+            $logged = $collide->session->set( array( $this->cfg['session'] => $userInfo ) );
         }
+
+        // check if logged in
+        $this->redirect( $logged );
     }
 
     /**
@@ -104,22 +110,97 @@ class Auth{
      * Check if user logged in and delete session, then redirect to login page
      *
      * @access  public
-     * @return  boolean true on success or false if already logged out
+     * @return  void
      */
     public function logout(){
         logWrite( "Auth::logout()" );
-        
+
+        // check if already logged in
+        $this->check();
+
+        // unset fields registered at login from session
+        $collide =& Controller::getInstance();
+        $sess = $collide->session->get();
+        unset( $sess[$this->cfg['session']] );
+        $collide->session->set( $sess );
+
+        // go to login page
+        $this->redirect( false );
     }
 
     /**
      * Check if user is logged in
      *
      * @access  public
+     * @param   boolean $redirect   redirect or return result
      * @return  boolean
      */
-    public function check(){
-        logWrite( "Auth::check()" );
+    public function check( $redirect = true ){
+        logWrite( "Auth::check( " . (int)$redirect ." )" );
 
+        $logged = false;
+
+        // get fields from session
+        $collide =& Controller::getInstance();
+        $fields = $collide->session->get( $this->cfg['session'] );
+
+        if( !is_null( $fields ) && count( $fields ) &&
+                is_array( $this->cfg['fields'] ) && count( $this->cfg['fields'] ) ){
+            $logged = true;
+
+            // if any field is missing then user not logged in
+            foreach( $this->cfg['fields'] as $field ){
+                if( !isset( $fields[$field] ) ){
+                    $logged = false;
+                }
+            }
+        }
+
+        // check result and redirect or return result
+        if( $redirect ){
+            $this->redirect( $logged );
+        }else{
+            return $logged;
+        }
+    }
+
+    /**
+     * Redirect to login page or to logged in page
+     *
+     * @access  protected
+     * @param   boolean     $fwd    go forward or back?
+     * @return  void
+     */
+    protected function redirect( $fwd = true ){
+        logWrite( "Auth::redirect( " . (int)$fwd ." )" );
+
+        $collide =& Controller::getInstance();
+
+        if( $fwd ){
+            // go to forward page or default page
+            if( isset( $this->cfg['fwd'] ) ){
+                $url = $this->cfg['fwd'];
+            }else{
+                $url = $collide->config->get( array( 'default', 'controller' ) );
+            }
+
+            // avoid multiple redirects
+            if( $url != $collide->url->getSegments( 0 ) ){
+                $collide->url->go( $url );
+            }
+        }else{
+            // go to login page or back
+            if( isset( $this->cfg['back'] ) ){
+                // avoid multiple redirects
+                if( $this->cfg['back'] != $collide->url->getSegments( 0 ) ){
+                    $collide->url->go( $this->cfg['back'] );
+                }
+            }else{
+                if( $this->cfg['back'] != $collide->url->back( true ) ){
+                    $collide->url->back();
+                }
+            }
+        }
     }
 
     /**
@@ -132,10 +213,14 @@ class Auth{
      * @return  string  encrypted password
      */
     protected function encryptPassword( $pass ){
+        logWrite( "Auth::encryptPassword( \$pass )" );
+
         $pass = (string)$pass;
 
-        $this->collide->config->load( 'config' );
-        $key = $this->collide->config->get( array( 'security', 'key' ) );
+        // get security key from config
+        $collide =& Controller::getInstance();
+        $collide->config->load( 'config' );
+        $key = $collide->config->get( array( 'security', 'key' ) );
 
         return hash( $this->cfg['algorithm'], $pass . ' ' . $key );
     }

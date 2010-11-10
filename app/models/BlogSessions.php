@@ -24,11 +24,11 @@ class BlogSessions extends BaseBlogSessions{
         
         // get session data for this user
         $data = $this->getSession( $expire );
-
+        
         // if any data returned then update data, else insert data
-        if( $data !== false ){
+        if( !is_null( $data ) ){
             // update
-            $res = Doctrine_Query::create()->
+            return Doctrine_Query::create()->
                 update( 'BlogSessions' )->
                 set( 'data', '?', $sess )->
                 set( 'start', 'UNIX_TIMESTAMP()' )->
@@ -45,8 +45,6 @@ class BlogSessions extends BaseBlogSessions{
 
             return $this->save();
         }
-
-        return false;
     }
 
     /**
@@ -70,7 +68,7 @@ class BlogSessions extends BaseBlogSessions{
 
         // if no session found return false
         if( count( $res ) == 0 ){
-            return false;
+            return null;
         }
 
         return $res[0];

@@ -268,10 +268,11 @@ class Url{
      * Go to previews page
      *
      * @access  public
+     * @param   boolean $return return result or redirect?
      * @return  void
      */
-    public function back(){
-        logWrite( "Url::back()" );
+    public function back( $return = false ){
+        logWrite( "Url::back( " . (int)$return . " )" );
 
         // strip generic info (protocol, domain, port, subfolder) from referer
         $url = str_replace( 
@@ -280,7 +281,12 @@ class Url{
                 $this->getSubfolder(),
                 '', $_SERVER['HTTP_REFERER'] );
 
-        // go to previews url
-        $this->go( $url );
+        if( $return ){
+            // return back url
+            return $url;
+        }else{
+            // go to previews url
+            $this->go( $url );
+        }
     }
 }
