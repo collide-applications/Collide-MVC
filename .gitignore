@@ -1,3 +1,4 @@
 core/logs/*
 app/config/db.php
 app/config/config.php
+app/models/sql/*

@@ -208,11 +208,11 @@ class Auth{
      *
      * Overwrite this method to change encryption
      *
-     * @access  protected
+     * @access  public
      * @param   string  $pass   password to encrypt
      * @return  string  encrypted password
      */
-    protected function encryptPassword( $pass ){
+    public function encryptPassword( $pass ){
         logWrite( "Auth::encryptPassword( \$pass )" );
 
         $pass = (string)$pass;

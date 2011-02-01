@@ -212,7 +212,7 @@ class Session{
                     if( is_array( $sess ) ){
                         array_walk_recursive( $sess, $func );
                     }else{
-                        $func( &$sess );
+                        $func( $sess );
                     }
                 }
             }
