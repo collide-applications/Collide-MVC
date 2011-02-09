@@ -101,19 +101,11 @@ class Log{
             unset( $cfg );
         }
 
-        // include FirePHP external library for firephp log type
-        require_once( CORE_LIB_EXT_PATH . 'FirePHPCore-0.3.1/FirePHP.class.php' );
+        // initialize FirePHP
+        $this->initFirePhp();
 
-        // get instance of FirePHP
-        $this->_firephp = FirePHP::getInstance( true );
-        // create group
-        $this->_firephp->group(
-            'Collide MVC Log',
-            array(
-                'Collapsed' => $this->_cfg['types']['firephp']['options']['collapsed'],
-                'Color' => '#FF0000'
-            )
-        );
+        // initialize ChromePHP
+        $this->initChromePhp();
     }
 
     /**
@@ -124,6 +116,44 @@ class Log{
      */
     public static function &getInstance(){
         return self::$_instance;
+    }
+
+    /**
+     * Initialize FirePHP class
+     *
+     * @access  private
+     * @return  void
+     */
+    private function initFirePhp(){
+        // initialize only if it is enabled from config
+        if( $this->_cfg['types']['firephp']['enabled'] === true ){
+            // include FirePHP external library for firephp log type
+            require_once( CORE_LIB_EXT_PATH . 'FirePHPCore-0.3.1/FirePHP.class.php' );
+
+            // get instance of FirePHP
+            $this->_firephp = FirePHP::getInstance( true );
+            // create group
+            $this->_firephp->group(
+                'Collide MVC Log',
+                array(
+                    'Collapsed' => $this->_cfg['types']['firephp']['options']['collapsed'],
+                    'Color' => '#FF0000'
+                )
+            );
+        }
+    }
+
+    /**
+     * Initialize ChromePhp class
+     *
+     * @access  private
+     * @return  void
+     */
+    private function initChromePhp(){
+        // initialize only if it is enabled from config
+        if( $this->_cfg['types']['firephp']['enabled'] === true ){
+            require_once( CORE_LIB_EXT_PATH . 'ChromePHP-2.2.1/ChromePhp.php' );
+        }
     }
 
     /**
@@ -158,7 +188,7 @@ class Log{
             }
 
             // if type not enabled continue
-            if( is_array( $exclusiveTypes ) && !$properties['enabled'] ){
+            if( is_array( $exclusiveTypes ) || !$properties['enabled'] ){
                 continue;
             }
 
@@ -265,7 +295,9 @@ EOF;
      * @todo    to be implemented when emailing sistem is done
      */
     private function email( $opt = array() ){
-        
+        /**
+         * @TODO Implement this
+         */
     }
 
     /**
@@ -279,6 +311,11 @@ EOF;
      * @return  void
      */
     private function firephp( $opt = array() ){
+        // if not initialized do not continue
+        if( $this->_cfg['types']['firephp']['enabled'] !== true ){
+            return false;
+        }
+
         // set options if any
         if( is_array( $opt ) ){
             $this->_firephp->getOptions();
@@ -304,6 +341,36 @@ EOF;
         // add trace if set in config
         if( isset( $opt['trace'] ) && $opt['trace'] === true ){
             $this->_firephp->trace( 'Trace' );
+        }
+    }
+
+    /**
+     * Display logs in Chrome console
+     *
+     * ChromePHP addon for Chrome required
+     * This method is using ChromePHP library
+     *
+     * @access  private
+     * @param   array   $opt    options for this log type
+     * @return  void
+     */
+    private function chromephp( $opt = array() ){
+        // if not initialized do not continue
+        if( $this->_cfg['types']['firephp']['enabled'] !== true ){
+            return false;
+        }
+
+        // call log function
+        switch( $this->_level ){
+            case 'warning':
+                ChromePhp::warn( $this->_msg );
+                break;
+            case 'error':
+                ChromePhp::error( $this->_msg );
+                break;
+            default:
+                // info or other log levels
+                ChromePhp::log( $this->_msg );
         }
     }
 }
