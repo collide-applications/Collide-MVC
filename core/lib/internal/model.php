@@ -33,7 +33,7 @@ class Model{
      * @access  public
      */
     public function __construct(){
-        logWrite( 'Model::__construct()' );
+        logWrite( 'Model::__construct()', 'core' );
     }
 
     /**
@@ -45,7 +45,7 @@ class Model{
      * @todo    add extra configuration for doctrine
      */
     public static function loadDoctrine( $connName = 'default' ){
-        logWrite( 'Model::loadDoctrine()' );
+        logWrite( 'Model::loadDoctrine()', 'core' );
 
         // prepare param
         if( empty( $connName ) ){

@@ -50,11 +50,11 @@ class Log{
      * @var     array   $_levels    log levels
      */
     private $_levels = array(
+        'core'      => 0,
         'info'      => 1,
         'warning'   => 2,
         'error'     => 3,
-        'debug'     => 4,
-        'all'       => 5
+        'debug'     => 4
     );
 
     /**
@@ -126,7 +126,7 @@ class Log{
      */
     private function initFirePhp(){
         // initialize only if it is enabled from config
-        if( $this->_cfg['types']['firephp']['enabled'] === true ){
+        if( count( $this->_cfg['types']['firephp']['level'] ) ){
             // include FirePHP external library for firephp log type
             require_once( CORE_LIB_EXT_PATH . 'FirePHPCore-0.3.1/FirePHP.class.php' );
 
@@ -151,7 +151,7 @@ class Log{
      */
     private function initChromePhp(){
         // initialize only if it is enabled from config
-        if( $this->_cfg['types']['firephp']['enabled'] === true ){
+        if( count( $this->_cfg['types']['firephp']['level'] ) ){
             require_once( CORE_LIB_EXT_PATH . 'ChromePHP-2.2.1/ChromePhp.php' );
         }
     }
@@ -162,8 +162,9 @@ class Log{
      * This method writes to all log types activated in config
      *
      * @access  public
-     * @param   string  $msg    message to log
-     * @param   string  $level  log level (defined in config)
+     * @param   string  $msg            message to log
+     * @param   string  $level          log level (defined in config)
+     * @param   mixed   $exclusiveTypes array or string with log types to write
      * @return  void
      */
     public function write( $msg, $level = 'info', $exclusiveTypes = null ){
@@ -187,16 +188,8 @@ class Log{
                 continue;
             }
 
-            // if type not enabled continue
-            if( is_array( $exclusiveTypes ) || !$properties['enabled'] ){
-                continue;
-            }
-
-            // get log level
-            $logLevel = $properties['level'];
-
-            // if level is ok try to write log
-            if( $logLevel >= $this->_levels[$this->_level] ){
+            // write logs for specified levels
+            if( count( $properties['level'] ) && in_array( $this->_levels[$this->_level], $properties['level'] ) ){
                 // check if method exists for each type
                 if( method_exists( $this, $type ) ){
                     $options = array();
@@ -311,36 +304,34 @@ EOF;
      * @return  void
      */
     private function firephp( $opt = array() ){
-        // if not initialized do not continue
-        if( $this->_cfg['types']['firephp']['enabled'] !== true ){
-            return false;
-        }
+        // if initialized
+        if( count( $this->_cfg['types']['firephp']['level'] ) ){
+            // set options if any
+            if( is_array( $opt ) ){
+                $this->_firephp->getOptions();
+                $this->_firephp->setOptions( $opt );
+            }
 
-        // set options if any
-        if( is_array( $opt ) ){
-            $this->_firephp->getOptions();
-            $this->_firephp->setOptions( $opt );
-        }
-        
-        // call log function
-        switch( $this->_level ){
-            case 'info':
-                $this->_firephp->info( $this->_msg );
-                break;
-            case 'warning':
-                $this->_firephp->warn( $this->_msg );
-                break;
-            case 'error':
-                $this->_firephp->error( $this->_msg );
-                break;
-            default:
-                // other log levels
-                $this->_firephp->log( $this->_msg, strtoupper( $this->_level ) );
-        }
+            // call log function
+            switch( $this->_level ){
+                case 'info':
+                    $this->_firephp->info( $this->_msg );
+                    break;
+                case 'warning':
+                    $this->_firephp->warn( $this->_msg );
+                    break;
+                case 'error':
+                    $this->_firephp->error( $this->_msg );
+                    break;
+                default:
+                    // other log levels
+                    $this->_firephp->log( $this->_msg, strtoupper( $this->_level ) );
+            }
 
-        // add trace if set in config
-        if( isset( $opt['trace'] ) && $opt['trace'] === true ){
-            $this->_firephp->trace( 'Trace' );
+            // add trace if set in config
+            if( isset( $opt['trace'] ) && $opt['trace'] === true ){
+                $this->_firephp->trace( 'Trace' );
+            }
         }
     }
 
@@ -355,22 +346,20 @@ EOF;
      * @return  void
      */
     private function chromephp( $opt = array() ){
-        // if not initialized do not continue
-        if( $this->_cfg['types']['firephp']['enabled'] !== true ){
-            return false;
-        }
-
-        // call log function
-        switch( $this->_level ){
-            case 'warning':
-                ChromePhp::warn( $this->_msg );
-                break;
-            case 'error':
-                ChromePhp::error( $this->_msg );
-                break;
-            default:
-                // info or other log levels
-                ChromePhp::log( $this->_msg );
+        // if initialized
+        if( count( $this->_cfg['types']['firephp']['level'] ) ){
+            // call log function
+            switch( $this->_level ){
+                case 'warning':
+                    ChromePhp::warn( $this->_msg );
+                    break;
+                case 'error':
+                    ChromePhp::error( $this->_msg );
+                    break;
+                default:
+                    // info or other log levels
+                    ChromePhp::log( $this->_msg );
+            }
         }
     }
 }

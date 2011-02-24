@@ -34,7 +34,7 @@ class Load{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Load::__construct()' );
+        logWrite( 'Load::__construct()', 'core' );
     }
 
     /**
@@ -47,7 +47,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function incFile( $fileName, $type = 'model', $connName = 'default' ){
-        logWrite( "Load::incFile( {$fileName} )" );
+        logWrite( "Load::incFile( {$fileName} )", 'core' );
 
         // check and prepare parameters
         if( empty( $fileName ) || empty( $type ) ){
@@ -156,7 +156,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function instantiate( $className, $type, $multiple, $params = array(), $newClassName = '', $connName = 'default' ){
-        logWrite( 'Load::instantiate()' );
+        logWrite( 'Load::instantiate()', 'core' );
 
         // get framework instance
         $collide =& thisInstance();
@@ -225,7 +225,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     private function load( $name, $type, $params = array(), $newClassName = '', $connName = 'default' ){
-        logWrite( "Load::load( '{$name}, '{$type}')" );
+        logWrite( "Load::load( '{$name}, '{$type}')", 'core' );
 
         // Collide instance
         $collide =& thisInstance();
@@ -302,7 +302,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     public function model( $name, $connName = 'default', $params = array(), $newName = '' ){
-        logWrite( 'Load::model()' );
+        logWrite( 'Load::model()', 'core' );
 
         // load class
         if( !$this->load( $name, 'model', $params, $newName, $connName ) ){
@@ -322,7 +322,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     public function lib( $name, $params = array(), $newName = '' ){
-        logWrite( 'Load::lib()' );
+        logWrite( 'Load::lib()', 'core' );
 
         // load class
         if( !$this->load( $name, 'lib', $params, $newName ) ){
@@ -342,7 +342,7 @@ class Load{
      * @return  boolean true on success false on error
      */
     public function helper( $name, $params = array(), $newName = '' ){
-        logWrite( 'Load::helper()' );
+        logWrite( 'Load::helper()', 'core' );
 
         // load class
         if( !$this->load( $name, 'helper', $params, $newName ) ){

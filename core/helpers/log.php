@@ -32,8 +32,9 @@
  * in all classes
  *
  * @access  public
- * @param   string  $msg    message to log
- * @param   string  $level  log level (defined in config)
+ * @param   string  $msg            message to log
+ * @param   string  $level          log level (defined in config)
+ * @param   mixed   $exclusiveTypes array or string with log types to write
  * @return  void
  */
 if( !function_exists( 'logWrite' ) ){

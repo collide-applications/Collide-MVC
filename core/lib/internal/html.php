@@ -34,7 +34,7 @@ class Html{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Html::__construct()' );
+        logWrite( 'Html::__construct()', 'core' );
     }
 
     /**
@@ -45,7 +45,7 @@ class Html{
      * @return  string  html code
      */
     private function attr( $conf = array() ){
-        logWrite( 'Html::attr( $conf )');
+        logWrite( 'Html::attr( $conf )', 'core' );
 
         // element attributes
         $attr = '';
@@ -74,7 +74,7 @@ class Html{
      * @return  string  content string
      */
     private function content( &$conf ){
-        logWrite( 'Html::content( &$conf )' );
+        logWrite( 'Html::content( &$conf )', 'core' );
 
         // add content if set
         $content = '';
@@ -94,7 +94,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function textbox( $conf = array() ){
-        logWrite( 'Html::textbox( $conf )' );
+        logWrite( 'Html::textbox( $conf )', 'core' );
 
         return '<input type="text"' . $this->attr( $conf ) . " />\n";
     }
@@ -107,7 +107,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function password( $conf = array() ){
-        logWrite( 'Html::password( $conf )' );
+        logWrite( 'Html::password( $conf )', 'core' );
 
         return '<input type="password"' . $this->attr( $conf ) . " />\n";
     }
@@ -120,7 +120,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function checkbox( $conf = array() ){
-        logWrite( 'Html::checkbox( $conf )' );
+        logWrite( 'Html::checkbox( $conf )', 'core' );
 
         return '<input type="checkbox"' . $this->attr( $conf ) . " />\n";
     }
@@ -133,7 +133,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function radio( $conf = array() ){
-        logWrite( 'Html::radio( $conf )' );
+        logWrite( 'Html::radio( $conf )', 'core' );
 
         return '<input type="radio"' . $this->attr( $conf ) . " />\n";
     }
@@ -146,7 +146,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function submit( $conf = array() ){
-        logWrite( 'Html::submit( $conf )' );
+        logWrite( 'Html::submit( $conf )', 'core' );
 
         return '<input type="submit"' . $this->attr( $conf ) . " />\n";
     }
@@ -159,7 +159,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function button( $conf = array() ){
-        logWrite( 'Html::button( $conf )' );
+        logWrite( 'Html::button( $conf )', 'core' );
 
         return '<input type="button"' . $this->attr( $conf ) . " />\n";
     }
@@ -172,7 +172,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function submit( $conf = array() ){
-        logWrite( 'Html::reset( $conf )' );
+        logWrite( 'Html::reset( $conf )', 'core' );
 
         return '<input type="reset"' . $this->attr( $conf ) . " />\n";
     }
@@ -185,7 +185,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function textarea( $conf = array() ){
-        logWrite( 'Html::textarea( $conf )' );
+        logWrite( 'Html::textarea( $conf )', 'core' );
 
         return '<textarea' . $this->attr( $conf ) . '>' . 
                 $this->content( $conf ) . "</textarea>\n";
@@ -199,7 +199,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function link( $conf = array() ){
-        logWrite( 'Html::link( $conf )' );
+        logWrite( 'Html::link( $conf )', 'core' );
 
         return '<a' . $this->attr( $conf ) . '>' . 
                 $this->content( $conf ) . "</a>\n";
@@ -213,7 +213,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function form( $conf = array() ){
-        logWrite( 'Html::form( $conf )' );
+        logWrite( 'Html::form( $conf )', 'core' );
 
         return '<form' . $this->attr( $conf ) . '>' .
                 $this->content( $conf ) . "</form>\n";
@@ -227,7 +227,7 @@ class Html{
      * @return  string  html code if $return param is true
      */
     public function table( $conf = array() ){
-        logWrite( 'Html::table( $conf )' );
+        logWrite( 'Html::table( $conf )', 'core' );
 
         // table attributes
         $attr = isset( $conf['attr'] ) ? $conf['attr'] : null;

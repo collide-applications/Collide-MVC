@@ -44,7 +44,7 @@ class Auth{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Auth::__construct()' );
+        logWrite( 'Auth::__construct()', 'core' );
 
         // initialize config array
         $collide =& Controller::getInstance();
@@ -63,7 +63,7 @@ class Auth{
      * @return  void
      */
     public function config( $config = array() ){
-        logWrite( "Auth::config( \$config )" );
+        logWrite( 'Auth::config( $config )', 'core' );
 
         // merge array
         $this->cfg = array_merge( $this->cfg, $config );
@@ -80,7 +80,7 @@ class Auth{
      * @return  mixed   user id or false on error
      */
     public function login( $user, $pass ){
-        logWrite( "Auth::login( {$user}, \$pass, \$config )" );
+        logWrite( "Auth::login( {$user}, \$pass, \$config )", 'core' );
 
         // check if already logged in
         $this->check();
@@ -113,7 +113,7 @@ class Auth{
      * @return  void
      */
     public function logout(){
-        logWrite( "Auth::logout()" );
+        logWrite( 'Auth::logout()', 'core' );
 
         // check if already logged in
         $this->check();
@@ -121,7 +121,9 @@ class Auth{
         // unset fields registered at login from session
         $collide =& Controller::getInstance();
         $sess = $collide->session->get();
+        var_dump( $sess );
         unset( $sess[$this->cfg['session']] );
+        var_dump( $sess );
         $collide->session->set( $sess );
 
         // go to login page
@@ -136,7 +138,7 @@ class Auth{
      * @return  boolean
      */
     public function check( $redirect = true ){
-        logWrite( "Auth::check( " . (int)$redirect ." )" );
+        logWrite( "Auth::check( " . (int)$redirect ." )", 'core' );
 
         $logged = false;
 
@@ -172,7 +174,7 @@ class Auth{
      * @return  void
      */
     protected function redirect( $fwd = true ){
-        logWrite( "Auth::redirect( " . (int)$fwd ." )" );
+        logWrite( "Auth::redirect( " . (int)$fwd ." )", 'core' );
 
         $collide =& Controller::getInstance();
 
@@ -191,8 +193,13 @@ class Auth{
         }else{
             // go to login page or back
             if( isset( $this->cfg['back'] ) ){
-                // avoid multiple redirects
-                if( $this->cfg['back'] != $collide->url->getSegments( 0 ) ){
+                // avoid multiple redirects by comparing back page with current segments (0 and 1)
+                $segments = $collide->url->getSegments( 0 );
+                $segments .= ( !is_null( $collide->url->getSegments( 1 ) ) ? '/' .
+                             $collide->url->getSegments( 1 ) : '' );
+                
+                if( $this->cfg['back'] != $segments ){
+                    // redirect
                     $collide->url->go( $this->cfg['back'] );
                 }
             }else{
@@ -213,7 +220,7 @@ class Auth{
      * @return  string  encrypted password
      */
     public function encryptPassword( $pass ){
-        logWrite( "Auth::encryptPassword( \$pass )" );
+        logWrite( 'Auth::encryptPassword( $pass )', 'core' );
 
         $pass = (string)$pass;
 

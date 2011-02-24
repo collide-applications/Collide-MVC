@@ -44,7 +44,7 @@ class Validation{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Validation::__construct()' );
+        logWrite( 'Validation::__construct()', 'core' );
     }
 
     /**
@@ -55,7 +55,7 @@ class Validation{
      * @return  boolean
      */
     public function load( $file ){
-        logWrite( "Config::load( '{$file}' )" );
+        logWrite( "Config::load( '{$file}' )", 'core' );
 
         // collide instance
         $collide =& thisInstance();
@@ -87,7 +87,7 @@ class Validation{
      * @return  boolean
      */
     public function check(){
-        logWrite( 'Validation::check()' );
+        logWrite( 'Validation::check()', 'core' );
 
         return true;
     }

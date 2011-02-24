@@ -45,7 +45,7 @@ class Globals{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Globals::__construct()' );
+        logWrite( 'Globals::__construct()', 'core' );
 
         // unset get array (method parameters used instead)
         if( isset( $_GET ) ){
@@ -82,7 +82,7 @@ class Globals{
      *                  error
      */
     public function get( $var = null, $type = 'post', $xss = false, $callback = null ){
-        //logWrite( 'Globals::get( $var, "' . $type . '", "' . $callback . '" )' );
+        //logWrite( 'Globals::get( $var, "' . $type . '", "' . $callback . '" )', 'core' );
 
         $globals = false;
 
@@ -163,7 +163,7 @@ class Globals{
      * @return  void
      */
     private function xss( &$item ){
-        //logWrite( 'Globals::xss()' );
+        //logWrite( 'Globals::xss()', 'core' );
 
         // apply htmlentities on strings
         if( is_string( $item ) ){

@@ -91,7 +91,7 @@ class Url{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Url::__construct' );
+        logWrite( 'Url::__construct', 'core' );
         
         // url segments
         $protocol               = 'http';
@@ -188,15 +188,21 @@ class Url{
      *
      * @access  public
      * @param   integer $position   segment position (first position is 0)
-     * @return  mixed   array of segments if no position provided or string
+     * @return  mixed   array of segments if no position provided, string or null
+     *                  if segment does not exist
      */
     public function getSegments( $position = null ){
-        logWrite( "Url::getSegments( {$position} )" );
+        logWrite( "Url::getSegments( {$position} )", 'core' );
         
         $segments = explode( '/', $this->_segments );
 
         if( !is_null( $position ) ){
-            return $segments[$position];
+            // if undefined segment it will return null
+            if( isset( $segments[$position] ) ){
+                return $segments[$position];
+            }
+
+            return null;
         }
 
         return $segments;
@@ -210,7 +216,7 @@ class Url{
      * @return  string  site url (with tailing slash)
      */
     public function get( $complete = false ){
-        logWrite( 'Url::get( ' . (int)$complete . ' )' );
+        logWrite( 'Url::get( ' . (int)$complete . ' )', 'core' );
 
         // if port is default do not add it
         ( $this->_port === '80' ) ? $port = '' : $port = $this->_port;
@@ -238,7 +244,7 @@ class Url{
      * @return  string  site url (with tailing slash)
      */
     public function go( $url = '', $force = false ){
-        logWrite( "Url::go( '{$url}', '" . (int)$force . "' )" );
+        logWrite( "Url::go( '{$url}', '" . (int)$force . "' )", 'core' );
         
         // check if headers already sent or force redirect specified
         if( $force === false && headers_sent() === true ){
@@ -272,7 +278,7 @@ class Url{
      * @return  void
      */
     public function back( $return = false ){
-        logWrite( "Url::back( " . (int)$return . " )" );
+        logWrite( "Url::back( " . (int)$return . " )", 'core' );
 
         // strip generic info (protocol, domain, port, subfolder) from referer
         $url = str_replace( 

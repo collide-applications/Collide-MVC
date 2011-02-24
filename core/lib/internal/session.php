@@ -53,7 +53,7 @@ class Session{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Session::__construct()' );
+        logWrite( 'Session::__construct()', 'core' );
 
         // keep session in an internal array
         @session_start();
@@ -82,7 +82,7 @@ class Session{
      * @param   array   $config   overwrite configuration array
      */
     public function config( $config ){
-        logWrite( "Session::config( \$conf )" );
+        logWrite( 'Session::config( $conf )', 'core' );
 
         // overwrite config array
         if( is_array( $config ) ){
@@ -111,7 +111,7 @@ class Session{
      * @return  boolean
      */
     public function set( $key, $val = null ){
-        logWrite( "Session::set( \$key, \$val )" );
+        logWrite( 'Session::set( $key, $val )', 'core' );
 
         // try to clean database
         $this->garbageCollector();
@@ -169,7 +169,7 @@ class Session{
      * @return  mixed   value from that index, null if not exists
      */
     public function get( $var = null, $callback = null ){
-        logWrite( "Session::get( \$var, \$callback )" );
+        logWrite( 'Session::get( $var, $callback )', 'core' );
 
         // try to clean database
         $this->garbageCollector();
@@ -228,7 +228,7 @@ class Session{
      * @return  void
      */
     protected function garbageCollector(){
-        logWrite( "Session::garbageCollector()" );
+        logWrite( 'Session::garbageCollector()', 'core' );
 
         if( isset( $this->cfg['cleanup'] ) && $this->cfg['cleanup'] > 0 ){
             if( rand( 0, 100 ) <= $this->cfg['cleanup'] ){

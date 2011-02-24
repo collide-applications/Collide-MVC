@@ -122,7 +122,7 @@ class Controller{
     public function __construct(){
         self::$thisInstance =& $this;
 
-        logWrite( 'Controller::__construct()' );
+        logWrite( 'Controller::__construct()', 'core' );
 
         // instantiate config library and load application config
         $configClassName = incLib( 'config' );
@@ -179,7 +179,7 @@ class Controller{
      * @return  string
      */
     public function getControllerName(){
-        logWrite( 'Controller::getControllerName()' );
+        logWrite( 'Controller::getControllerName()', 'core' );
 
         return $this->_controllerName;
     }
@@ -193,7 +193,7 @@ class Controller{
      * @return  void
      */
     public function  __call( $name,  $args ){
-        logWrite( "Controller::__call()" );
+        logWrite( 'Controller::__call()', 'core' );
 
         require_once( CORE_LIB_INT_PATH . 'collide_exception' . EXT );
         throw new Collide_exception( 'Function "' . $name . '" does not exists!' );
@@ -218,7 +218,7 @@ class Controller{
      * @return  array
      */
     public function getLoaded( $types = '' ){
-        logWrite( "Controller::getLoaded()" );
+        logWrite( 'Controller::getLoaded()', 'core' );
 
         // if empty array or empty string return all loaded items
         if( ( is_array( $types ) && count( $types ) < 1 ) ||
@@ -254,7 +254,7 @@ class Controller{
      * @return  boolean
      */
     public function addLoaded( $type, $item ){
-        logWrite( "Controller::addLoaded()" );
+        logWrite( 'Controller::addLoaded()', 'core' );
 
         // prepare type and item
         $type = strtolower( trim( $type ) );
@@ -287,7 +287,7 @@ class Controller{
      * @return  void
      */
     public function addObject( $name, $obj ){
-        logWrite( "Controller::addObject()" );
+        logWrite( 'Controller::addObject()', 'core' );
 
         $this->$name = $obj;
     }
@@ -301,7 +301,7 @@ class Controller{
      * @return  void
      */
     private function autoload(){
-        logWrite( "Controller::autoload()" );
+        logWrite( 'Controller::autoload()', 'core' );
 
         // load application config
         require( APP_CONFIG_PATH . 'load' . EXT );

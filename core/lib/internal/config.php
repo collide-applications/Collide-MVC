@@ -46,7 +46,7 @@ class Config{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'Config::__construct()' );
+        logWrite( 'Config::__construct()', 'core' );
     }
 
     /**
@@ -61,7 +61,7 @@ class Config{
      * @return  mixed   value from that index or null in not exists
      */
     public function get( $var = null ){
-        logWrite( 'Config::get( $var )' );
+        logWrite( 'Config::get( $var )', 'core' );
 
         // create an array from $var
         if( !is_null( $var ) && !is_array( $var ) ){
@@ -101,7 +101,7 @@ class Config{
      * @return  mixed           modified value
      */
     public function set( $var, $val ){
-        logWrite( "Config::get( '{$var}', {$val} )" );
+        logWrite( "Config::get( '{$var}', {$val} )", 'core' );
 
         $this->_cfg[$var] = $val;
 
@@ -117,7 +117,7 @@ class Config{
      * @return  boolean
      */
     public function load( $file, $force = false ){
-        logWrite( "Config::load( '{$file}' )" );
+        logWrite( "Config::load( '{$file}' )", 'core' );
 
         // collide instance
         $collide =& thisInstance();

@@ -35,7 +35,7 @@ class I18n{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'I18n::__construct()' );
+        logWrite( 'I18n::__construct()', 'core' );
     }
 
     /**
@@ -48,7 +48,7 @@ class I18n{
      * @return  string  html or empty string if error
      */
     public function load( $type, $file, $attr = array() ){
-        logWrite( 'Html::load( "' . $type . '", "' . $attr . '" )' );
+        logWrite( 'Html::load( "' . $type . '", "' . $attr . '" )', 'core' );
 
         $html = '';
 

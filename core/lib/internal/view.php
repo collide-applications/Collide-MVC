@@ -63,7 +63,7 @@ class View{
      * @return  void
      */
     public function __construct(){
-        logWrite( 'View::__construct()' );
+        logWrite( 'View::__construct()', 'core' );
 
         // set values for template from config (could be overwrited with setters)
         // define this controller object
@@ -89,7 +89,7 @@ class View{
      * @return  void
      */
     public function get( $views = null, $info = array(), $filters = null ){
-        logWrite( 'View::render()' );
+        logWrite( 'View::render()', 'core' );
 
         // define this controller object
         $collide =& thisInstance();
@@ -148,7 +148,7 @@ class View{
      * @return  void
      */
     public function template( $info = array(), $name = null ){
-        logWrite( 'View::template( array(), "' . $name . '" )' );
+        logWrite( "View::template( array(), '{$name}' )", 'core' );
         
         // define this controller object
         $collide =& thisInstance();
@@ -184,7 +184,7 @@ class View{
      * @return  mixed   boolean or content if <var>$return</var> is true
      */
     private function getView( $view ){
-        logWrite( 'View::getView("' . $view . '")' );
+        logWrite( "View::getView( '{$view}' )", 'core' );
 
         // define this controller object
         $collide =& thisInstance();
@@ -234,7 +234,7 @@ class View{
      * @return  boolean true on success or false on error
      */
     private function applyFilters( $filters, &$output ){
-        logWrite( 'View::applyFilters( ' . print_r( $filters, 1) . ', $output)' );
+        logWrite( 'View::applyFilters( ' . print_r( $filters, 1) . ', $output)', 'core' );
 
         // include filters script
         if( is_file( APP_LIB_PATH . 'filters' . EXT ) ){
@@ -276,7 +276,7 @@ class View{
      * @return  boolean
      */
     private function setTplInfo( $info ){
-        logWrite( 'View::setTplInfo( $info )' );
+        logWrite( 'View::setTplInfo( $info )', 'core' );
 
         if( !is_array( $info ) || !count( $info ) ){
             return false;
@@ -303,7 +303,7 @@ class View{
      * @return  void
      */
     public function setTplTitle( $title ){
-        logWrite( 'View::setTplTitle( "' . $title . '" )' );
+        logWrite( "View::setTplTitle( '{$title}' )", 'core' );
 
         $this->_tplTitle = htmlentities( $title );
     }
@@ -316,7 +316,7 @@ class View{
      * @return  void
      */
     public function setTplKeywords( $key ){
-        logWrite( 'View::setTplKeywords( "' . $key . '" )' );
+        logWrite( "View::setTplKeywords( '{$key}' )", 'core' );
 
         $this->_tplKey = htmlentities( $key );
     }
@@ -343,7 +343,7 @@ class View{
      * @return  void
      */
     public function setTplFavicon( $fav, $cdn = '' ){
-        logWrite( 'View::setTplFavicon( "' . $fav . '" )' );
+        logWrite( "View::setTplFavicon( '{$fav}' )", 'core' );
 
         $this->_tplFav      = htmlentities( $fav );
         $this->_tplFavCdn   = $cdn;
@@ -358,7 +358,7 @@ class View{
      * @return  void
      */
     public function setTplCss( $css, $cdn = '' ){
-        logWrite( 'View::setTplCss( "' . $css . '" )' );
+        logWrite( "View::setTplCss( '{$css}' )", 'core' );
 
         // create array of styles
         if( is_string( $css ) ){
@@ -378,7 +378,7 @@ class View{
      * @return  void
      */
     public function setTplJs( $js, $cdn = '' ){
-        logWrite( 'View::setTplJs( "' . $js . '" )' );
+        logWrite( "View::setTplJs( '{$js}' )", 'core' );
 
         // create array of styles
         if( is_string( $js ) ){
@@ -396,7 +396,7 @@ class View{
      * @return  string  template title
      */
     public function getTplTitle(){
-        logWrite( 'View::getTplTitle()' );
+        logWrite( 'View::getTplTitle()', 'core' );
 
         $html = "<title></title>\n";
 
@@ -414,7 +414,7 @@ class View{
      * @return  string  template keywords
      */
     public function getTplKeywords(){
-        logWrite( 'View::getTplKeywords()' );
+        logWrite( 'View::getTplKeywords()', 'core' );
 
         $html = '';
 
@@ -432,7 +432,7 @@ class View{
      * @return  string  template description
      */
     public function getTplDescription(){
-        logWrite( 'View::getTplDescription()' );
+        logWrite( 'View::getTplDescription()', 'core' );
 
         $html = '';
 
@@ -450,7 +450,7 @@ class View{
      * @return  string  template favicon
      */
     public function getTplFavicon(){
-        logWrite( 'View::getTplFavicon()' );
+        logWrite( 'View::getTplFavicon()', 'core' );
 
         $html = '';
 
@@ -475,7 +475,7 @@ EOF;
      * @return  void
      */
     public function getTplCss(){
-        logWrite( 'View::getTplCss()' );
+        logWrite( 'View::getTplCss()', 'core' );
 
         $html = '';
 
@@ -499,7 +499,7 @@ EOF;
      * @return  void
      */
     public function getTplJs(){
-        logWrite( 'View::getTplJs()' );
+        logWrite( 'View::getTplJs()', 'core' );
 
         $html = '';
 
@@ -533,7 +533,7 @@ EOF;
      * @return  string  url prefixed with CDN
      */
     private function addCdn( $file, $cdn = '' ){
-        logWrite( 'View::addCdn( $file, $pattern )' );
+        logWrite( 'View::addCdn( $file, $pattern )', 'core' );
 
         $file = ltrim( $file, '/' );
 
