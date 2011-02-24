@@ -27,7 +27,7 @@
  * @category    Views
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
- * @TODO        Add SMARTY support
+ * @todo        Add SMARTY support
  */
 class View{
     /**

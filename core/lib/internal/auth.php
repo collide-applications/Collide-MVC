@@ -23,8 +23,7 @@
  * @category    Auth
  * @author      Collide Applications Development Team
  * @link        http://mvc.collide-applications.com/docs/
- * @todo
- * - check permissions;
+ * @todo        check permissions;
  */
 class Auth{
     /**

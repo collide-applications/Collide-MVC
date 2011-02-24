@@ -289,7 +289,7 @@ EOF;
      */
     private function email( $opt = array() ){
         /**
-         * @TODO Implement this
+         * @todo Implement this
          */
     }
 
