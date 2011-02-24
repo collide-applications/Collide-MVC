@@ -13,13 +13,14 @@ Collide MVC
 - logging system using files and FirePHP;
 - config files;
 - HTML library;
-- HTML forms library with PHP validation;
 - session abstractization library;
 - PHP global arrays abstractization library;
-- multi language support;
-- CRUD demo application;
+- Authentication library;
+- CRUD demo application (blog);
 
 ### TODO:
 
 - implement HTML table generator with support for Doctrine results;
 - implement support for jQuery (helpers);
+- multi language;
+- PHP and javascript validation;
