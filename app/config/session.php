@@ -28,5 +28,5 @@
 $cfg['session'] = array(
     'overwrite' => false,   // overwrite all session array when session set
     'expire'    => 60,      // session life time (in seconds)
-    'cleanup'   => 100      // garbage collector frequency (between 0% and 100%)
+    'cleanup'   => 25      // garbage collector frequency (between 0% and 100%)
 );
