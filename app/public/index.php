@@ -31,7 +31,19 @@ define( 'DS', DIRECTORY_SEPARATOR );
 // define root folder
 define( 'ROOT_PATH', dirname( dirname( dirname( __FILE__ ) ) ) . DS );
 
-// define core folder
+/**
+ * Define core folder.
+ * We recommend to put the core folder outside of the web server root to
+ * avoid unauthorized access to core files.
+ * This could be done by calling PHP dirname function on <code>ROOT_PATH</code>
+ * when creating <code>CORE_PATH</code> constant
+ * e.g:
+ * <code>define( 'CORE_PATH', dirname( ROOT_PATH ) . DS . 'core' . DS );</code>
+ *
+ * or by specifying the full path to the core folder
+ * e.g:
+ * <code>define( 'CORE_PATH', '/var/www/core' );</code>
+ */
 define( 'CORE_PATH', ROOT_PATH . 'core' . DS );
 
 // php scripts extension
