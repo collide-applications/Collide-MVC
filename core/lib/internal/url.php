@@ -228,8 +228,11 @@ class Url{
         if( $complete ){
             $url .= $this->_queryString;
         }else{
-            // add tailing slash
-            $url = rtrim( $url, '/' ) . '/' . $this->_subfolder;
+            // add tailing slash and subfolder if any
+            $url = rtrim( $url, '/' ) . '/';
+            if( $this->_subfolder != '/' ){
+                $url .= $this->_subfolder;
+            }
         }
 
         return $url;
