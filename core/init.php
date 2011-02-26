@@ -62,7 +62,7 @@ if( !function_exists( 'initHook' ) ){
      */
     function initHook(){
         incLib( 'collide_exception' );
-
+        
         // load default application config
         require( APP_CONFIG_PATH . 'config' . EXT );
 

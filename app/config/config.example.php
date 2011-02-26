@@ -41,15 +41,14 @@ $cfg['security']['key'] = 'c953a8af38791d0a6e0d5d7268152e561';
 
 /**
  * Defined log levels:
- * 0 - do not write to logs;
+ * 0 - core
  * 1 - info
  * 2 - warning
  * 3 - error
  * 4 - debug
- * 5 - all
  */
-$cfg['log']['types']['file']     = array( 'enabled' => true, 'level' => 5 );
-$cfg['log']['types']['email']    = array( 'enabled' => true, 'level' => 5 );
+$cfg['log']['types']['file']     = array( 'level' => array( 0, 1, 2, 3, 4 ) );
+$cfg['log']['types']['email']    = array( 'level' => array() );
 
 // set console options
 $consoleLogOptions = array(
@@ -60,8 +59,14 @@ $consoleLogOptions = array(
     'trace'                 => false,       // include trace
     'collapsed'             => true         // show collapsed
 );
-$cfg['log']['types']['firephp']  = array( 'enabled' => true, 'level' => 5, 'options' => $consoleLogOptions );
-$cfg['log']['types']['chromephp']  = array( 'enabled' => true, 'level' => 5, 'options' => $consoleLogOptions );
+$cfg['log']['types']['firephp'] = array(
+    'level' => array(),
+    'options' => $consoleLogOptions
+);
+$cfg['log']['types']['chromephp'] = array(
+    'level' => array(),
+    'options' => $consoleLogOptions
+);
 
 // if set to true will overwrite the log file at each instance
 // !!! use it with caution (all previews log messages for current day will be lost)
