@@ -26,7 +26,6 @@
 
 $cfg['auth'] = array(
     'back'      => 'auth',          // page to go if login fails
-    'fwd'       => 'blog',          // page to go if login succeeded
     'model'     => 'users',         // model to load for checking users
     'method'    => 'login',         // method to call to check user and pass
     'algorithm' => 'sha1',          // password encryption algorithm

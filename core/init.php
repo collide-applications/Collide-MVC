@@ -82,11 +82,52 @@ if( !function_exists( 'initHook' ) ){
 
         // get url segments
         $arrUrl = explode( '/', URL );
-        
+
+        // include standard controller library
+        incLib( 'controller' );
+
         // get controller
-        if( isset( $arrUrl[0] ) && !empty( $arrUrl[0] ) ){
-            $controller = $arrUrl[0];
-            array_shift( $arrUrl );
+        if( count( $arrUrl ) ){
+            $controllerPath = '';
+
+            // get each url segment and check if it is a file or folder
+            // if it is a file include it, if it is a folder go further until
+            // a file is reached and include it
+            foreach( $arrUrl as $urlSegment ){
+                $urlSegment = strtolower( $urlSegment );
+
+                // check if this segment is file and include it
+                if( isset( $urlSegment ) && !empty( $urlSegment ) ){
+                    if( file_exists( APP_CONTROLLERS_PATH .
+                        $controllerPath . $urlSegment . EXT ) ){
+                        require_once(
+                            APP_CONTROLLERS_PATH .
+                            $controllerPath . $urlSegment . EXT
+                        );
+
+                        // keep file name to use it in class name
+                        $controller = $urlSegment;
+                        array_shift( $arrUrl );
+
+                        break;
+                    }else if( is_dir( APP_CONTROLLERS_PATH . $urlSegment ) ){
+                        // if this is a folder keep it and go further
+                        $controllerPath .= $urlSegment . '/';
+                        array_shift( $arrUrl );
+                    }else{
+                        // if no file or folder the url is incorrect
+                        throw new Collide_exception( 'Page not found!' );
+                    }
+                }else{
+                    // if no segment provided include default controller
+                    if( file_exists( APP_CONTROLLERS_PATH . $controller . EXT ) ){
+                        require_once( APP_CONTROLLERS_PATH . $controller . EXT );
+                    }else{
+                        // if default controller not found the url is incorrect
+                        throw new Collide_exception( 'Page not found!' );
+                    }
+                }
+            }
         }
 
         // get method
@@ -98,27 +139,21 @@ if( !function_exists( 'initHook' ) ){
         // query string
         $params = $arrUrl;
 
-        // include standard controller library
-        incLib( 'controller' );
+        // instantiate controller
+        $controllerClassName = ucfirst( $controller ) . $cfg['default']['controller_sufix'];
 
-        // include requested controller
-        if( file_exists( APP_CONTROLLERS_PATH .
-                         strtolower( $controller ) . EXT ) ){
-            require_once( APP_CONTROLLERS_PATH .
-                          strtolower( $controller ) . EXT );
+        // if class exists instantiate it
+        if( class_exists( $controllerClassName ) ){
+            $objController = new $controllerClassName();
         }else{
             throw new Collide_exception( 'Page not found!' );
         }
-
-        // instantiate controller
-        $controllerClassName = ucfirst( $controller ) . $cfg['default']['controller_sufix'];
-        $objController = new $controllerClassName();
 
         // try to call method
         if( (int)method_exists( $controllerClassName, $method ) ){
             call_user_func_array( array( $objController, $method ), $params );
         }else{
-            throw new Collide_exception( 'Method not foud!' );
+            throw new Collide_exception( 'Page not found!' );
         }
 
         return true;

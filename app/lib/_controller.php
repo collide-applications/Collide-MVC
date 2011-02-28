@@ -39,5 +39,13 @@ class _Controller extends Controller{
         // check if user is logged in
         $this->load->lib( 'auth' );
         $this->auth->check();
+
+//        $collide->config->load( 'auth' );
+
+//        if( $this->auth->check( false ) ){
+//            $this->url->go( $this->config->get( array( 'auth', 'fwd' ) ) );
+//        }else{
+//            $this->url->go( $this->config->get( array( 'auth', 'back' ) ) );
+//        }
     }
 }
