@@ -84,7 +84,10 @@ class View{
      * @access  public
      * @param   mixed   $views      views to include and display<br>
      *                              if null, display default view
-     * @param   array   $info       variables to assign to views
+     * @param   mixed   $info       variables to assign to views
+     *                              if array provided variable names will be
+     *                              indexes, otherwise variable name will be
+     *                              "info"
      * @param   mixed   $filters    array or string with filters to apply
      * @return  void
      */

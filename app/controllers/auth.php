@@ -46,6 +46,11 @@ class AuthController extends _Controller{
     public function index(){
         logWrite( 'AuthController::index()' );
 
+        // if already logged in go to default controller
+        if( $this->auth->check( false ) ){
+            $this->url->go( $this->config->get( array( 'default', 'controller' ) ) );
+        }
+
         // load view
         $info['main'] = $this->view->get( 'auth/index' );
 
@@ -65,7 +70,11 @@ class AuthController extends _Controller{
         logWrite( 'AuthController::login()' );
 
         $form = $this->globals->get( 'form' );
-        $this->auth->login( $form['user'], $form['pass'] );
+
+        // if logged in go to default controller
+        if( $this->auth->login( $form['user'], $form['pass'] ) ){
+            $this->url->go( $this->config->get( array( 'default', 'controller' ) ) );
+        }
     }
 
     /**

@@ -229,7 +229,7 @@ class Log{
             throw new Collide_exception( 'Logs dir is not writable!' );
         }else{
             fclose( $file );
-            unlink( CORE_LOG_PATH . 'test_writable' );
+            @unlink( CORE_LOG_PATH . 'test_writable' );
         }
 
         // text to write
