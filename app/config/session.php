@@ -27,6 +27,6 @@
 // global session configuration
 $cfg['session'] = array(
     'overwrite' => false,   // overwrite all session array when session set
-    'expire'    => 60,      // session life time (in seconds)
-    'cleanup'   => 25      // garbage collector frequency (between 0% and 100%)
+    'expire'    => 3600,    // session life time (in seconds)
+    'cleanup'   => 25       // garbage collector frequency (between 0% and 100%)
 );

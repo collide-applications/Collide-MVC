@@ -96,11 +96,11 @@ class Auth{
         // call function to check if username and password matches
         if( $userInfo = $collide->users->$method( $user, $this->encryptPassword( $pass ), $this->cfg['fields'] ) ){
             // register session variables
-            $logged = $collide->session->set( array( $this->cfg['session'] => $userInfo ) );
+           return $collide->session->set( array( $this->cfg['session'] => $userInfo ) );
         }
 
         // check if logged in
-        $this->redirect( $logged );
+        return false;
     }
 
     /**
@@ -126,7 +126,7 @@ class Auth{
         $collide->session->set( $sess );
 
         // go to login page
-        $this->redirect( false );
+        $this->redirect();
     }
 
     /**
@@ -169,27 +169,16 @@ class Auth{
      * Redirect to login page or to logged in page
      *
      * @access  protected
-     * @param   boolean     $fwd    go forward or back?
+     * @param   boolean     $logged     is logged or not
      * @return  void
      */
-    protected function redirect( $fwd = true ){
-        logWrite( "Auth::redirect( " . (int)$fwd ." )", 'core' );
+    protected function redirect( $logged = false ){
+        logWrite( "Auth::redirect( " . (int)$logged ." )", 'core' );
 
         $collide =& Controller::getInstance();
 
-        if( $fwd ){
-            // go to forward page or default page
-            if( isset( $this->cfg['fwd'] ) ){
-                $url = $this->cfg['fwd'];
-            }else{
-                $url = $collide->config->get( array( 'default', 'controller' ) );
-            }
-
-            // avoid multiple redirects
-            if( $url != $collide->url->getSegments( 0 ) ){
-                $collide->url->go( $url );
-            }
-        }else{
+        // if no logged go to login page
+        if( $logged === false ){
             // go to login page or back
             if( isset( $this->cfg['back'] ) ){
                 // avoid multiple redirects by comparing back page with current segments (0 and 1)
