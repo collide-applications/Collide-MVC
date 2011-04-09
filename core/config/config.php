@@ -60,7 +60,8 @@ define( 'DOCTRINE_PATH', CORE_LIB_EXT_PATH . 'Doctrine-' . DOCTRINE_VERSION . DS
  */
 
 // path to application folder
-// !!! If you move application to another path change this value.
+// !!! If you move application to another path change this value and change
+// path to public folder from .htaccess.
 define( 'APP_PATH', ROOT_PATH . 'app' . DS );
 // path to application config folder
 define( 'APP_CONFIG_PATH', APP_PATH . 'config' . DS );
